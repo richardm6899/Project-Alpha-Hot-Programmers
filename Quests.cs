@@ -4,6 +4,7 @@ public class Quest
     public string Name;
     public string Description;
 
+
     public Quest(int id, string name, string description)
     {
         this.ID = id;
@@ -19,9 +20,9 @@ public class Quest
 
     // As a player I want to fight a monster to complete a quest
 
-    public static void StartQuest(int questID, int monsterID)
+    public static void StartQuest(int questID, int monsterID, int LocationID)
     {
-        Mission.World.QuestByID(questID);
+        Quest mission = World.QuestByID(questID); //Making object
         if (questID == 1)
         {
             Console.WriteLine("Clear Blacksmith Garden quest accepted");
@@ -63,9 +64,5 @@ public class Quest
         {
             return false; // The player suffers consequences, the quest fails to cancel
         }
-    }
-    public static void Main()
-    {
-        StartQuest(1, 1);
     }
 }

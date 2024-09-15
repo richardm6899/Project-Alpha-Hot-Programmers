@@ -15,4 +15,25 @@ public class Monster
         MaximumHitPoints = maximumhitpoints;
 
     }
+
+    public void AttackPlayer(Player player)
+    {
+        Console.WriteLine($"{Name} attacks {player.Name}!");
+        player.TakeDamage(this.Damage);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if(CurrentHitPoints <= 0)
+        {
+            World.Monsters[ID] = null;
+            Console.WriteLine($"You beat {this.Name}!\nCongratulations!");
+        }
+        else
+        {
+            this.CurrentHitPoints = this.CurrentHitPoints - damage;
+            Console.WriteLine($"Monsters current hit points: {World.MonsterByID(ID).CurrentHitPoints}"); // was Monster[2], changed to MonsterByID[ID]
+
+        }
+    }
 }

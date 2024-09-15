@@ -29,87 +29,87 @@ public class Quest
 
     // Enters location with a quest, user is asked if he wants to start, once started he must finish the quest.
 
-    public static void EnterLocationWithAQuest(int LocationID)
-    {
-        Location location = World.LocationByID(LocationID);
-        if (LocationID == 3)
-        {
-            Console.WriteLine("You have entered " + location.Name + ". Would you like to start the quest? (y/n)");
-            string input = Console.ReadLine();
-            if (input == "y")
-            {
-                StartQuest(1, 1, 3);
-            }
-            else
-            {
-                Dont_StartQuest();
-            }
-        }
-        else if (LocationID == 5)
-        {
-            Console.WriteLine("You have entered " + location.Name + ". Would you like to start the quest? (y/n)");
-            string input = Console.ReadLine();
-            if (input == "y")
-            {
-                StartQuest(2, 2, 5);
-            }
-            else
-            {
-                Dont_StartQuest();
-            }
-        }
-        else if (LocationID == 7)
-        {
-            Console.WriteLine("You have entered " + location.Name + ". Would you like to start the quest? (y/n)");
-            string input = Console.ReadLine();
-            if (input == "y")
-            {
-                StartQuest(3, 3, 7);
-            }
-            else
-            {
-                Dont_StartQuest();
-            }
-        }
-        else if (LocationID == 9)
-        {
-            Console.WriteLine("You have entered " + location.Name + ". Would you like to start the quest? (y/n)");
-            string input = Console.ReadLine();
-            if (input == "y")
-            {
-                StartQuest(4, 4, 9);
-            }
-            else
-            {
-                Dont_StartQuest();
-            }
-        }
-        else if (LocationID == 11)
-        {
-            Console.WriteLine("You have entered " + location.Name + ". Would you like to start the quest? (y/n)");
-            string input = Console.ReadLine();
-            if (input == "y")
-            {
-                StartQuest(5, 5, 11);
-            }
-            else
-            {
-                Dont_StartQuest();
-            }
-        }
-        else
-        {
-            Console.WriteLine("Wrong location ID");
-        }
-    }
+    // public static void EnterLocationWithAQuest(int LocationID)
+    // {
+    //     Location location = World.LocationByID(LocationID);
+    //     if (LocationID == 3)
+    //     {
+    //         Console.WriteLine("You have entered " + location.Name + ". Would you like to start the quest? (y/n)");
+    //         string input = Console.ReadLine();
+    //         if (input == "y")
+    //         {
+    //             StartQuest(1, 1, 3);
+    //         }
+    //         else
+    //         {
+    //             Dont_StartQuest();
+    //         }
+    //     }
+    //     else if (LocationID == 5)
+    //     {
+    //         Console.WriteLine("You have entered " + location.Name + ". Would you like to start the quest? (y/n)");
+    //         string input = Console.ReadLine();
+    //         if (input == "y")
+    //         {
+    //             StartQuest(2, 2, 5);
+    //         }
+    //         else
+    //         {
+    //             Dont_StartQuest();
+    //         }
+    //     }
+    //     else if (LocationID == 7)
+    //     {
+    //         Console.WriteLine("You have entered " + location.Name + ". Would you like to start the quest? (y/n)");
+    //         string input = Console.ReadLine();
+    //         if (input == "y")
+    //         {
+    //             StartQuest(3, 3, 7);
+    //         }
+    //         else
+    //         {
+    //             Dont_StartQuest();
+    //         }
+    //     }
+    //     else if (LocationID == 9)
+    //     {
+    //         Console.WriteLine("You have entered " + location.Name + ". Would you like to start the quest? (y/n)");
+    //         string input = Console.ReadLine();
+    //         if (input == "y")
+    //         {
+    //             StartQuest(4, 4, 9);
+    //         }
+    //         else
+    //         {
+    //             Dont_StartQuest();
+    //         }
+    //     }
+    //     else if (LocationID == 11)
+    //     {
+    //         Console.WriteLine("You have entered " + location.Name + ". Would you like to start the quest? (y/n)");
+    //         string input = Console.ReadLine();
+    //         if (input == "y")
+    //         {
+    //             StartQuest(5, 5, 11);
+    //         }
+    //         else
+    //         {
+    //             Dont_StartQuest();
+    //         }
+    //     }
+    //     else
+    //     {
+    //         Console.WriteLine("Wrong location ID");
+    //     }
+    // }
 
 
     // Notifies user he'll be returned to previous location
-    public static void Dont_StartQuest() //int questID, int monsterID, int LocationID
-    {
-        Console.WriteLine("You'll be returned where you came from. Say when you are ready to start the quest.");
-        //Implement logic to return to previous location
-    }
+    // public static void Dont_StartQuest() //int questID, int monsterID, int LocationID
+    // {
+    //     Console.WriteLine("You'll be returned where you came from. Say when you are ready to start the quest.");
+    //     //Implement logic to return to previous location
+    // }
 
 
     // Starts quest and needs requirements in order to proceed, quests partly implemented, needs fight methods
@@ -118,22 +118,25 @@ public class Quest
         Quest mission = World.QuestByID(questID); //Making object
         Location location = World.LocationByID(LocationID);
         Monster monster = World.MonsterByID(monsterID);
-        if (mission.ID == 1)
+        Player player = new Player("test", location);
+        if (mission.ID == 1) // Blackmisth garden, location 3
         {
             Console.WriteLine("Clear Blacksmith Garden quest accepted");
             Console.WriteLine(mission.Name);
             Console.WriteLine(mission.Description);
             if (monster.ID == 1)
             {
+                player.Fighting2(monster);
                 //Introduce quest method logic
-                if (monster.CurrentHitPoints == 0)
+                if (monster.CurrentHitPoints <= 0)
                 {
-                    Console.WriteLine($"You have killed {monster.Name}. Return to the blacksmith for your reward and your next quest.");
+                    Console.WriteLine($"Return to the blacksmith for your reward and your next quest.");
+                    victory1 = true; 
                 }
                 else
                 {
-                    Console.WriteLine("Keep trying!");
-                    victory1 = true; // must be in the statement above
+                    Console.WriteLine("Don't give up!");
+                    // must be in the statement above
                 }
             }
             else
@@ -142,7 +145,7 @@ public class Quest
             }
 
         }
-        else if (questID == 2 && victory1 == true)
+        else if (questID == 2 && victory1 == true) //Blackmisth, location 5
         {
             bool menu2 = true;
             Console.WriteLine("Collect Blacksmith items quest accepted");
@@ -168,22 +171,23 @@ public class Quest
                 }
             }
         }
-        else if (questID == 3 && victory2 == true)
+        else if (questID == 3 && victory2 == true) // Quest in Alchemist, objective in cave, location 7
         {
             Console.WriteLine("Collect Alchemist items quest accepted");
             Console.WriteLine(mission.Name);
             Console.WriteLine(mission.Description);
-            if (monster.ID == 3)
+            if (monster.ID == 2)
             {
                 //Introduce quest method logic
-                if (monster.CurrentHitPoints == 0)
+                player.Fighting2(monster);
+                if (monster.CurrentHitPoints <= 0)
                 {
-                    Console.WriteLine($"You have killed {monster.Name}. Return to the Alchemist for your reward and your next quest awaits in the shop basement.");
+                    Console.WriteLine($"Return to the Alchemist for your reward and your next quest awaits in the shop basement.");
                     victory3 = true;
                 }
                 else
                 {
-                    Console.WriteLine("Keep trying!");
+                    Console.WriteLine("Don't give up!");
                 }
             }
             else
@@ -191,7 +195,7 @@ public class Quest
                 Console.WriteLine("Incorrect monster for this zone");
             }
         }
-        else if (questID == 4)
+        else if (questID == 4) // Shop basement, location 9
         {
             Console.WriteLine("Save Halflings quest accepted");
             Console.WriteLine(mission.Name);
@@ -215,17 +219,18 @@ public class Quest
                 }
             }
         }
-        else if (questID == 5 && victory4 == true)
+        else if (questID == 5 && victory4 == true) // Forest, location 11
         {
             Console.WriteLine("Kill Aragog quest accepted");
             Console.WriteLine(mission.Name);
             Console.WriteLine(mission.Description);
-            if (monster.ID == 5)
+            if (monster.ID == 3)
             {
                 //Introduce quest method logic
-                if (monster.CurrentHitPoints == 0)
+                player.Fighting2(monster);
+                if (monster.CurrentHitPoints <= 0)
                 {
-                    Console.WriteLine($"You have killed {monster.Name}. The villagers now live in piece and harmony, maybe its time to go back to bed.");
+                    Console.WriteLine($"The villagers now live in piece and harmony, maybe its time to go back to bed.");
                     victory5 = true;
                 }
                 else
@@ -245,7 +250,7 @@ public class Quest
     }
 
     // Generates a random number, if above 3, returns true, otherwise returns false
-    public static bool CancelQuest()
+    public static bool CancelFight()
     {
         int rolldice = new Random().Next(1, 7);
         int fleethreshhold = 3;
@@ -259,9 +264,4 @@ public class Quest
             return false; // The player suffers consequences, the quest fails to cancel
         }
     }
-    // public static void Main()
-    // {
-    //     EnterLocationWithAQuest(3);
-    //     EnterLocationWithAQuest(5);
-    // }
 }

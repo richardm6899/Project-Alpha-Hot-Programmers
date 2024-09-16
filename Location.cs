@@ -59,4 +59,19 @@ public class Location
         if (location == "W") return LocationToWest;
         return null;
     }
+
+    public static void Map()
+    {
+        System.Console.WriteLine("H - Home");
+        System.Console.WriteLine("T - Town hall");
+        System.Console.WriteLine("BY - Blacksmith Yard");
+        System.Console.WriteLine("B - Blacksmith");
+        System.Console.WriteLine("BB - Blacksmith Basement");
+        System.Console.WriteLine("A - Alchemist tower");
+        System.Console.WriteLine("C - Cave");
+        System.Console.WriteLine("S - Shop");
+        System.Console.WriteLine("SB - Shop Basement");
+        System.Console.WriteLine("CF - CampFire");
+        System.Console.WriteLine("F - Forest");
+    }
 }

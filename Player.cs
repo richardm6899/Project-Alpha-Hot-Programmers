@@ -6,7 +6,7 @@ public class Player
 
     public Location Current_Location;
     public int Max_Health;
-    public List<int> Inventory = new List<int>();
+    public List<List<int>> Inventory = new List<List<int>>();
 
     public int Coins;
     public string Name;
@@ -24,11 +24,6 @@ public class Player
             
     }
 
-    public string DisplayInventory()
-    {
-        if(Inventory
-        return ;
-    }
 
     //Inventory
     // public list<string>Inventory()

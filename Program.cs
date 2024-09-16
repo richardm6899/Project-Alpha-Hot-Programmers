@@ -288,7 +288,7 @@ class Program
                     {
                         // fight roaches
                         // if win blacksmith = true and quest_blacksmith_garden = true
-                        Quest.StartQuest(1, 1, 3);
+                        Quest.StartQuest(1, 1, 3, player);
                         blacksmith = true;
                         quest_blacksmith_garden = true;
                         //  else stay false and die or respawn.
@@ -350,7 +350,7 @@ class Program
             {
                 // "mini game" look for items in boxes. you find weird shit and in one of the boxes you find 
                 // maybe switch statements
-                Quest.StartQuest(2, 0, 4);
+                Quest.StartQuest(2, 0, 4, player);
                 // when correct box found
                 quest_blacksmith_items = true;
             }
@@ -401,7 +401,7 @@ class Program
                 // n = back to cave
                 // s = you hear rustling its the goblin looking in his bag, jou fight him
                 quest_alchemists_items = true;
-                Quest.StartQuest(3, 2, 7);
+                Quest.StartQuest(3, 2, 7, player);
                 // w = you don't hear a lot, dead end
                 // e = you hear what sounds like chatter = a whole lotta bats (we can do another fight or run away)
             }
@@ -436,7 +436,7 @@ class Program
                     Console.WriteLine("You go down stairs and see halflings in cages..\nYou sigh and look at the shop keeper");
                     Console.WriteLine("You try to open the cages however, there's a special lock holding them in the cell.");
                     Console.WriteLine("Complete the puzzle to save the halflings.....");
-                    Quest.StartQuest(4, 0, 9);
+                    Quest.StartQuest(4, 0, 9, player);
                     // if quest completed then shop basement false Y om door te gaan
                     string test_doorgang = Console.ReadLine();
                     if (test_doorgang == "Y")
@@ -486,7 +486,7 @@ class Program
             {
                 quest_aragog = true;
                 Console.WriteLine("Aragog lives here");
-                Quest.StartQuest(5, 3, 11);
+                Quest.StartQuest(5, 3, 11, player);
                 bool beaten_aragog = true;
             }
             if (player.Current_Location.ID == 1 && quest_aragog == true)

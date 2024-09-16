@@ -1,130 +1,4 @@
-﻿//     public static void Main()
-//     {
-//         bool menu = false;
-//         bool test = true;
-//         // ------------------------------- menu
-//         while (menu)
-//         {
-//             Console.WriteLine("hi welcome to ");
-//             Console.WriteLine("press enter to continue");
-//             Console.ReadLine();
-//             menu = false;
-//             home = true;
-
-//         }
-//         // ------------------------------ 1. home (H)
-//         while (home)
-//         {
-//             Console.WriteLine("You just woke up?");
-//             Console.WriteLine("You wake up, go down stairs, eat a meal, life is good.\nyou go outside, and see the town is fucked. what to do what to do.\nYou must reach the town hall to talk to the mayor");
-
-//             string choice = Map("H");
-//             Console.WriteLine(choice, "----------------");
-//             if (choice == "T")
-//             {
-//                 home = false;
-//                 town_hall = true;
-
-//             }
-//             else
-//             {
-//                 while (test)
-//                 {
-//                     Console.WriteLine("nothing going on here");
-//                     string choice1 = Map(choice);
-//                     if (choice1 == "T")
-//                     {
-//                         test = false;
-//                         town_hall = false;
-//                     }
-//                     string choice2 = Map(choice1);
-//                     Console.WriteLine($"you are at {choice2}------------------------------------------------");
-//                     if (choice2 == "T")
-//                     {
-//                         test = false;
-//                         town_hall = false;
-//                     }
-//                     string choice3= Map(choice2);
-//                     Console.WriteLine($"you are at ----------------{choice3}------------------------------------------------");
-//                     if (choice3 == "T")
-//                     {
-//                         test = false;
-//                         town_hall = false;
-//                     }
-
-//                 }
-
-//             }
-
-//         }
-//         //--------------------- 2.town hall ---- (acquire sword)(T)
-//         while (town_hall)
-//         {
-//             Console.WriteLine("you go to the town hall to ask what is happening. \nthe mayor says the town was attacked, and he needs your help to hunt the thing in the forest. \nhe gives you a weapon, it sucks (rusty sword). he says you can go to the blacksmith to make it better.");
-//             break;
-//         }
-
-//         // ------------------- 3.black smith yard ----- (cockroach fight)(BY)
-//         while (blacksmith_yard)
-//         {
-//             Console.WriteLine("You go to the blacksmith. his front yard is being destroyed by huge cockroaches. u fight them.");
-//         }
-//         // -------------------- 4. enter blacksmith shop(B)
-//         while (blacksmith)
-//         {
-//             Console.WriteLine("you kill them, you enter blacksmith shop .the blacksmith thanks you and ask for another favour. he will reward the second quest with a better sword. ");
-//         }
-//         // --------------------- 5. enter blacksmith basement(BB)
-//         while (blacksmith_basement)
-//         {
-//             Console.WriteLine("he asks you to find an item from his cellar. You enter his cellar. \nhe says he heard clicking sound in the forest last night behind his house, he said not to go there until you're very strong. \nhe said the alchemist could give you potions.");
-//         }
-//         // ---------------------- 6. alchemist(A)
-//         while (alchemist)
-//         {
-//             Console.WriteLine("you go to the alchemists house he wont open the door.\n he was robbed by the loot goblins that live in the cave behind his house.\n he says he wants his stuff back and then he might talk to you.");
-//         }
-//         // ---------------------- 7. cave (fight)(C)
-//         while (cave)
-//         {
-//             Console.WriteLine("you go into the cold damp cave behind the alchemists tower.\n you don't wanna go inside, but u gotta. u go inside you're very cold. you hear chatter. \nyou round the corner and see a loot goblin looking into a bag. he hears you. \nhe runs towards u. u fight.");
-//         }
-//         // ---------------------- 8. alchemist return(A)
-//         while (alchemist_2)
-//         {
-//             Console.WriteLine("You collect the bag and go back to the alchemist. \nHe lets you in, you can tell he actually doesn't want you here. he gives you stuffs and shoos you out of his house.\nHe says he doesn't want to see you again, if u want stuff go to the shop behind the town hall.\nDon't come back here.");
-//         }
-//         //  -------------------- 9. shop(s)
-//         while (shop)
-//         {
-//             Console.WriteLine("go to behind the town hall to the shop. if you go to the blacksmith he will warn you to go to the shop to get some better stuff. talk to the shopkeeper. you hear screaming down stairs....");
-//         }
-//         // ---------------------- 10.shop basement (puzzle mini game)(SB)
-//         while (shop_basement)
-//         {
-//             Console.WriteLine("he looks embarrassed. \nyou look disappointed.\n you go down stairs and see halflings in cages.\nyou sigh. you try to open the cages.\npuzzle mini game.");
-//         }
-//         // you can now buy stuff in shop(S)
-//         // shop where you can engage with the shopkeeper
-//         while (shop2)
-//         {
-//             Console.WriteLine("the shop keeper also talks about clicking sounds in the forest.\nhe says he's very scared of spiders.");
-//         }
-//         // ---------------------- 11.location forest(F)
-//         while (forest)
-//         {
-//             Console.WriteLine("(location forest) go to the forest to kill aragog (end quest)");
-//         }
-//         // ----------------------- 12.campfire song song
-//         while (campfire)
-//         {
-
-//         }
-
-
-//     }
-//
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
@@ -136,12 +10,14 @@ class Program
         // before game starts
         bool running = true; // main game loop only false if you want game to stop
         bool home_screen = true;  // home screen -- could implement pause game
+
         // quests
         bool quest_blacksmith_garden = false; // fight roaches 
         bool quest_blacksmith_items = false; // find items in basement 
         bool quest_alchemists_items = false; // fight loot goblin
         bool quest_save_halflings = false; // save halflings from cages. math mini game?
         bool quest_aragog = false; // fight aragog (big ass spider in the forest)
+
         //places
         bool shop = false;
         bool home = true;
@@ -154,6 +30,7 @@ class Program
         bool campfire = false;
         bool forest = false;
         bool return_home = false; // sets to true when been home already so player can choose to go to bed to heal
+
         // rewards
         bool reward_mayor = false;  // you get rusty sword and can go to blacksmith
         bool reward_blacksmith = false; // you get better sword and can go to alchemist
@@ -176,29 +53,30 @@ class Program
         string player_name = Console.ReadLine();
         Player player = new Player(player_name, World.Locations[0]);
         Console.WriteLine("-------------------------------");
-        Console.Clear();
+        System.Console.Clear();
         System.Console.WriteLine("Player starting stats:");
 
         System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nLocation: {player.Current_Location.Name}");
         Console.WriteLine("-------------------------------");
         System.Console.WriteLine("[enter]");
         System.Console.ReadKey();
-        Console.Clear();
+        System.Console.Clear();
         while (running)
         {
             while (home) // first time coming home without ever moving /game intro
             {
 
-                Console.WriteLine("Trrriiiing Triiiing.\nIts 9 AM. Time to start the day.\nAs you walk down your cat goerge greets you.");
+                Console.WriteLine("-------------------------------");
+                Console.WriteLine("Trrriiiing Triiiing.\nIts 9 AM. Time to start the day.\nAs you walk down your cat George greets you.");
                 Console.WriteLine("Lovely morning isn't it. As you take your first look outside you see chaos and mayhem everywhere.");
                 Console.WriteLine("Time to start and adventure.");
                 Console.WriteLine("-------------------------------");
-                Console.WriteLine("You need to reach the townhall(T) to meet the mayor.");
+                Console.WriteLine("You need to reach the town hall(T) to meet the mayor.");
                 Console.WriteLine("        SB\n         |\n         S\n         |\n         T\n         |\n    F-CF-H-Y-B-BB\n         |\n         A\n         |\n         C");
                 Console.WriteLine("-------------------------------");
                 System.Console.WriteLine("[enter]");
                 System.Console.ReadKey();
-                Console.Clear();
+                System.Console.Clear();
                 home = false;
                 return_home = true;
             }
@@ -208,10 +86,26 @@ class Program
             Console.WriteLine("-------------------------------");
             System.Console.WriteLine("Current location: " + player.Current_Location.Name);
             System.Console.WriteLine(player.Current_Location.Compass());
-            System.Console.WriteLine("Where to go?");
+            System.Console.WriteLine("Where to go? N/E/S/W");
+            System.Console.WriteLine("Map info: M");
+            System.Console.WriteLine("Quit game: Q");
             string direction = Console.ReadLine().ToUpper();
-            Console.Clear();
-            player.MoveTo(player.Current_Location.GetLocationAt(direction));
+            System.Console.Clear();
+
+            // player choice
+            // show info about map
+            if (direction == "M") Location.Map();
+            // quest log (what you have to do now/what you are doing)
+            // if (direction == "L") quest log
+            // quit game
+            if (direction == "Q")
+            {
+                System.Console.WriteLine("Quitting game........");
+                System.Console.ReadKey();
+                break;
+            }
+            // game play
+            else player.MoveTo(player.Current_Location.GetLocationAt(direction));
 
             // return home
             // can add new functionality to home if need be (inventory or crafting lol)
@@ -221,6 +115,7 @@ class Program
 
                 while (return_home)
                 {
+                    return_home = true;
                     // player can choose to heal up or leave home
                     System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nLocation: {player.Current_Location.Name}");
                     Console.WriteLine("-------------------------------");
@@ -423,7 +318,7 @@ class Program
                     System.Console.WriteLine("While he's talking you hear strange sounds coming from his basement.\nHe kind of looks embarrassed.");
                     System.Console.WriteLine("You decide to go look down there.\nThe creature looks at you but doesn't say anything.");
                     shop_basement = true;
-                    
+
                 }
             }
             // shop basement 

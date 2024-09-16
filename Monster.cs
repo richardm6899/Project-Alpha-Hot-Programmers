@@ -32,7 +32,7 @@ public class Monster
         else
         {
             this.CurrentHitPoints = this.CurrentHitPoints - damage;
-            Console.WriteLine($"Monsters current hit points: {World.MonsterByID(ID).CurrentHitPoints}"); // was Monster[2], changed to MonsterByID[ID]
+            Console.WriteLine($"Monsters current health points: {World.MonsterByID(ID).CurrentHitPoints}"); // was Monster[2], changed to MonsterByID[ID]
 
         }
     }

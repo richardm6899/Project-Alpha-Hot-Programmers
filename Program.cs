@@ -383,6 +383,7 @@ class Program
                     System.Console.WriteLine("You agree.\nThey say \"Don't come back here, if you want more stuff go to the shop.\"");
                     // you get potions
                     reward_alchemist = true;
+                    shop = true;
                 }
                 // you've given the items to the alchemist
                 else if (reward_alchemist)
@@ -422,6 +423,7 @@ class Program
                     System.Console.WriteLine("While he's talking you hear strange sounds coming from his basement.\nHe kind of looks embarrassed.");
                     System.Console.WriteLine("You decide to go look down there.\nThe creature looks at you but doesn't say anything.");
                     shop_basement = true;
+                    
                 }
             }
             // shop basement 

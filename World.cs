@@ -4,11 +4,17 @@ public static class World
 {
 
     // make lists
+    public static readonly List<Potion> Potions = new List<Potion>();
     public static readonly List<Weapon> Weapons = new List<Weapon>();
     public static readonly List<Monster> Monsters = new List<Monster>();
     public static readonly List<Quest> Quests = new List<Quest>();
     public static readonly List<Location> Locations = new List<Location>();
     public static readonly Random RandomGenerator = new Random();
+
+    //potion ids
+
+    public const int POTION_ID_HEALTH_POTION = 1;
+    public const int POTION_ID_STRENGTH = 2;
 
     // weapon ids
     public const int WEAPON_ID_RUSTY_SWORD = 1;
@@ -51,9 +57,15 @@ public static class World
         PopulateMonsters();
         PopulateQuests();
         PopulateLocations();
+        PopulatePotions();
     }
 
 
+    public static void PopulatePotions()
+    {
+        Potions.Add(new Potion(POTION_ID_HEALTH_POTION, "Health Potion"));
+        Potions.Add(new Potion(POTION_ID_STRENGTH, "Strength Potion"));
+    }
     //  add weapons to the weapons list
     public static void PopulateWeapons()
     {
@@ -236,6 +248,19 @@ public static class World
         }
 
         return null;
+    }
+
+    public static Potion PotionByID(int id)
+    {
+              foreach (Potion potion in Potions)
+        {
+            if (potion.ID == id)
+            {
+                return potion;
+            }
+        }
+
+        return null;  
     }
 
     //  get weapon by the id

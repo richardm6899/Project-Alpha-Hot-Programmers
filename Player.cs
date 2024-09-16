@@ -6,7 +6,9 @@ public class Player
 
     public Location Current_Location;
     public int Max_Health;
+    public List<int> Inventory = new List<int>();
 
+    public int Coins;
     public string Name;
     //Player Info
     public Player(string name, Location current_location)
@@ -18,9 +20,15 @@ public class Player
         // this.Defense = defense;
         this.Current_Weapon = World.Weapons[0];
         this.Current_Location = World.Locations[0];
+        this.Coins = 10;
+            
     }
 
-
+    public string DisplayInventory()
+    {
+        if(Inventory
+        return ;
+    }
 
     //Inventory
     // public list<string>Inventory()

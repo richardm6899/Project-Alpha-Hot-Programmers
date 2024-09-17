@@ -91,6 +91,7 @@ class Program
             System.Console.WriteLine(player.Current_Location.Compass());
             System.Console.WriteLine("Where to go? N/E/S/W");
             System.Console.WriteLine("Map info: M");
+            System.Console.WriteLine("Inventory: I:");
             System.Console.WriteLine("Quit game: Q");
             string direction = Console.ReadLine().ToUpper();
             System.Console.Clear();
@@ -102,7 +103,8 @@ class Program
             // quest log (what you have to do now/what you are doing)
             // if (direction == "L") quest log
 
-            // if (direction == "I") inventory
+            // show player inventory
+            if (direction == "I") player.PlayerInventory.DisplayInventory();
 
             // quit game
             if (direction == "Q")
@@ -146,6 +148,7 @@ class Program
                             System.Console.WriteLine("The mayor thanks you, but sees you don't have a weapon.");
                             System.Console.WriteLine("He gives you a rusty looking sword.\nHe apologizes for not having anything better for you");
                             // recieve weapon
+                            player.AddItemsToInventory(null, World.Weapons[0]);
                             System.Console.WriteLine("He says the blacksmith might be able to improve your sword,\nbut his garden is overrun by cockroaches.");
                             Console.WriteLine("-------------------------------");
                             // start quest blacksmith garden
@@ -346,6 +349,7 @@ class Program
                 // choose from 3 ways to find the goblin
                 // n = back to cave
                 // s = you hear rustling its the goblin looking in his bag, jou fight him
+
                 // w = you don't hear a lot, dead end
                 // e = you hear what sounds like chatter = a whole lotta bats (we can do another fight or run away)
             }
@@ -405,7 +409,6 @@ class Program
                     Console.WriteLine("-------------------------------");
                     Quest.StartQuest(4, 0, 9, player);
                     reward_shopkeeper = true;
-
                     // if quest completed then shop basement false Y om door te gaan
                     string test_doorgang = Console.ReadLine();
                     if (test_doorgang == "Y")
@@ -476,8 +479,6 @@ class Program
                 Console.WriteLine("Aragog lives here");
                 Console.WriteLine("-------------------------------");
                 Quest.StartQuest(5, 3, 11, player);
-
-
                 bool beaten_aragog = true;
             }
             if (player.Current_Location.ID == 1 && quest_aragog == true)

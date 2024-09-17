@@ -24,16 +24,14 @@ public class Monster
 
     public void TakeDamage(int damage)
     {
+        this.CurrentHitPoints = this.CurrentHitPoints - damage;
         if(CurrentHitPoints <= 0)
         {
             World.Monsters[ID] = null;
-            Console.WriteLine($"You beat {this.Name}!\nCongratulations!");
         }
         else
         {
-            this.CurrentHitPoints = this.CurrentHitPoints - damage;
             Console.WriteLine($"Monsters current health points: {World.MonsterByID(ID).CurrentHitPoints}"); // was Monster[2], changed to MonsterByID[ID]
-
         }
     }
 }

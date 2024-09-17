@@ -1,3 +1,5 @@
+using System.Formats.Asn1;
+
 public class Player
 {
     public int Current_Health;
@@ -45,7 +47,7 @@ public class Player
     Console.WriteLine($"You fight the {monster.Name}");
     while (this.Current_Health > 0 && monster.CurrentHitPoints > 0)
     {
-        Console.WriteLine("What do you want to do? (A)ttack or (R)un?");
+        Console.WriteLine("What do you want to do? (A)ttack, use a (C)onsumable or (R)un?");
         string answer = Console.ReadLine();
         switch (answer.ToUpper())
         {
@@ -57,13 +59,17 @@ public class Player
                 }
                 break;
             case "R":
-                if (CancelFight())
+                Console.WriteLine("");
+                int treshhold = 12;
+                if (RollDice(treshhold))
                 {
+                     // The player flees,the quest is cancelled
                     Console.WriteLine("You successfully fled from the combat!");
                     //player.Current_Location = World.Locations[0];
                 }
                 else
                 {
+                     // The player suffers consequences, the quest fails to cancel
                     Console.WriteLine("You failed to flee. The monster attacks you!");
                     monster.AttackPlayer(this);
                 }
@@ -106,8 +112,8 @@ public class Player
 
     public void AttackMonster(Monster monster)
     {
-        Console.WriteLine($"You hit {monster.Name}! for {Current_Weapon.Damage}");
-        monster.TakeDamage(Current_Weapon.Damage);
+        Console.WriteLine($"You try to hit {monster.Name} with {this.Current_Weapon.Name}");
+        monster.TakeDamage(RollDamage(monster));
     }
 
     public void TakeDamage(int damage)
@@ -137,18 +143,68 @@ public class Player
         return this.Current_Location.Name;
     }
     
-    public static bool CancelFight()
+    public int RollDamage(Monster monster)
     {
-        int rolldice = new Random().Next(1, 7);
-        int fleethreshhold = 3;
-
-        if (rolldice > fleethreshhold)
+        Random random = new Random();
+        int diceroll = random.Next(1, 21);
+        
+        int damage = 0;
+        
+        if(diceroll == 20)
         {
-            return true; // The player flees,the quest is cancelled
+            Console.WriteLine("You hit a crit!");
+            damage = this.Current_Weapon.Damage + 5;
+            Console.WriteLine($"You hit {monster.Name} for {damage}");
+        }
+        else if(diceroll > 17)
+        {
+            damage = this.Current_Weapon.Damage;
+            Console.WriteLine($"You hit {monster.Name} for {damage}");
+        }
+        else if(diceroll > 12)
+        {
+            damage = Convert.ToInt32(Current_Weapon.Damage * 0.8);
+            Console.WriteLine($"You hit {monster.Name} for {damage}");
+        }
+        else if(diceroll > 8)
+        {
+            damage = Convert.ToInt32(Current_Weapon.Damage * 0.4);
+            Console.WriteLine($"You hit {monster.Name} for {damage}");
+        }
+        else if(diceroll > 4)
+        {
+            damage = Convert.ToInt32(Current_Weapon.Damage * 0.2);
+            Console.WriteLine($"You hit {monster.Name} for {damage}");
+        }
+        else if(diceroll > 1)
+        {
+            damage = 0;
+            Console.WriteLine("You missed!");
+        }
+        else if(diceroll == 1)
+        {
+            Console.WriteLine("You missed and the monster attacks again!");
+            monster.AttackPlayer(this);
+            damage = 0;
+        }
+
+        return damage;
+    }
+
+    public bool RollDice(int succestreshhold)
+    {
+        Random random = new Random();
+        int diceroll = random.Next(1, 21);
+    
+        if (diceroll > succestreshhold)
+        {
+            Console.WriteLine($"That is a succes!");
+            return true;
         }
         else
         {
-            return false; // The player suffers consequences, the quest fails to cancel
+            Console.WriteLine($"That is a fail...");
+            return false;
         }
     }
 

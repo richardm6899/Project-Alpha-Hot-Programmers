@@ -13,8 +13,9 @@ public static class World
 
     //potion ids
 
-    public const int POTION_ID_HEALTH_POTION = 1;
-    public const int POTION_ID_STRENGTH = 2;
+    public const int POTION_ID_APPLE = 1;
+    public const int POTION_ID_HEALTH_POTION = 2;
+    public const int POTION_ID_STRENGTH = 3;
 
     // weapon ids
     public const int WEAPON_ID_RUSTY_SWORD = 1;
@@ -63,8 +64,9 @@ public static class World
 
     public static void PopulatePotions()
     {
-        Potions.Add(new Potion(POTION_ID_HEALTH_POTION, "Health Potion"));
-        Potions.Add(new Potion(POTION_ID_STRENGTH, "Strength Potion"));
+        Potions.Add(new Potion(POTION_ID_APPLE, "Apple", 1, "heal"));
+        Potions.Add(new Potion(POTION_ID_HEALTH_POTION, "Health Potion", 10, "heal"));
+        Potions.Add(new Potion(POTION_ID_STRENGTH, "Strength Potion", 1, "power"));
     }
     //  add weapons to the weapons list
     public static void PopulateWeapons()

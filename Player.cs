@@ -6,8 +6,7 @@ public class Player
 
     public Location Current_Location;
     public int Max_Health;
-    public List<List<int>> Inventory = new List<List<int>>();
-
+    public Inventory PlayerInventory = new Inventory();
     public int Coins;
     public string Name;
     //Player Info
@@ -21,9 +20,27 @@ public class Player
         this.Current_Weapon = World.Weapons[0];
         this.Current_Location = World.Locations[0];
         this.Coins = 10;
-            
+        
     }
 
+    public void AddItemsToInventory(Potion potion, Weapon weapon)
+    {
+        if(potion == null && weapon == null)
+        {
+            Console.WriteLine("You can't do this.");
+        } 
+        else if(potion == null)
+        {
+            PlayerInventory.WeaponInventory.Add(weapon);
+            Console.WriteLine("you got a weapon");
+
+        }
+        else if(weapon == null)
+        {
+            PlayerInventory.PotionInventory.Add(potion);
+            Console.WriteLine("you got a potion");
+        }
+    }
 
     //Inventory
     // public list<string>Inventory()

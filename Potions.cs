@@ -4,10 +4,16 @@ public class Potion
 
     public int ID;
 
-    public Potion(int id, string name)
+    public int Strength;
+
+    public string Usage;
+
+    public Potion(int id, string name, int strength, string usage)
     {
         this.ID = id;
         this.Name = name;
+        this.Strength = strength;
+        this.Usage = usage;
     }
 
 

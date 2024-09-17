@@ -36,6 +36,8 @@ class Program
         bool reward_blacksmith = false; // you get better sword and can go to alchemist
         bool reward_alchemist = false; // you get health potion you can go to shop, when u return items
         bool reward_shopkeeper = false; // you can shop in the shop
+        bool test_inventory = true;
+        
 
         //home screen
         while (home_screen)
@@ -58,6 +60,7 @@ class Program
 
         System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nLocation: {player.Current_Location.Name}");
         Console.WriteLine("-------------------------------");
+       
         System.Console.WriteLine("[enter]");
         System.Console.ReadKey();
         System.Console.Clear();
@@ -79,6 +82,7 @@ class Program
                 System.Console.Clear();
                 home = false;
                 return_home = true;
+
             }
 
             System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nLocation: {player.Current_Location.Name}");
@@ -89,6 +93,7 @@ class Program
             System.Console.WriteLine("Where to go? N/E/S/W");
             System.Console.WriteLine("Map info: M");
             System.Console.WriteLine("Quit game: Q");
+            Console.WriteLine("Display Inventory: I");
             string direction = Console.ReadLine().ToUpper();
             System.Console.Clear();
 
@@ -104,50 +109,53 @@ class Program
                 System.Console.ReadKey();
                 break;
             }
+            if (direction == "I")
+            {
+                player.DisplayInventory();
+            }
             // game play
             else player.MoveTo(player.Current_Location.GetLocationAt(direction));
 
             // return home
             // can add new functionality to home if need be (inventory or crafting lol)
-            if (player.Current_Location.ID == 1)
-            {
-                // if already player been  return_home = true so next time home player can choose to heal
+            // if (player.Current_Location.ID == 1)
+            // {
+            //     // if already player been  return_home = true so next time home player can choose to heal
+            //     return_home = true;
+            //     while (return_home)
+            //     {
+            //         // player can choose to heal up or leave home
+            //         System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nLocation: {player.Current_Location.Name}");
+            //         Console.WriteLine("-------------------------------");
+            //         Console.WriteLine("Welcome back home do you want to go to bed?: (Y/N)");
+            //         string Bed = Console.ReadLine().ToUpper();
 
-                while (return_home)
-                {
-                    return_home = true;
-                    // player can choose to heal up or leave home
-                    System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nLocation: {player.Current_Location.Name}");
-                    Console.WriteLine("-------------------------------");
-                    Console.WriteLine("Welcome back home do you want to go to bed?: (Y/N)");
-                    string Bed = Console.ReadLine().ToUpper();
+            //         if (Bed == "Y")
+            //         {
+            //             Console.WriteLine("snooze snooze");
+            //             // insert heal up
+            //             return_home = false;
+            //             home = false;
 
-                    if (Bed == "Y")
-                    {
-                        Console.WriteLine("snooze snooze");
-                        // insert heal up
-                        return_home = false;
-                        home = false;
-
-                    }
-                    else if (Bed == "N")
-                    {
-                        Console.WriteLine("-------------------------------");
-                        Console.WriteLine("Leaving home......");
-                        Console.WriteLine("-------------------------------");
-                        return_home = false;
-                        home = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("invalid answer.");
-                    }
+            //         }
+            //         else if (Bed == "N")
+            //         {
+            //             Console.WriteLine("-------------------------------");
+            //             Console.WriteLine("Leaving home......");
+            //             Console.WriteLine("-------------------------------");
+            //             return_home = false;
+            //             home = false;
+            //         }
+            //         else
+            //         {
+            //             Console.WriteLine("invalid answer.");
+            //         }
 
 
-                }
-                //  when here is check point. health back to max 
+            //     }
+            //     //  when here is check point. health back to max 
 
-            }
+            // }
 
             // town hall
             if (player.Current_Location.ID == 2)

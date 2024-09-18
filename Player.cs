@@ -50,24 +50,13 @@ public class Player
 
     // }
 
-    public void Fighting(Monster monster)
-    {
-        Console.WriteLine($"You fight the {monster}");
-        string answer1 = Console.ReadLine();
-        do
-        {
-            AttackMonster(monster);
-            monster.AttackPlayer(this);
-        }while(World.Monsters != null|| this.Current_Health != 0);
-    }
-
     public void Fighting2(Monster monster)
 {
-
     Console.WriteLine($"You fight the {monster.Name}");
     while (this.Current_Health > 0 && monster.CurrentHitPoints > 0)
     {
         Console.WriteLine("What do you want to do? (A)ttack, use a (C)onsumable or (R)un?");
+        bool run = false;
         string answer = Console.ReadLine();
         switch (answer.ToUpper())
         {
@@ -85,6 +74,7 @@ public class Player
                 {
                      // The player flees,the quest is cancelled
                     Console.WriteLine("You successfully fled from the combat!");
+                    run = true;
                     //player.Current_Location = World.Locations[0];
                 }
                 else
@@ -97,6 +87,10 @@ public class Player
             default:
                 Console.WriteLine("Invalid input. Please try again.");
                 break;
+        }
+        if(run == true)
+        {
+            this.Current_Location = World.Locations[0];
         }
     }
     if (this.Current_Health <= 0)
@@ -141,7 +135,6 @@ public class Player
         if (Current_Health <= 0)
         {
             Console.WriteLine("You died\n GAME OVER");
-
         }
         else
         {

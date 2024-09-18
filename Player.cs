@@ -74,10 +74,10 @@ public class Player
             Console.WriteLine($"Current weapon = {Current_Weapon.Name}");
             Console.WriteLine("--------------------------------------");
             Console.WriteLine("Weapon inventory: ");
-            
+
             // list made to get all available weapon id for switching
             List<int> id_list = new();
-            foreach(var weapon in PlayerInventory.WeaponInventory)
+            foreach (var weapon in PlayerInventory.WeaponInventory)
             {
                 Console.WriteLine($"Weapon ID: {weapon.ID}");
                 Console.WriteLine($"Weapon name: {weapon.Name}");
@@ -95,13 +95,13 @@ public class Player
             {
                 // makes new weapon object to replace with current weapon
                 Weapon new_weapon = World.WeaponByID(Convert.ToInt32(Weapon_id));
-                
+
 
                 if (new_weapon != null && id_list.Contains(new_weapon.ID))
                 {
                     // makes it so that the old weapon is placed back into inventory
-                    AddItemToInventory(null,World.WeaponByID(Current_Weapon.ID));
-                    RemoveItemFromInventory(null,World.WeaponByID(new_weapon.ID));
+                    AddItemToInventory(null, World.WeaponByID(Current_Weapon.ID));
+                    RemoveItemFromInventory(null, World.WeaponByID(new_weapon.ID));
                     // replace current weapon with new weapon
                     Current_Weapon = new_weapon;
                     Console.WriteLine("--------------------------------------");
@@ -112,7 +112,7 @@ public class Player
                     switch_weapon = false;
                     Console.Clear();
                 }
-                else if(new_weapon != null && !id_list.Contains(new_weapon.ID))
+                else if (new_weapon != null && !id_list.Contains(new_weapon.ID))
                 {
                     Console.WriteLine("--------------------------------------");
                     Console.WriteLine("You don't have this weapon....");
@@ -148,7 +148,7 @@ public class Player
 
             // shows how many weapons player has and what weapons player has
 
-            Console.WriteLine("--------------------------------------"); 
+            Console.WriteLine("--------------------------------------");
             Console.WriteLine($"You have {PlayerInventory.WeaponInventory.Count} weapons in your inventory");
             Console.WriteLine("--------------------------------------");
             foreach (var weapon in PlayerInventory.WeaponInventory)
@@ -204,8 +204,11 @@ public class Player
                     }
                 }
             }
+            else
+            {
+                display_inventory = false;
+            }
 
-            
         }
 
     }

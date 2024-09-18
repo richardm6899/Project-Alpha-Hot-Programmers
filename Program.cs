@@ -36,7 +36,6 @@ class Program
         bool reward_blacksmith = false; // you get better sword and can go to alchemist
         bool reward_alchemist = false; // you get health potion you can go to shop, when u return items
         bool reward_shopkeeper = false; // you can shop in the shop
-        bool test_inventory = true;
         
 
         //home screen
@@ -54,6 +53,7 @@ class Program
         System.Console.WriteLine("What is your characters name? ");
         string player_name = Console.ReadLine();
         Player player = new Player(player_name, World.Locations[0]);
+        player.AddItemToInventory(null,World.WeaponByID(1));
         Console.WriteLine("-------------------------------");
         System.Console.Clear();
         System.Console.WriteLine("Player starting stats:");
@@ -64,6 +64,7 @@ class Program
         System.Console.WriteLine("[enter]");
         System.Console.ReadKey();
         System.Console.Clear();
+
         while (running)
         {
             while (home) // first time coming home without ever moving /game intro
@@ -116,46 +117,7 @@ class Program
             // game play
             else player.MoveTo(player.Current_Location.GetLocationAt(direction));
 
-            // return home
-            // can add new functionality to home if need be (inventory or crafting lol)
-            // if (player.Current_Location.ID == 1)
-            // {
-            //     // if already player been  return_home = true so next time home player can choose to heal
-            //     return_home = true;
-            //     while (return_home)
-            //     {
-            //         // player can choose to heal up or leave home
-            //         System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nLocation: {player.Current_Location.Name}");
-            //         Console.WriteLine("-------------------------------");
-            //         Console.WriteLine("Welcome back home do you want to go to bed?: (Y/N)");
-            //         string Bed = Console.ReadLine().ToUpper();
-
-            //         if (Bed == "Y")
-            //         {
-            //             Console.WriteLine("snooze snooze");
-            //             // insert heal up
-            //             return_home = false;
-            //             home = false;
-
-            //         }
-            //         else if (Bed == "N")
-            //         {
-            //             Console.WriteLine("-------------------------------");
-            //             Console.WriteLine("Leaving home......");
-            //             Console.WriteLine("-------------------------------");
-            //             return_home = false;
-            //             home = false;
-            //         }
-            //         else
-            //         {
-            //             Console.WriteLine("invalid answer.");
-            //         }
-
-
-            //     }
-            //     //  when here is check point. health back to max 
-
-            // }
+           
 
             // town hall
             if (player.Current_Location.ID == 2)

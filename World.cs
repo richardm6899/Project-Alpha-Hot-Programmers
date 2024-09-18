@@ -24,6 +24,7 @@ public static class World
     public const int WEAPON_ID_LONG_SWORD = 4;
     public const int WEAPON_ID_EXCALIBUR = 5;
     public const int WEAPONS_ID_BOW = 6;
+    public const int Weapon_ID_FIST = 7;
 
     // monster ids
     public const int MONSTER_ID_COCKROACH = 1;
@@ -74,12 +75,14 @@ public static class World
         // id
         // name
         // max damage
+        Weapons.Add(new Weapon(Weapon_ID_FIST, "Fist", 1));
         Weapons.Add(new Weapon(WEAPON_ID_RUSTY_SWORD, "Rusty sword", 10));
         Weapons.Add(new Weapon(WEAPON_ID_CLUB, "Club", 12));
         Weapons.Add(new Weapon(WEAPON_ID_CLOWN_HAMMER, "Clown Hammer", 3));
         Weapons.Add(new Weapon(WEAPON_ID_LONG_SWORD, "Long sword", 20));
         Weapons.Add(new Weapon(WEAPON_ID_EXCALIBUR, "Excalibur", 10000));
         Weapons.Add(new Weapon(WEAPONS_ID_BOW, "Bow", 25));
+        
     }
 
 

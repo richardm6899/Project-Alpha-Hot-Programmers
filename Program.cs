@@ -104,7 +104,7 @@ class Program
             // if (direction == "L") quest log
 
             // show player inventory
-            if (direction == "I") player.PlayerInventory.DisplayInventory();
+            if (direction == "I") player.DisplayInventory();
 
             // quit game
             if (direction == "Q")
@@ -148,7 +148,7 @@ class Program
                             System.Console.WriteLine("The mayor thanks you, but sees you don't have a weapon.");
                             System.Console.WriteLine("He gives you a rusty looking sword.\nHe apologizes for not having anything better for you");
                             // recieve weapon
-                            player.AddItemsToInventory(null, World.Weapons[0]);
+                            player.AddItemToInventory(null, World.Weapons[0]);
                             System.Console.WriteLine("He says the blacksmith might be able to improve your sword,\nbut his garden is overrun by cockroaches.");
                             Console.WriteLine("-------------------------------");
                             // start quest blacksmith garden

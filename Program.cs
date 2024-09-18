@@ -248,7 +248,7 @@ class Program
                     System.Console.WriteLine("You give the tools, the blacksmith smiles.");
                     // you get better weapon
                     System.Console.WriteLine("The blacksmith gives you a better sword.");
-                    player.AddItemsToInventory(null, World.Weapons[1]);
+                    player.AddItemToInventory(null, World.Weapons[1]);
                     reward_blacksmith = true;
 
                     System.Console.WriteLine("He tells you about an alchemist that lives near that could give you potions for battle.");

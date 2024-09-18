@@ -91,6 +91,7 @@ public class Player
         if(run == true)
         {
             this.Current_Location = World.Locations[0];
+            break;
         }
     }
     if (this.Current_Health <= 0)

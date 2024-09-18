@@ -270,7 +270,7 @@ class Program
             {
                 // "mini game" look for items in boxes. you find weird shit and in one of the boxes you find 
                 // maybe switch statements
-                Quest.StartQuest(2, 0, 4, player);
+                Quest.StartQuest(2, 1, 4, player);
                 // when correct box found
                 quest_blacksmith_items = true;
             }

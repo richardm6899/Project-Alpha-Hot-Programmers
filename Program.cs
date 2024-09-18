@@ -36,7 +36,7 @@ class Program
         bool reward_blacksmith = false; // you get better sword and can go to alchemist
         bool reward_alchemist = false; // you get health potion you can go to shop, when u return items
         bool reward_shopkeeper = false; // you can shop in the shop
-        
+
 
         //home screen
         while (home_screen)
@@ -53,14 +53,13 @@ class Program
         System.Console.WriteLine("What is your characters name? ");
         string player_name = Console.ReadLine();
         Player player = new Player(player_name, World.Locations[0]);
-        player.AddItemToInventory(null,World.WeaponByID(1));
         Console.WriteLine("-------------------------------");
         System.Console.Clear();
         System.Console.WriteLine("Player starting stats:");
 
         System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nLocation: {player.Current_Location.Name}");
         Console.WriteLine("-------------------------------");
-       
+
         System.Console.WriteLine("[enter]");
         System.Console.ReadKey();
         System.Console.Clear();
@@ -117,7 +116,7 @@ class Program
             // game play
             else player.MoveTo(player.Current_Location.GetLocationAt(direction));
 
-           
+
 
             // town hall
             if (player.Current_Location.ID == 2)

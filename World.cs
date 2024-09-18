@@ -75,7 +75,7 @@ public static class World
         // name
         // max damage
         Weapons.Add(new Weapon(WEAPON_ID_RUSTY_SWORD, "Rusty sword", 10));
-        Weapons.Add(new Weapon(WEAPON_ID_CLUB, "Club", 12));
+        Weapons.Add(new Weapon(WEAPON_ID_CLUB, "Sword", 15));
         Weapons.Add(new Weapon(WEAPON_ID_CLOWN_HAMMER, "Clown Hammer", 3));
         Weapons.Add(new Weapon(WEAPON_ID_LONG_SWORD, "Long sword", 20));
         Weapons.Add(new Weapon(WEAPON_ID_EXCALIBUR, "Excalibur", 10000));

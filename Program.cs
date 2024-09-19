@@ -34,9 +34,38 @@ class Program
         // rewards
         bool reward_mayor = false;  // you get rusty sword and can go to blacksmith
         bool reward_blacksmith = false; // you get better sword and can go to alchemist
-        bool reward_alchemist = false; // you get health potion you can go to shop, when u return items
+        bool reward_alchemist = false; // you get health Consumable you can go to shop, when u return items
         bool reward_shopkeeper = false; // you can shop in the shop
+        bool trade_shop_test = true;
 
+        Player player = new Player("player_name", World.Locations[0]);
+        while (trade_shop_test)
+        {
+            Console.WriteLine("would u like to trade stuff Y/N");
+            string choice = Console.ReadLine().ToUpper();
+
+            if (choice == "Y")
+            {
+                //activate trade shop
+                TradeShop.TradeShopOG(player);
+
+                trade_shop_test = false;
+            }
+            else if (choice == "N")
+            {
+                Console.WriteLine("-------------------------------");
+                Console.WriteLine("leaving trade shop....");
+                Console.WriteLine("-------------------------------");
+                Console.WriteLine("[enter]");
+                Console.ReadLine();
+                trade_shop_test = false;
+            }
+            else
+            {
+                Console.WriteLine("input error trade shop outer layer");
+                Console.Clear();
+            }
+        }
         //home screen
         while (home_screen)
         {
@@ -51,7 +80,7 @@ class Program
         // ask player for name and show player beginning stats
         System.Console.WriteLine("What is your characters name? ");
         string player_name = Console.ReadLine();
-        Player player = new Player(player_name, World.Locations[0]);
+        // Player player = new Player(player_name, World.Locations[0]);
         Console.WriteLine("-------------------------------");
         System.Console.Clear();
         System.Console.WriteLine("Player starting stats:");
@@ -248,10 +277,10 @@ class Program
                     System.Console.WriteLine("You give the tools, the blacksmith smiles.");
                     // you get better weapon
                     System.Console.WriteLine("The blacksmith gives you a better sword.");
-                    player.AddItemsToInventory(null, World.Weapons[1]);
+                    player.AddItemToInventory(null, World.Weapons[1]);
                     reward_blacksmith = true;
 
-                    System.Console.WriteLine("He tells you about an alchemist that lives near that could give you potions for battle.");
+                    System.Console.WriteLine("He tells you about an alchemist that lives near that could give you Consumables for battle.");
                     Console.WriteLine("-------------------------------");
                     alchemist_tower = true;
                 }
@@ -305,10 +334,10 @@ class Program
                     Console.WriteLine("-------------------------------");
                     System.Console.WriteLine("You knock on the door.\nA small peep hole opens.");
                     System.Console.WriteLine("The alchemist starts yelling at you.\nYou show the bag you took from the loot goblin.");
-                    System.Console.WriteLine("They stop yelling.\nThe door slightly opens.\nYou hear the alchemist say \"I'll give you some potions for the bag\"");
+                    System.Console.WriteLine("They stop yelling.\nThe door slightly opens.\nYou hear the alchemist say \"I'll give you some Consumables for the bag\"");
                     System.Console.WriteLine("You agree.\nThey say \"Don't come back here, if you want more stuff go to the shop.\"");
                     Console.WriteLine("-------------------------------");
-                    // you get potions
+                    // you get Consumable
                     reward_alchemist = true;
                     shop = true;
                 }

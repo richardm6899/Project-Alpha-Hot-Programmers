@@ -28,16 +28,16 @@ public class Player
 
     // Inventory ----------------------------------------------------
     // add item in player inventory
-    // how to: AddItemsToInventory(PotionByID(...),WeaponByID(...))
+    // how to: AddItemsToInventory(ConsumableByID(...),WeaponByID(...))
 
     // oli/Thomas
-    public void AddItemToInventory(Potion potion, Weapon weapon)
+    public void AddItemToInventory(Consumable consumable, Weapon weapon)
     {
-        if (potion == null && weapon == null)
+        if (consumable == null && weapon == null)
         {
             Console.WriteLine("You can't do this.");
         }
-        else if (potion == null)
+        else if (consumable == null)
         {
             PlayerInventory.WeaponInventory.Add(weapon);
             Console.WriteLine("you got a weapon");
@@ -45,18 +45,18 @@ public class Player
         }
         else if (weapon == null)
         {
-            PlayerInventory.PotionInventory.Add(potion);
-            Console.WriteLine("you got a potion");
+            PlayerInventory.ConsumableInventory.Add(consumable);
+            Console.WriteLine("you got a Consumable");
         }
     }
     // oli
-    public void RemoveItemFromInventory(Potion potion, Weapon weapon)
+    public void RemoveItemFromInventory(Consumable consumable, Weapon weapon)
     {
-        if (potion == null && weapon == null)
+        if (consumable == null && weapon == null)
         {
             Console.WriteLine("You can't do this.");
         }
-        else if (potion == null)
+        else if (consumable == null)
         {
             PlayerInventory.WeaponInventory.Remove(weapon);
             Console.WriteLine("you removed a weapon");
@@ -64,8 +64,8 @@ public class Player
         }
         else if (weapon == null)
         {
-            PlayerInventory.PotionInventory.Remove(potion);
-            Console.WriteLine("you remove potion");
+            PlayerInventory.ConsumableInventory.Remove(consumable);
+            Console.WriteLine("you remove Consumable");
         }
     }
     // oli
@@ -94,7 +94,7 @@ public class Player
             Console.WriteLine("Which weapon would you like to equip?: Enter ID");
             Console.WriteLine("--------------------------------------");
             string choice = Console.ReadLine();
-            // try parse to check if player inserts a 
+            // try parse to check if player inserts a int otherwise invalid
             if (int.TryParse(choice, out int Weapon_id))
             {
                 // makes new weapon object to replace with current weapon
@@ -114,7 +114,7 @@ public class Player
                     Console.WriteLine("[Enter]");
                     Console.ReadLine();
                     switch_weapon = false;
-                    Console.Clear();
+                    
                 }
                 else if (new_weapon != null && !id_list.Contains(new_weapon.ID))
                 {
@@ -123,7 +123,7 @@ public class Player
                     Console.WriteLine("--------------------------------------");
                     Console.WriteLine("[Enter]");
                     Console.ReadLine();
-                    Console.Clear();
+                    
                 }
                 else
                 {
@@ -132,14 +132,13 @@ public class Player
                     Console.WriteLine("--------------------------------------");
                     Console.WriteLine("[Enter]");
                     Console.ReadLine();
-                    Console.Clear();
                 }
 
 
             }
             else
             {
-                Console.WriteLine("Invalid output");
+                Console.WriteLine("Invalid input");
             }
         }
     }
@@ -162,13 +161,13 @@ public class Player
                 Console.WriteLine($"Weapon damage: {weapon.Damage}");
                 Console.WriteLine("--------------------------------------");
             }
-            // shows how many potions and what potion player has
-            Console.WriteLine($"You have {PlayerInventory.PotionInventory.Count} potions in your inventory");
+            // shows how many Consumables and what Consumable player has
+            Console.WriteLine($"You have {PlayerInventory.ConsumableInventory.Count} Consumables in your inventory");
             Console.WriteLine("--------------------------------------");
-            foreach (var potion in PlayerInventory.PotionInventory)
+            foreach (var consumable in PlayerInventory.ConsumableInventory)
             {
 
-                Console.WriteLine($"Consumable name: {potion.Name}");
+                Console.WriteLine($"Consumable name: {consumable.Name}");
                 Console.WriteLine("--------------------------------------");
             }
             // Shows current weapon of player
@@ -194,7 +193,7 @@ public class Player
                     }
                     else if (choice == "N")
                     {
-                        Console.WriteLine("leaving Inventory;");
+                        Console.WriteLine("leaving Inventory...");
                         display_inventory = false;
                         switch_weaponYN = false;
 
@@ -203,7 +202,7 @@ public class Player
                     {
                         Console.WriteLine("Invalid input choice switch weapon Y/N");
                         switch_weaponYN = false;
-                        Console.Clear();
+                        
 
                     }
                 }

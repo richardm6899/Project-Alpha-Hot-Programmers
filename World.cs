@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Security.Cryptography.X509Certificates;
 
 public static class World
@@ -10,6 +11,7 @@ public static class World
     public static readonly List<Quest> Quests = new List<Quest>();
     public static readonly List<Location> Locations = new List<Location>();
     public static readonly Random RandomGenerator = new Random();
+    public static readonly List<Cave> Caves = new List<Cave>();
 
     //potion ids
 
@@ -51,6 +53,17 @@ public static class World
     public const int LOCATION_ID_CAMPFIRE = 10;
     public const int LOCATION_ID_FOREST = 11;
 
+    // cave ids
+
+    public const int CAVE_ID_CAVE_1 = 1;
+    public const int CAVE_ID_CAVE_2 = 2;
+    public const int CAVE_ID_CAVE_3 = 3;
+    public const int CAVE_ID_CAVE_4 = 4;
+    public const int CAVE_ID_CAVE_5 = 5;
+    public const int CAVE_ID_CAVE_GOBLIN = 6;
+    public const int CAVE_ID_CAVE_ITEM = 7;
+    public const int CAVE_ID_CAVE_SNAKE = 8;
+
 
     // call methods to add everything to the made lists
     static World()
@@ -60,6 +73,7 @@ public static class World
         PopulateQuests();
         PopulateLocations();
         PopulatePotions();
+        PopulateCave();
     }
 
 
@@ -82,7 +96,7 @@ public static class World
         Weapons.Add(new Weapon(WEAPON_ID_LONG_SWORD, "Long sword", 20));
         Weapons.Add(new Weapon(WEAPON_ID_EXCALIBUR, "Excalibur", 10000));
         Weapons.Add(new Weapon(WEAPONS_ID_BOW, "Bow", 25));
-        
+
     }
 
 
@@ -241,6 +255,64 @@ public static class World
     }
 
 
+
+    //  add cave locations to the Caves list
+    public static void PopulateCave()
+    {
+        //create locations in cave
+        Cave cave_1 = new Cave(CAVE_ID_CAVE_1, "Cave room", null);
+
+        Cave cave_2 = new Cave(CAVE_ID_CAVE_2, "Cave chamber", null);
+
+        Cave cave_3 = new Cave(CAVE_ID_CAVE_3, "Cave hall", null);
+
+        Cave cave_4 = new Cave(CAVE_ID_CAVE_4, "Cave place", null);
+
+        Cave cave_5 = new Cave(CAVE_ID_CAVE_5, "Cave bedroom", null);
+
+        Cave cave_goblin = new Cave(CAVE_ID_CAVE_GOBLIN, "Cave goblin", null);
+        cave_goblin.MonsterLivingHere = MonsterByID(MONSTER_ID_LOOT_GOBLIN);
+
+        Cave cave_item = new Cave(CAVE_ID_CAVE_ITEM, "Cave Item", null);
+
+        Cave cave_snake = new Cave(CAVE_ID_CAVE_SNAKE, "Cave Snake", null);
+
+
+        cave_1.LocationToNorth = cave_item;
+        cave_1.LocationToWest = cave_3;
+        cave_1.LocationToEast = cave_2;
+
+        cave_2.LocationToEast = cave_snake;
+        cave_2.LocationToWest = cave_1;
+
+        cave_3.LocationToNorth = cave_4;
+        cave_3.LocationToEast = cave_1;
+
+        cave_4.LocationToWest = cave_goblin;
+        cave_4.LocationToEast = cave_item;
+        cave_4.LocationToSouth = cave_3;
+
+        cave_5.LocationToSouth = cave_item;
+
+        cave_goblin.LocationToEast = cave_4;
+
+        cave_item.LocationToNorth = cave_5;
+        cave_item.LocationToSouth = cave_1;
+        cave_item.LocationToWest = cave_4;
+
+        cave_snake.LocationToWest = cave_2;
+
+        Caves.Add(cave_1);
+        Caves.Add(cave_2);
+        Caves.Add(cave_3);
+        Caves.Add(cave_4);
+        Caves.Add(cave_5);
+        Caves.Add(cave_goblin);
+        Caves.Add(cave_item);
+        Caves.Add(cave_snake);
+    }
+
+
     //  get a location by the id
     public static Location LocationByID(int id)
     {
@@ -257,7 +329,7 @@ public static class World
 
     public static Potion PotionByID(int id)
     {
-              foreach (Potion potion in Potions)
+        foreach (Potion potion in Potions)
         {
             if (potion.ID == id)
             {
@@ -265,7 +337,7 @@ public static class World
             }
         }
 
-        return null;  
+        return null;
     }
 
     //  get weapon by the id

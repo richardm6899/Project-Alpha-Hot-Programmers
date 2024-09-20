@@ -26,6 +26,7 @@ public class Player
     }
 
 
+
     // Inventory ----------------------------------------------------
     // add item in player inventory
     // how to: AddItemsToInventory(ConsumableByID(...),WeaponByID(...))
@@ -49,6 +50,7 @@ public class Player
             Console.WriteLine("you got a Consumable");
         }
     }
+
     // oli
     public void RemoveItemFromInventory(Consumable consumable, Weapon weapon)
     {
@@ -69,6 +71,7 @@ public class Player
         }
     }
     // oli
+
     public void SwitchWeapon()
     {
         bool switch_weapon = true;
@@ -114,7 +117,7 @@ public class Player
                     Console.WriteLine("[Enter]");
                     Console.ReadLine();
                     switch_weapon = false;
-                    
+
                 }
                 else if (new_weapon != null && !id_list.Contains(new_weapon.ID))
                 {
@@ -123,7 +126,7 @@ public class Player
                     Console.WriteLine("--------------------------------------");
                     Console.WriteLine("[Enter]");
                     Console.ReadLine();
-                    
+
                 }
                 else
                 {
@@ -202,7 +205,7 @@ public class Player
                     {
                         Console.WriteLine("Invalid input choice switch weapon Y/N");
                         switch_weaponYN = false;
-                        
+
 
                     }
                 }
@@ -215,41 +218,32 @@ public class Player
         }
 
     }
-    public void Fighting(Monster monster)
-    {
-        Console.WriteLine($"You fight the {monster}");
-        string answer1 = Console.ReadLine();
-        do
-        {
-            AttackMonster(monster);
-            monster.AttackPlayer(this);
-        } while (World.Monsters != null || this.Current_Health != 0);
-    }
 
     public void Fighting2(Monster monster)
     {
-
         Console.WriteLine($"You fight the {monster.Name}");
         while (this.Current_Health > 0 && monster.CurrentHitPoints > 0)
         {
             Console.WriteLine("What do you want to do? (A)ttack, use a (C)onsumable or (R)un?");
+            bool run = false;
             string answer = Console.ReadLine();
             switch (answer.ToUpper())
             {
                 case "A":
                     AttackMonster(monster);
                     if (monster.CurrentHitPoints > 0)
-                    {
                         monster.AttackPlayer(this);
-                    }
                     break;
+
                 case "R":
                     Console.WriteLine("");
                     int treshhold = 12;
                     if (RollDice(treshhold))
                     {
+
                         // The player flees,the quest is cancelled
                         Console.WriteLine("You successfully fled from the combat!");
+                        run = true;
                         //player.Current_Location = World.Locations[0];
                     }
                     else
@@ -262,6 +256,13 @@ public class Player
                 default:
                     Console.WriteLine("Invalid input. Please try again.");
                     break;
+
+            }
+            if (run == true)
+            {
+                this.Current_Location = World.Locations[0];
+                break;
+
             }
         }
         if (this.Current_Health <= 0)
@@ -306,7 +307,6 @@ public class Player
         if (Current_Health <= 0)
         {
             Console.WriteLine("You died\n GAME OVER");
-
         }
         else
         {

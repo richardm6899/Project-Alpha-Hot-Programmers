@@ -2,7 +2,7 @@ public class Inventory
 {
     public List<Weapon> WeaponInventory = new List<Weapon>();
 
-    public List<Potion> PotionInventory = new List<Potion>();
+    public List<Consumable> ConsumableInventory = new List<Consumable>();
 
 
 }

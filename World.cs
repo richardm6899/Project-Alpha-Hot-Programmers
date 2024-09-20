@@ -5,7 +5,7 @@ public static class World
 {
 
     // make lists
-    public static readonly List<Potion> Potions = new List<Potion>();
+    public static readonly List<Consumable> Consumables = new List<Consumable>();
     public static readonly List<Weapon> Weapons = new List<Weapon>();
     public static readonly List<Monster> Monsters = new List<Monster>();
     public static readonly List<Quest> Quests = new List<Quest>();
@@ -15,9 +15,9 @@ public static class World
 
     //potion ids
 
-    public const int POTION_ID_APPLE = 1;
-    public const int POTION_ID_HEALTH_POTION = 2;
-    public const int POTION_ID_STRENGTH = 3;
+    public const int CONSUMABLE_ID_APPLE = 1;
+    public const int CONSUMABLE_ID_HEALTH_POTION = 2;
+    public const int CONSUMABLE_ID_STRENGTH = 3;
 
     // weapon ids
     public const int WEAPON_ID_RUSTY_SWORD = 1;
@@ -72,16 +72,18 @@ public static class World
         PopulateMonsters();
         PopulateQuests();
         PopulateLocations();
-        PopulatePotions();
+
+        PopulateConsumables();
         PopulateCave();
+
     }
 
 
-    public static void PopulatePotions()
+    public static void PopulateConsumables()
     {
-        Potions.Add(new Potion(POTION_ID_APPLE, "Apple", 1, "heal"));
-        Potions.Add(new Potion(POTION_ID_HEALTH_POTION, "Health Potion", 10, "heal"));
-        Potions.Add(new Potion(POTION_ID_STRENGTH, "Strength Potion", 1, "power"));
+        Consumables.Add(new Consumable(CONSUMABLE_ID_APPLE, "Apple", 1, "heal",1));
+        Consumables.Add(new Consumable(CONSUMABLE_ID_HEALTH_POTION, "Health Potion", 10, "heal",3));
+        Consumables.Add(new Consumable(CONSUMABLE_ID_STRENGTH, "Strength Potion", 1, "power",5));
     }
     //  add weapons to the weapons list
     public static void PopulateWeapons()
@@ -89,13 +91,14 @@ public static class World
         // id
         // name
         // max damage
-        Weapons.Add(new Weapon(Weapon_ID_FIST, "Fist", 1));
-        Weapons.Add(new Weapon(WEAPON_ID_RUSTY_SWORD, "Rusty sword", 10));
-        Weapons.Add(new Weapon(WEAPON_ID_CLUB, "Sword", 15));
-        Weapons.Add(new Weapon(WEAPON_ID_CLOWN_HAMMER, "Clown Hammer", 3));
-        Weapons.Add(new Weapon(WEAPON_ID_LONG_SWORD, "Long sword", 20));
-        Weapons.Add(new Weapon(WEAPON_ID_EXCALIBUR, "Excalibur", 10000));
-        Weapons.Add(new Weapon(WEAPONS_ID_BOW, "Bow", 25));
+
+        Weapons.Add(new Weapon(Weapon_ID_FIST, "Fist", 1,0));
+        Weapons.Add(new Weapon(WEAPON_ID_RUSTY_SWORD, "Rusty sword", 10,5));
+        Weapons.Add(new Weapon(WEAPON_ID_CLUB, "Sword", 15,7));
+        Weapons.Add(new Weapon(WEAPON_ID_CLOWN_HAMMER, "Clown Hammer", 3,3));
+        Weapons.Add(new Weapon(WEAPON_ID_LONG_SWORD, "Long sword", 20,8));
+        Weapons.Add(new Weapon(WEAPON_ID_EXCALIBUR, "Excalibur", 10000,1000000000));
+        Weapons.Add(new Weapon(WEAPONS_ID_BOW, "Bow", 25,15));
 
     }
 
@@ -327,13 +330,13 @@ public static class World
         return null;
     }
 
-    public static Potion PotionByID(int id)
+    public static Consumable ConsumableByID(int id)
     {
-        foreach (Potion potion in Potions)
+       foreach (Consumable consumable in Consumables;
         {
-            if (potion.ID == id)
+            if (consumable.ID == id)
             {
-                return potion;
+                return consumable;
             }
         }
 

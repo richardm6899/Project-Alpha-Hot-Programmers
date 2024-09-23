@@ -1,4 +1,4 @@
-using System.Transactions;
+using System.Formats.Asn1;
 
 public class Player
 {
@@ -8,7 +8,8 @@ public class Player
 
     public Location Current_Location;
     public int Max_Health;
-
+    public Inventory PlayerInventory = new Inventory();
+    public int Coins;
     public string Name;
     bool dead = false;
     //Player Info
@@ -21,9 +22,202 @@ public class Player
         // this.Defense = defense;
         this.Current_Weapon = World.Weapons[0];
         this.Current_Location = World.Locations[0];
+        this.Coins = 10;
+
     }
 
 
+
+    // Inventory ----------------------------------------------------
+    // add item in player inventory
+    // how to: AddItemsToInventory(ConsumableByID(...),WeaponByID(...))
+
+    // oli/Thomas
+    public void AddItemToInventory(Consumable consumable, Weapon weapon)
+    {
+        if (consumable == null && weapon == null)
+        {
+            Console.WriteLine("You can't do this.");
+        }
+        else if (consumable == null)
+        {
+            PlayerInventory.WeaponInventory.Add(weapon);
+            Console.WriteLine("you got a weapon");
+
+        }
+        else if (weapon == null)
+        {
+            PlayerInventory.ConsumableInventory.Add(consumable);
+            Console.WriteLine("you got a Consumable");
+        }
+    }
+
+    // oli
+    public void RemoveItemFromInventory(Consumable consumable, Weapon weapon)
+    {
+        if (consumable == null && weapon == null)
+        {
+            Console.WriteLine("You can't do this.");
+        }
+        else if (consumable == null)
+        {
+            PlayerInventory.WeaponInventory.Remove(weapon);
+            Console.WriteLine("you removed a weapon");
+
+        }
+        else if (weapon == null)
+        {
+            PlayerInventory.ConsumableInventory.Remove(consumable);
+            Console.WriteLine("you remove Consumable");
+        }
+    }
+    // oli
+
+    public void SwitchWeapon()
+    {
+        bool switch_weapon = true;
+        while (switch_weapon)
+        {
+            // show current weapon name 
+            Console.WriteLine($"Current weapon = {Current_Weapon.Name}");
+            Console.WriteLine("--------------------------------------");
+            Console.WriteLine("Weapon inventory: ");
+
+            // list made to get all available weapon id for switching
+            List<int> id_list = new();
+            foreach (var weapon in PlayerInventory.WeaponInventory)
+            {
+                Console.WriteLine($"Weapon ID: {weapon.ID}");
+                Console.WriteLine($"Weapon name: {weapon.Name}");
+                Console.WriteLine($"Weapon damage: {weapon.Damage}");
+                Console.WriteLine("--------------------------------------");
+                id_list.Add(weapon.ID);
+
+
+            }
+            Console.WriteLine("Which weapon would you like to equip?: Enter ID");
+            Console.WriteLine("--------------------------------------");
+            string choice = Console.ReadLine();
+            // try parse to check if player inserts a int otherwise invalid
+            if (int.TryParse(choice, out int Weapon_id))
+            {
+                // makes new weapon object to replace with current weapon
+                Weapon new_weapon = World.WeaponByID(Convert.ToInt32(Weapon_id));
+
+
+                if (new_weapon != null && id_list.Contains(new_weapon.ID))
+                {
+                    // makes it so that the old weapon is placed back into inventory
+                    AddItemToInventory(null, World.WeaponByID(Current_Weapon.ID));
+                    RemoveItemFromInventory(null, World.WeaponByID(new_weapon.ID));
+                    // replace current weapon with new weapon
+                    Current_Weapon = new_weapon;
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine($"Current weapon = {Current_Weapon.Name}");
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine("[Enter]");
+                    Console.ReadLine();
+                    switch_weapon = false;
+
+                }
+                else if (new_weapon != null && !id_list.Contains(new_weapon.ID))
+                {
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine("You don't have this weapon....");
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine("[Enter]");
+                    Console.ReadLine();
+
+                }
+                else
+                {
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine("Invalid weapon ID");
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine("[Enter]");
+                    Console.ReadLine();
+                }
+
+
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
+            }
+        }
+    }
+    // oli/Thomas
+    public void DisplayInventory()
+    {
+        bool display_inventory = true;
+        while (display_inventory)
+        {
+
+            // shows how many weapons player has and what weapons player has
+
+            Console.WriteLine("--------------------------------------");
+            Console.WriteLine($"You have {PlayerInventory.WeaponInventory.Count} weapons in your inventory");
+            Console.WriteLine("--------------------------------------");
+            foreach (var weapon in PlayerInventory.WeaponInventory)
+            {
+                Console.WriteLine($"Weapon ID: {weapon.ID}");
+                Console.WriteLine($"Weapon name: {weapon.Name}");
+                Console.WriteLine($"Weapon damage: {weapon.Damage}");
+                Console.WriteLine("--------------------------------------");
+            }
+            // shows how many Consumables and what Consumable player has
+            Console.WriteLine($"You have {PlayerInventory.ConsumableInventory.Count} Consumables in your inventory");
+            Console.WriteLine("--------------------------------------");
+            foreach (var consumable in PlayerInventory.ConsumableInventory)
+            {
+
+                Console.WriteLine($"Consumable name: {consumable.Name}");
+                Console.WriteLine("--------------------------------------");
+            }
+            // Shows current weapon of player
+            Console.WriteLine($"Current weapon ------------------");
+            Console.WriteLine($"Weapon ID: {Current_Weapon.ID}");
+            Console.WriteLine($"Weapon name: {Current_Weapon.Name}");
+            Console.WriteLine($"Weapon damage: {Current_Weapon.Damage}");
+            // if player has gained weapon let player be able to switch weapon
+            if (PlayerInventory.WeaponInventory.Count > 0)
+            {
+                bool switch_weaponYN = true;
+                Console.WriteLine("--------------------------------------");
+                Console.WriteLine("Would you like to switch your current weapon?: (Y/N)");
+                string choice = Console.ReadLine().ToUpper();
+                // so can handle incorrect input.
+                while (switch_weaponYN)
+                {
+                    if (choice == "Y")
+                    {
+                        display_inventory = false;
+                        switch_weaponYN = false;
+                        SwitchWeapon();
+                    }
+                    else if (choice == "N")
+                    {
+                        Console.WriteLine("leaving Inventory...");
+                        display_inventory = false;
+                        switch_weaponYN = false;
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input choice switch weapon Y/N");
+                        switch_weaponYN = false;
+
+
+                    }
+                }
+            }
+            else
+            {
+                display_inventory = false;
+            }
+
+        }
+    }
 
     //Inventory
     // public list<string>Inventory()
@@ -46,14 +240,17 @@ public class Player
     {
         if (monster.CurrentHitPoints > 0)
         {
+            Console.WriteLine("-------------------------------");
             Console.WriteLine($"You see the {monster.Name}");
             Console.WriteLine("Do you try to kill them? (Y/N)?");
+            Console.WriteLine("-------------------------------");
             string user_answer = Console.ReadLine().ToLower();
             if (user_answer == "y")
             {
                 while (this.Current_Health > 0 && monster.CurrentHitPoints > 0)
                 {
                     Console.WriteLine("What do you want to do? (A)ttack or (R)un?");
+                    bool run = false;
                     string answer = Console.ReadLine();
                     switch (answer.ToUpper())
                     {
@@ -70,9 +267,14 @@ public class Player
                             }
                             break;
                         case "R":
-                            if (CancelFight())
+                            Console.WriteLine("");
+                            int treshhold = 12;
+                            if (RollDice(treshhold))
                             {
+
+                                // The player flees,the quest is cancelled
                                 Console.WriteLine("You successfully fled from the combat!");
+                                run = true;
                                 //player.Current_Location = World.Locations[0];
                             }
                             else
@@ -84,17 +286,23 @@ public class Player
                         default:
                             Console.WriteLine("Invalid input. Please try again.");
                             break;
-                        }
                     }
+                    if (run == true)
+                    {
+                        this.Current_Location = World.Locations[0];
+                        break;
+
+                    }
+                }
+                if (this.Current_Health <= 0)
+                {
+                    Console.WriteLine("You died. GAME OVER");
+                }
             }
-            if (this.Current_Health <= 0)
+            else
             {
-                Console.WriteLine("You died. GAME OVER");
+                Console.WriteLine($"the {monster.Name} is dead!");
             }
-        }
-        else
-        {
-            Console.WriteLine($"the {monster.Name} is dead!");
         }
     }
 
@@ -106,20 +314,20 @@ public class Player
             if (Current_Location.QuestAvailableHere != null)
             {
                 if (Quest.quest_log.Contains(Current_Location.QuestAvailableHere) == false)
-                { 
-                Quest.StartQuest(Current_Location.QuestAvailableHere, Current_Location, Current_Location.MonsterLivingHere, this);
-                }   
-            }
-            if (Current_Location.MonsterLivingHere != null)
                 {
-                    Fighting2(Current_Location.MonsterLivingHere);
+                    Quest.StartQuest(Current_Location.QuestAvailableHere, Current_Location, Current_Location.MonsterLivingHere, this);
                 }
             }
-            if (Current_Location == World.Locations[6] || Current_Location == World.Locations[8])
+            if (Current_Location.MonsterLivingHere != null)
             {
-                Quest.Riddles(this);
+                Fighting2(Current_Location.MonsterLivingHere);
             }
-                return true;
+        }
+        if (Current_Location == World.Locations[6] || Current_Location == World.Locations[8])
+        {
+            Quest.Riddles(this);
+        }
+        return true;
         {
             return false;
         }
@@ -138,8 +346,8 @@ public class Player
 
     public void AttackMonster(Monster monster)
     {
-        Console.WriteLine($"You hit {monster.Name}! for {Current_Weapon.Damage}");
-        monster.TakeDamage(Current_Weapon.Damage);
+        Console.WriteLine($"You try to hit {monster.Name} with {this.Current_Weapon.Name}");
+        monster.TakeDamage(RollDamage(monster));
     }
 
     public void TakeDamage(int damage)
@@ -147,7 +355,6 @@ public class Player
         if (Current_Health <= 0)
         {
             Console.WriteLine("You died\n GAME OVER");
-
         }
         else
         {
@@ -169,18 +376,68 @@ public class Player
         return this.Current_Location.Name;
     }
 
-    public static bool CancelFight()
+    public int RollDamage(Monster monster)
     {
-        int rolldice = new Random().Next(1, 7);
-        int fleethreshhold = 3;
+        Random random = new Random();
+        int diceroll = random.Next(1, 21);
 
-        if (rolldice > fleethreshhold)
+        int damage = 0;
+
+        if (diceroll == 20)
         {
-            return true; // The player flees,the quest is cancelled
+            Console.WriteLine("You hit a crit!");
+            damage = this.Current_Weapon.Damage + 5;
+            Console.WriteLine($"You hit {monster.Name} for {damage}");
+        }
+        else if (diceroll > 17)
+        {
+            damage = this.Current_Weapon.Damage;
+            Console.WriteLine($"You hit {monster.Name} for {damage}");
+        }
+        else if (diceroll > 12)
+        {
+            damage = Convert.ToInt32(Current_Weapon.Damage * 0.8);
+            Console.WriteLine($"You hit {monster.Name} for {damage}");
+        }
+        else if (diceroll > 8)
+        {
+            damage = Convert.ToInt32(Current_Weapon.Damage * 0.4);
+            Console.WriteLine($"You hit {monster.Name} for {damage}");
+        }
+        else if (diceroll > 4)
+        {
+            damage = Convert.ToInt32(Current_Weapon.Damage * 0.2);
+            Console.WriteLine($"You hit {monster.Name} for {damage}");
+        }
+        else if (diceroll > 1)
+        {
+            damage = 0;
+            Console.WriteLine("You missed!");
+        }
+        else if (diceroll == 1)
+        {
+            Console.WriteLine("You missed and the monster attacks again!");
+            monster.AttackPlayer(this);
+            damage = 0;
+        }
+
+        return damage;
+    }
+
+    public bool RollDice(int succestreshhold)
+    {
+        Random random = new Random();
+        int diceroll = random.Next(1, 21);
+
+        if (diceroll > succestreshhold)
+        {
+            Console.WriteLine($"That is a succes!");
+            return true;
         }
         else
         {
-            return false; // The player suffers consequences, the quest fails to cancel
+            Console.WriteLine($"That is a fail...");
+            return false;
         }
     }
 

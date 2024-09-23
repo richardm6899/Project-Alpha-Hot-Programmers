@@ -18,6 +18,7 @@ public static class World
     public const int CONSUMABLE_ID_APPLE = 1;
     public const int CONSUMABLE_ID_HEALTH_POTION = 2;
     public const int CONSUMABLE_ID_STRENGTH = 3;
+    public const int CONSUMABLE_ID_POTATO = 4;
 
     // weapon ids
     public const int WEAPON_ID_RUSTY_SWORD = 1;
@@ -55,14 +56,14 @@ public static class World
 
     // cave ids
 
-    public const int CAVE_ID_CAVE_1 = 1;
-    public const int CAVE_ID_CAVE_2 = 2;
-    public const int CAVE_ID_CAVE_3 = 3;
-    public const int CAVE_ID_CAVE_4 = 4;
-    public const int CAVE_ID_CAVE_5 = 5;
-    public const int CAVE_ID_CAVE_GOBLIN = 6;
-    public const int CAVE_ID_CAVE_ITEM = 7;
-    public const int CAVE_ID_CAVE_SNAKE = 8;
+    public const int LOCATION_ID_CAVE_1 = 12;
+    public const int LOCATION_ID_CAVE_2 = 13;
+    public const int LOCATION_ID_CAVE_3 = 14;
+    public const int LOCATION_ID_CAVE_4 = 15;
+    public const int LOCATION_ID_CAVE_5 = 16;
+    public const int LOCATION_ID_CAVE_GOBLIN = 17;
+    public const int LOCATION_ID_CAVE_ITEM = 18;
+    public const int LOCATION_ID_CAVE_SNAKE = 19;
 
 
     // call methods to add everything to the made lists
@@ -72,10 +73,7 @@ public static class World
         PopulateMonsters();
         PopulateQuests();
         PopulateLocations();
-
         PopulateConsumables();
-        PopulateCave();
-
     }
 
 
@@ -84,6 +82,7 @@ public static class World
         Consumables.Add(new Consumable(CONSUMABLE_ID_APPLE, "Apple", 1, "heal", 1));
         Consumables.Add(new Consumable(CONSUMABLE_ID_HEALTH_POTION, "Health Potion", 10, "heal", 3));
         Consumables.Add(new Consumable(CONSUMABLE_ID_STRENGTH, "Strength Potion", 1, "power", 5));
+        Consumables.Add(new Consumable(CONSUMABLE_ID_POTATO, "Potato", 5, "h", 2));
     }
     //  add weapons to the weapons list
     public static void PopulateWeapons()
@@ -211,6 +210,24 @@ public static class World
         Location forest = new Location(LOCATION_ID_FOREST, "Forest", "A monster!", null, null);
         forest.MonsterLivingHere = MonsterByID(MONSTER_ID_ARAGOG);
 
+        // cave locations
+        Location cave_1 = new Location(LOCATION_ID_CAVE_1, "Cave 1", "Cave room", null, null);
+
+        Location cave_2 = new Location(LOCATION_ID_CAVE_2, "Cave 2", "Cave chamber", null, null);
+
+        Location cave_3 = new Location(LOCATION_ID_CAVE_3, "Cave 3", "Cave hall", null, null);
+
+        Location cave_4 = new Location(LOCATION_ID_CAVE_4, "Cave 4", "Cave place", null, null);
+
+        Location cave_5 = new Location(LOCATION_ID_CAVE_5, "Cave 5", "Cave bedroom", null, null);
+
+        Location cave_goblin = new Location(LOCATION_ID_CAVE_GOBLIN, "Cave goblin", "Cave goblin", null, null);
+        cave_goblin.MonsterLivingHere = MonsterByID(MONSTER_ID_LOOT_GOBLIN);
+
+        Location cave_item = new Location(LOCATION_ID_CAVE_ITEM, "Cave item", "Cave Item", null, null);
+
+        Location cave_snake = new Location(LOCATION_ID_CAVE_SNAKE, "Cave snake", "Cave Snake", null, null);
+
         // Link the locations together
         home.LocationToNorth = townHall;
         home.LocationToEast = blacksmithYard;
@@ -243,44 +260,8 @@ public static class World
 
         forest.LocationToEast = campFire;
 
-        // Add the locations to the static list
-        Locations.Add(home);
-        Locations.Add(townHall);
-        Locations.Add(alchemistTower);
-        Locations.Add(cave);
-        Locations.Add(blacksmithYard);
-        Locations.Add(blacksmith);
-        Locations.Add(blacksmithBasement);
-        Locations.Add(shop);
-        Locations.Add(shopBasement);
-        Locations.Add(campFire);
-        Locations.Add(forest);
-    }
 
-
-
-    //  add cave locations to the Caves list
-    public static void PopulateCave()
-    {
-        //create locations in cave
-        Cave cave_1 = new Cave(CAVE_ID_CAVE_1, "Cave room", null);
-
-        Cave cave_2 = new Cave(CAVE_ID_CAVE_2, "Cave chamber", null);
-
-        Cave cave_3 = new Cave(CAVE_ID_CAVE_3, "Cave hall", null);
-
-        Cave cave_4 = new Cave(CAVE_ID_CAVE_4, "Cave place", null);
-
-        Cave cave_5 = new Cave(CAVE_ID_CAVE_5, "Cave bedroom", null);
-
-        Cave cave_goblin = new Cave(CAVE_ID_CAVE_GOBLIN, "Cave goblin", null);
-        cave_goblin.MonsterLivingHere = MonsterByID(MONSTER_ID_LOOT_GOBLIN);
-
-        Cave cave_item = new Cave(CAVE_ID_CAVE_ITEM, "Cave Item", null);
-
-        Cave cave_snake = new Cave(CAVE_ID_CAVE_SNAKE, "Cave Snake", null);
-
-
+        // link cave locations
         cave_1.LocationToNorth = cave_item;
         cave_1.LocationToWest = cave_3;
         cave_1.LocationToEast = cave_2;
@@ -305,15 +286,30 @@ public static class World
 
         cave_snake.LocationToWest = cave_2;
 
-        Caves.Add(cave_1);
-        Caves.Add(cave_2);
-        Caves.Add(cave_3);
-        Caves.Add(cave_4);
-        Caves.Add(cave_5);
-        Caves.Add(cave_goblin);
-        Caves.Add(cave_item);
-        Caves.Add(cave_snake);
+        // Add the locations to the static list
+        Locations.Add(home);  // Locations[0]
+        Locations.Add(townHall);  // Locations[1]
+        Locations.Add(alchemistTower);  // Locations[2]
+        Locations.Add(cave);// Locations[3]
+        Locations.Add(blacksmithYard);// Locations[4]
+        Locations.Add(blacksmith);// Locations[5]
+        Locations.Add(blacksmithBasement);// Locations[6]
+        Locations.Add(shop);// Locations[7]
+        Locations.Add(shopBasement);// Locations[8]
+        Locations.Add(campFire);// Locations[9]
+        Locations.Add(forest);// Locations[10]
+
+        // add cave locations
+        Locations.Add(cave_1);// Locations[11]
+        Locations.Add(cave_2);// Locations[12]
+        Locations.Add(cave_3);// Locations[13]
+        Locations.Add(cave_4);// Locations[14]
+        Locations.Add(cave_5);// Locations[15]
+        Locations.Add(cave_goblin);// Locations[16]
+        Locations.Add(cave_item);// Locations[17]
+        Locations.Add(cave_snake);// Locations[18]
     }
+
 
 
     //  get a location by the id

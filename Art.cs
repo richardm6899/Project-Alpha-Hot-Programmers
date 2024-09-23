@@ -8,7 +8,7 @@ class Art
 | [ ]--[ ]--[ ]           |
 |       |    |            |
 |      [ ]--[ ]--[ ]--[ ] |
-|           |             |
+|            |            |
 |       you are here      |
 ---------------------------");
     }
@@ -19,5 +19,18 @@ class Art
 | Out Getting Stuff   | 
 | Will Be Back Later..| 
 -----------------------");
+    }
+
+    public static void InsideCaveMap()
+    {
+        System.Console.WriteLine(@"---------------------------
+|           [ ]           |
+|            |            |
+| [ ]--[ ]--[ ]           |
+|       |    |            |
+|      [ ]--[ ]--[ ]--[ ] |
+|            |            |
+|        entrance         |
+---------------------------");
     }
 }

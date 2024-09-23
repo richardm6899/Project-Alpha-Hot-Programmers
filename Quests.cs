@@ -113,12 +113,11 @@ public class Quest
 
 
     // Starts quest and needs requirements in order to proceed, quests partly implemented, needs fight methods
-    public static void StartQuest(int questID, int monsterID, int LocationID)
+    public static void StartQuest(int questID, int monsterID, int LocationID, Player player)
     {
         Quest mission = World.QuestByID(questID); //Making object
         Location location = World.LocationByID(LocationID);
         Monster monster = World.MonsterByID(monsterID);
-        Player player = new Player("test", location);
         if (mission.ID == 1) // Blackmisth garden, location 3
         {
             Console.WriteLine("Clear Blacksmith Garden quest accepted");

@@ -1,3 +1,5 @@
+using System.Transactions;
+
 public class Player
 {
     public int Current_Health;
@@ -8,6 +10,7 @@ public class Player
     public int Max_Health;
 
     public string Name;
+    bool dead = false;
     //Player Info
     public Player(string name, Location current_location)
     {
@@ -36,61 +39,90 @@ public class Player
         {
             AttackMonster(monster);
             monster.AttackPlayer(this);
-        }while(World.Monsters != null|| this.Current_Health != 0);
+        } while (World.Monsters != null || this.Current_Health != 0);
     }
 
     public void Fighting2(Monster monster)
-{
-
-    Console.WriteLine($"You fight the {monster.Name}");
-    while (this.Current_Health > 0 && monster.CurrentHitPoints > 0)
     {
-        Console.WriteLine("What do you want to do? (A)ttack or (R)un?");
-        string answer = Console.ReadLine();
-        switch (answer.ToUpper())
+        if (monster.CurrentHitPoints > 0)
         {
-            case "A":
-                AttackMonster(monster);
-                if (monster.CurrentHitPoints > 0)
+            Console.WriteLine($"You see the {monster.Name}");
+            Console.WriteLine("Do you try to kill them? (Y/N)?");
+            string user_answer = Console.ReadLine().ToLower();
+            if (user_answer == "y")
+            {
+                while (this.Current_Health > 0 && monster.CurrentHitPoints > 0)
                 {
-                    monster.AttackPlayer(this);
-                }
-                break;
-            case "R":
-                if (CancelFight())
-                {
-                    Console.WriteLine("You successfully fled from the combat!");
-                    //player.Current_Location = World.Locations[0];
-                }
-                else
-                {
-                    Console.WriteLine("You failed to flee. The monster attacks you!");
-                    monster.AttackPlayer(this);
-                }
-                break;
-            default:
-                Console.WriteLine("Invalid input. Please try again.");
-                break;
+                    Console.WriteLine("What do you want to do? (A)ttack or (R)un?");
+                    string answer = Console.ReadLine();
+                    switch (answer.ToUpper())
+                    {
+                        case "A":
+                            AttackMonster(monster);
+                            if (monster.CurrentHitPoints > 0)
+                            {
+                                monster.AttackPlayer(this);
+                            }
+                            if (monster.CurrentHitPoints <= 0)
+                            {
+                                Console.WriteLine($"The {monster.Name} is dead!");
+                                break;
+                            }
+                            break;
+                        case "R":
+                            if (CancelFight())
+                            {
+                                Console.WriteLine("You successfully fled from the combat!");
+                                //player.Current_Location = World.Locations[0];
+                            }
+                            else
+                            {
+                                Console.WriteLine("You failed to flee. The monster attacks you!");
+                                monster.AttackPlayer(this);
+                            }
+                            break;
+                        default:
+                            Console.WriteLine("Invalid input. Please try again.");
+                            break;
+                        }
+                    }
+            }
+            if (this.Current_Health <= 0)
+            {
+                Console.WriteLine("You died. GAME OVER");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"the {monster.Name} is dead!");
         }
     }
-    if (this.Current_Health <= 0)
-    {
-        Console.WriteLine("You died. GAME OVER");
-    }
-    else
-    {
-        Console.WriteLine($"You killed the {monster.Name}!");
-    }
-}
 
     public bool MoveTo(Location newlocation)
     {
         if (newlocation != null)
         {
             Current_Location = newlocation;
-            return true;
+            if (Current_Location.QuestAvailableHere != null)
+            {
+                if (Quest.quest_log.Contains(Current_Location.QuestAvailableHere) == false)
+                { 
+                Quest.StartQuest(Current_Location.QuestAvailableHere, Current_Location, Current_Location.MonsterLivingHere, this);
+                }   
+            }
+            if (Current_Location.MonsterLivingHere != null)
+                {
+                    Fighting2(Current_Location.MonsterLivingHere);
+                }
+            }
+            if (Current_Location == World.Locations[6] || Current_Location == World.Locations[8])
+            {
+                Quest.Riddles(this);
+            }
+                return true;
+        {
+            return false;
         }
-        return false;
     }
 
     public void Heal(int health)
@@ -131,12 +163,12 @@ public class Player
 
 
 
-    
+
     public string Get_Current_Location()
     {
         return this.Current_Location.Name;
     }
-    
+
     public static bool CancelFight()
     {
         int rolldice = new Random().Next(1, 7);

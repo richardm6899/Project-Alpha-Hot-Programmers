@@ -175,6 +175,12 @@ class Program
         System.Console.WriteLine("What is your characters name? ");
         string player_name = Console.ReadLine();
         Player player = new Player(player_name, World.Locations[0]);
+        // Quest Objects 
+        Quest quest1 = World.QuestByID(1);
+        Quest quest2 = World.QuestByID(2);
+        Quest quest3 = World.QuestByID(3);
+        Quest quest4 = World.QuestByID(4);
+        Quest quest5 = World.QuestByID(5);
         Console.WriteLine("-------------------------------");
         Console.Clear();
         System.Console.WriteLine("Player starting stats:");
@@ -209,8 +215,11 @@ class Program
             System.Console.WriteLine("Current location: " + player.Current_Location.Name);
             System.Console.WriteLine(player.Current_Location.Compass());
             System.Console.WriteLine("Where to go?");
+
             string direction = Console.ReadLine().ToUpper();
+            Quest.QuestLog(direction);
             Console.Clear();
+
             player.MoveTo(player.Current_Location.GetLocationAt(direction));
 
             // return home
@@ -247,8 +256,6 @@ class Program
                     {
                         Console.WriteLine("invalid answer.");
                     }
-
-
                 }
                 //  when here is check point. health back to max 
 
@@ -280,15 +287,14 @@ class Program
                 // you go to the blacksmith garden, you have seen the mayor, and haven't finished the cockroach fight
                 if (blacksmith_yard && quest_blacksmith_garden == false)
                 {
-                    System.Console.WriteLine("You see huge cockroaches in the garden.");
-                    System.Console.WriteLine("Do you try to kill them? (Y/N) ");
-                    string user_answer = Console.ReadLine().ToLower();
+                    // System.Console.WriteLine("You see huge cockroaches in the garden.");
+                    // System.Console.WriteLine("Do you try to kill them? (Y/N) ");
+                    // string user_answer = Console.ReadLine().ToLower();
                     // you choose to fight the roaches
-                    if (user_answer == "y")
+                    if (player.Current_Location.MonsterLivingHere.CurrentHitPoints <= 0)
                     {
                         // fight roaches
                         // if win blacksmith = true and quest_blacksmith_garden = true
-                        Quest.StartQuest(1, 1, 3);
                         blacksmith = true;
                         quest_blacksmith_garden = true;
                         //  else stay false and die or respawn.
@@ -321,9 +327,10 @@ class Program
                 // you killed the cockroaches but don't have the blacksmiths items yet
                 if (quest_blacksmith_items == false)
                 {
-                    System.Console.WriteLine("The blacksmith thanks you for killing the monsters in hig garden.");
+                    System.Console.WriteLine("The blacksmith thanks you for killing the monsters in his garden.");
                     System.Console.WriteLine("He asks you to find his tools in his basement.");
                     System.Console.WriteLine("He says he'll give you a better sword if you do.");
+
                     blacksmith_basement = true;
 
                 }
@@ -350,7 +357,6 @@ class Program
             {
                 // "mini game" look for items in boxes. you find weird shit and in one of the boxes you find 
                 // maybe switch statements
-                Quest.StartQuest(2, 0, 4);
                 // when correct box found
                 quest_blacksmith_items = true;
             }
@@ -381,6 +387,7 @@ class Program
                     System.Console.WriteLine("The alchemist starts yelling at you.\nYou show the bag you took from the loot goblin.");
                     System.Console.WriteLine("They stop yelling.\nThe door slightly opens.\nYou hear the alchemist say \"I'll give you some potions for the bag\"");
                     System.Console.WriteLine("You agree.\nThey say \"Don't come back here, if you want more stuff go to the shop.\"");
+
                     // you get potions
                     reward_alchemist = true;
                     shop = true;
@@ -401,7 +408,7 @@ class Program
                 // n = back to cave
                 // s = you hear rustling its the goblin looking in his bag, jou fight him
                 quest_alchemists_items = true;
-                Quest.StartQuest(3, 2, 7);
+                //Quest.StartQuest(3, 2, 7, player);
                 // w = you don't hear a lot, dead end
                 // e = you hear what sounds like chatter = a whole lotta bats (we can do another fight or run away)
             }
@@ -422,8 +429,9 @@ class Program
                     System.Console.WriteLine("The thing starts talking \"Welcome to my sh\"");
                     System.Console.WriteLine("While he's talking you hear strange sounds coming from his basement.\nHe kind of looks embarrassed.");
                     System.Console.WriteLine("You decide to go look down there.\nThe creature looks at you but doesn't say anything.");
+                    World.Quests.Add(quest4);
                     shop_basement = true;
-                    
+
                 }
             }
             // shop basement 
@@ -436,7 +444,7 @@ class Program
                     Console.WriteLine("You go down stairs and see halflings in cages..\nYou sigh and look at the shop keeper");
                     Console.WriteLine("You try to open the cages however, there's a special lock holding them in the cell.");
                     Console.WriteLine("Complete the puzzle to save the halflings.....");
-                    Quest.StartQuest(4, 0, 9);
+                    //Quest.StartQuest(4, 0, 9, player);
                     // if quest completed then shop basement false Y om door te gaan
                     string test_doorgang = Console.ReadLine();
                     if (test_doorgang == "Y")
@@ -486,7 +494,8 @@ class Program
             {
                 quest_aragog = true;
                 Console.WriteLine("Aragog lives here");
-                Quest.StartQuest(5, 3, 11);
+                World.Quests.Add(quest5);
+                //Quest.StartQuest(5, 3, 11, player);
                 bool beaten_aragog = true;
             }
             if (player.Current_Location.ID == 1 && quest_aragog == true)
@@ -494,7 +503,6 @@ class Program
                 System.Console.WriteLine("YOU DID IT.\n You have beaten aragog.\nReturn home to ");
                 running = false;
             }
-
         }
     }
 }

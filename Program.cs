@@ -59,7 +59,7 @@ class Program
         string? player_name = Console.ReadLine();
         while (player_name == null || player_name == "")
         {
-            System.Console.WriteLine("Incorrect Input\nPlayer name:");
+            System.Console.WriteLine("Incorrect Input\nPlayer name: ");
             player_name = Console.ReadLine();
         }
         player_name = char.ToUpper(player_name[0]) + player_name.Substring(1); // capitalize first letter
@@ -69,7 +69,7 @@ class Program
 
         Console.WriteLine("-------------------------------");
         System.Console.Clear();
-        System.Console.WriteLine("Player starting stats:");
+        System.Console.WriteLine("Player starting stats: ");
 
         // player starting stats
         System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nCoins: {player.Coins}\nLocation: {player.Current_Location.Name}");
@@ -82,7 +82,7 @@ class Program
             // if player dies
             if (player.Current_Health <= 0)
             {
-                System.Console.WriteLine("You died :()");
+                System.Console.WriteLine("You died....)");
                 break;
             }
             while (home) // first time coming home without ever moving /game intro
@@ -104,7 +104,7 @@ class Program
                 home = false;
             }
 
-            System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nCoins: {player.Coins}\nLocation: {player.Current_Location.Name}");
+            System.Console.WriteLine($"Name: {player.Name}\nHealth: {player.Current_Health}\nCoins: {player.Coins}\nLocation: {player.Current_Location.Name}");
             Console.WriteLine("-------------------------------");
             Console.WriteLine("        SB\n         |\n         S\n         |\n         T\n         |\n    F-CF-H-Y-B-BB\n         |\n         A\n         |\n         C");
             Console.WriteLine("-------------------------------");
@@ -114,7 +114,7 @@ class Program
             System.Console.WriteLine(player.Current_Location.Compass());
             System.Console.WriteLine("Where to go? N/E/S/W");
             System.Console.WriteLine("Map info: M");
-            System.Console.WriteLine("Inventory: I:");
+            System.Console.WriteLine("Inventory: I");
             System.Console.WriteLine("Quest Log: L");
             System.Console.WriteLine("Quit game: Q");
             string direction = Console.ReadLine().ToUpper();
@@ -161,7 +161,7 @@ class Program
                     {
                         // mayor tells u about quest to get to the blacksmith
                         System.Console.WriteLine("The mayor tells you about a scary monster in the forest.");
-                        System.Console.WriteLine("He asks if you could try to save the town.\nY/N.");
+                        System.Console.WriteLine("He asks if you could try to save the town.\nY/N. ");
                         Console.WriteLine("-------------------------------");
 
                         user_save_town = System.Console.ReadLine().ToUpper();
@@ -390,7 +390,7 @@ class Program
                 System.Console.WriteLine("You walk to the cave behind the tower.");
                 System.Console.WriteLine("You see a board next to the entrance.");
                 Art.CaveMap();
-                System.Console.WriteLine("Do you enter? Y/N");
+                System.Console.WriteLine("Do you enter? Y/N ");
                 Console.WriteLine("-------------------------------");
                 string user_cave = "";
                 do
@@ -408,17 +408,16 @@ class Program
                             {
                                 break;
                             }
-                            System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nCoins: {player.Coins}\nLocation: {player.Current_Location.Name}");
+                            System.Console.WriteLine($"Name: {player.Name}\nHealth: {player.Current_Health}\nCoins: {player.Coins}\nLocation: {player.Current_Location.Name}");
                             System.Console.WriteLine("[enter]");
                             Console.ReadLine();
                             System.Console.WriteLine("Current location: " + player.Current_Location.Name);
                             System.Console.WriteLine(player.Current_Location.Compass());
                             System.Console.WriteLine("Where to go? N/E/S/W");
-                            System.Console.WriteLine("Inventory: I:");
+                            System.Console.WriteLine("Inventory: I");
                             // System.Console.WriteLine("Quest Log: L");
                             System.Console.WriteLine("Cave map: C");
                             System.Console.WriteLine("Exit cave: EC");
-                            System.Console.WriteLine("Quit game: Q");
                             string cave_direction = Console.ReadLine().ToUpper();
                             // System.Console.Clear();
 
@@ -439,13 +438,6 @@ class Program
                                 player.Current_Location = World.Locations[3];
                             }
 
-                            // quit game
-                            if (cave_direction == "Q")
-                            {
-                                System.Console.WriteLine("Quitting game........");
-                                System.Console.ReadKey();
-                                break;
-                            }
                             // game play
                             else player.MoveTo(player.Current_Location.GetLocationAt(cave_direction));
 
@@ -454,7 +446,8 @@ class Program
                                 // cave room 1
                                 case 12:
                                     {
-                                        System.Console.WriteLine("You're at the cave entrance. It's cold, the walls are moist. ieuw.\nYou hear sounds all around you. \nWhich way do you go?");
+                                        System.Console.WriteLine("You're at the cave entrance. It's cold, the walls are moist. ieuw.");
+                                        System.Console.WriteLine("You hear sounds all around you. \nWhich way do you go?");
                                         break;
                                     }
 
@@ -491,7 +484,7 @@ class Program
                                     {
                                         if (goblin_in_room)
                                         {
-                                            System.Console.WriteLine("You see the Goblin.\nDo you fight it? Y/N");
+                                            System.Console.WriteLine("You see the Goblin.\nDo you fight it? Y/N ");
                                             string player_fight = Console.ReadLine().ToUpper();
                                             if (player_fight == "Y")
                                             {
@@ -504,7 +497,7 @@ class Program
                                                     Player.Questlog_count = 8;
                                                 }
 
-                                                System.Console.WriteLine("Do you wish to leave the cave right away? Y/N");
+                                                System.Console.WriteLine("Do you wish to leave the cave right away? Y/N ");
                                                 string player_leave = Console.ReadLine().ToUpper();
                                                 if (player_leave == "Y")
                                                 {
@@ -654,7 +647,8 @@ class Program
                     Console.WriteLine("-------------------------------");
                     Console.WriteLine("In the clearing of the forest you spot a faint light with several shadows around it.");
                     Console.WriteLine("You approach the campfire.\nYou spot fellow villagers taking a break from the chaos all around.");
-                    Console.WriteLine("This is a safe haven. The campfire has healing properties.\nHolding your hands near the fire will heal you up for battle;");
+                    Console.WriteLine("This is a safe haven. The campfire has healing properties.");
+                    Console.WriteLine("Holding your hands near the fire might heal you up for battle.");
                     Console.WriteLine("-------------------------------");
 
                     bool campfire_heal = true;
@@ -667,6 +661,7 @@ class Program
                         if (campfire_choice == "Y")
                         {
                             // heal player
+                            player.FullHealth();
                             Console.WriteLine("-------------------------------");
                             Console.WriteLine("player healed");
                             Console.WriteLine("-------------------------------");
@@ -689,7 +684,7 @@ class Program
                 else if (campfire == false)
                 {
                     Console.WriteLine("-------------------------------");
-                    System.Console.WriteLine("You see a campfire in the distance");
+                    System.Console.WriteLine("You see a campfire in the distance.");
                     System.Console.WriteLine("It looks scary\nYou turn back for now.");
                     System.Console.WriteLine("Returning home..");
                     Console.WriteLine("-------------------------------");
@@ -703,7 +698,7 @@ class Program
             {
                 quest_aragog = true;
                 Console.WriteLine("-------------------------------");
-                Console.WriteLine("Aragog lives here\nDo you fight him?\nY/N");
+                Console.WriteLine("Aragog lives here\nDo you fight him?\nY/N ");
                 Console.WriteLine("-------------------------------");
                 string user_aragog = System.Console.ReadLine().ToUpper();
                 if (user_aragog == "Y")

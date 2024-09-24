@@ -15,7 +15,7 @@ public class Player
     public static int Questlog_count = 1;
 
     public int Defense = 0;
-  
+
     //Player Info
     public Player(string name, Location current_location)
     {
@@ -53,7 +53,8 @@ public class Player
         else if (Questlog_count == 2)
         {
             Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("|+ Reach the Blacksmith's Yard......           |");
+            Console.WriteLine("|+ Reach the Blacksmith's Yard......        |");
+            Console.WriteLine("|+ advice: switch weapon.                   |");
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("[Enter]");
             Console.ReadLine();
@@ -159,11 +160,16 @@ public class Player
 
 
     }
-      // Inventory ----------------------------------------------------
+    // Inventory ----------------------------------------------------
     // add item in player inventory
     // how to: AddItemsToInventory(ConsumableByID(...),WeaponByID(...))
 
     // oli/Thomas
+
+    public void AddMoney(int money)
+    {
+        Coins += money;
+    }
 
     public void AddItemToInventory(Consumable consumable, Weapon weapon)
     {
@@ -394,15 +400,15 @@ public class Player
                     break;
 
                 case "C":
-                    if(this.PlayerInventory.ConsumableInventory.Count != 0)
+                    if (this.PlayerInventory.ConsumableInventory.Count != 0)
                     {
                         foreach (var consumable in PlayerInventory.ConsumableInventory)
-                            {
-                                int count = 1;
-                                Console.WriteLine("Pick a Consumable:");
-                                Console.WriteLine($"Consumable name: ({count}){consumable.Name}");
-                                Console.WriteLine("--------------------------------------");
-                            }
+                        {
+                            int count = 1;
+                            Console.WriteLine("Pick a Consumable:");
+                            Console.WriteLine($"Consumable name: ({count}){consumable.Name}");
+                            Console.WriteLine("--------------------------------------");
+                        }
                         int ConsumableID = Convert.ToInt32(Console.ReadLine()) - 1;
 
                         Consumable consumableToUse = PlayerInventory.ConsumableInventory[ConsumableID];
@@ -457,7 +463,7 @@ public class Player
             }
             if (Current_Location.MonsterLivingHere != null)
             {
-                Fighting2(Current_Location.MonsterLivingHere);
+                Quest.StartQuest(Current_Location.QuestAvailableHere, Current_Location, Current_Location.MonsterLivingHere, this);
             }
         }
         if (Current_Location == World.Locations[6] || Current_Location == World.Locations[8])

@@ -420,7 +420,6 @@ class Program
                                 case 12:
                                     {
                                         System.Console.WriteLine("You're at the cave entrance. It's cold, the walls are moist. ieuw.\nYou hear sounds all around you. \nWhich way do you go?");
-                                        Quest.StartQuest(1, 1, 3, player);
                                         break;
                                     }
 
@@ -464,10 +463,10 @@ class Program
                                                 // fight the goblin 
                                                 // add goblin fight here!!
                                                 quest_alchemists_items = true;
-                                                if (player.Questlog_count == 7)
-                                                {
-                                                    player.Questlog_count = 8;
-                                                }
+                                                // if (player.Questlog_count == 7)
+                                                // {
+                                                //     player.Questlog_count = 8;
+                                                // }
 
                                                 System.Console.WriteLine("Do you wish to leave the cave right away? Y/N");
                                                 string player_leave = Console.ReadLine().ToUpper();
@@ -604,7 +603,7 @@ class Program
             }
 
         }
- 
+
         // shop basement 
         if (player.Current_Location.ID == 9)
         {
@@ -694,7 +693,7 @@ class Program
                 System.Console.WriteLine("You defeated the monster, you can return home to rest.");
                 Console.WriteLine("-------------------------------");
             }
-  
+
             else if (user_aragog == "N")
             {
                 Console.WriteLine("-------------------------------");
@@ -713,5 +712,4 @@ class Program
             running = false;
         }
     }
-}
 }

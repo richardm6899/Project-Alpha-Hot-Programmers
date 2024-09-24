@@ -365,11 +365,11 @@ public class Player
 
     public void Fighting2(Monster monster)
     {
+        bool run = false;
         Console.WriteLine($"You fight the {monster.Name}");
         while (this.Current_Health > 0 && monster.CurrentHitPoints > 0)
         {
             Console.WriteLine("What do you want to do? (A)ttack, use a (C)onsumable or (R)un?");
-            bool run = false;
             string answer = Console.ReadLine();
             switch (answer.ToUpper())
             {
@@ -403,20 +403,25 @@ public class Player
                     if (this.PlayerInventory.ConsumableInventory.Count != 0)
                     {
                         foreach (var consumable in PlayerInventory.ConsumableInventory)
-                        {
-                            int count = 1;
-                            Console.WriteLine("Pick a Consumable:");
-                            Console.WriteLine($"Consumable name: ({count}){consumable.Name}");
-                            Console.WriteLine("--------------------------------------");
-                        }
-                        int ConsumableID = Convert.ToInt32(Console.ReadLine()) - 1;
+                            {
+                                int count = 1;
+                                Console.WriteLine("Pick a Consumable:");
+                                Console.WriteLine($"Consumable name: ({count}){consumable.Name}");
+                                Console.WriteLine("--------------------------------------");
+                                count++;
+                            }
+                        string id = Console.ReadLine();
 
-                        Consumable consumableToUse = PlayerInventory.ConsumableInventory[ConsumableID];
-                        if (consumableToUse != null)
+                        if(int.TryParse(id, out int ConsumableID))
                         {
-                            consumableToUse.Consuming(this);
-                            PlayerInventory.ConsumableInventory.Remove(consumableToUse);
-                            Console.WriteLine($"You used {consumableToUse.Name}.");
+                            ConsumableID = ConsumableID - 1;
+                            Consumable consumableToUse = PlayerInventory.ConsumableInventory[ConsumableID];
+                            if (consumableToUse != null)
+                            {
+                                consumableToUse.Consuming(this);
+                                PlayerInventory.ConsumableInventory.Remove(consumableToUse);
+                                Console.WriteLine($"You used {consumableToUse.Name}.");
+                            }
                         }
                     }
                     else
@@ -436,15 +441,18 @@ public class Player
 
             }
         }
-        if (this.Current_Health <= 0)
-        {
-            Console.WriteLine("You died. GAME OVER");
-        }
-        else
-        {
-            Console.WriteLine($"You killed the {monster.Name}!");
-            this.Strength = 0;
-            this.Defense = 0;
+        if (run == false)
+        {  
+            if (this.Current_Health <= 0)
+            {
+                Console.WriteLine("You died. GAME OVER");
+            }
+            else
+            {
+                Console.WriteLine($"You killed the {monster.Name}!");
+                this.Strength = 0;
+                this.Defense = 0;
+            }
         }
     }
 

@@ -68,7 +68,7 @@ class Program
         Player player = new Player(player_name, World.Locations[0]);
 
         Console.WriteLine("-------------------------------");
-        System.Console.Clear();
+        // System.Console.Clear();
         System.Console.WriteLine("Player starting stats: ");
 
         // player starting stats
@@ -100,7 +100,7 @@ class Program
 
                 System.Console.WriteLine("[enter]");
                 System.Console.ReadLine();
-                System.Console.Clear();
+                // System.Console.Clear();
                 home = false;
             }
 
@@ -168,7 +168,7 @@ class Program
                         if (user_save_town == "Y")
                         {
                             // gives weapon
-                            System.Console.Clear();
+                            // System.Console.Clear();
                             Console.WriteLine("-------------------------------");
                             System.Console.WriteLine("The mayor thanks you, but sees you don't have a weapon.");
                             System.Console.WriteLine("He gives you a rusty looking sword.");
@@ -468,6 +468,12 @@ class Program
                                 // cave room 4
                                 case 15:
                                     {
+                                        if (World.Monsters[1].CurrentHitPoints <= 0)
+                                        {
+                                            System.Console.WriteLine("You see the goblins stuff on the ground.\nIt might be from the Alchemist.");
+                                            System.Console.WriteLine("You take it with you.");
+                                            quest_alchemists_items = true;
+                                        }
                                         System.Console.WriteLine("There are coins leading west.\nThere are also food scraps laying around.");
                                         break;
                                     }
@@ -482,41 +488,6 @@ class Program
                                 // cave room goblin
                                 case 17:
                                     {
-                                        if (goblin_in_room)
-                                        {
-                                            System.Console.WriteLine("You see the Goblin.\nDo you fight it? Y/N ");
-                                            string player_fight = Console.ReadLine().ToUpper();
-                                            if (player_fight == "Y")
-                                            {
-                                                // fight the goblin 
-                                                // add goblin fight here!!\
-                                                //player count naar 8
-                                                quest_alchemists_items = true;
-                                                if (Player.Questlog_count == 7)
-                                                {
-                                                    Player.Questlog_count = 8;
-                                                }
-
-                                                System.Console.WriteLine("Do you wish to leave the cave right away? Y/N ");
-                                                string player_leave = Console.ReadLine().ToUpper();
-                                                if (player_leave == "Y")
-                                                {
-                                                    player.Current_Location.ID = 7;
-                                                    in_cave = false;
-                                                }
-                                            }
-                                            else if (player_fight == "N")
-                                            {
-                                                System.Console.WriteLine("You decide to not yet fight the goblin.");
-                                                player.Current_Location = World.Locations[14];
-                                            }
-                                        }
-                                        else
-                                        {
-                                            System.Console.WriteLine("The goblin lays still in the room.\nHe's dead.");
-                                        }
-                                        // if monster dead quest_alchemist is true, get asked if you want to leave cave. if yes go to cave = id 7
-
                                         break;
                                     }
                                 // cave room item
@@ -574,8 +545,6 @@ class Program
                     else System.Console.WriteLine("Incorrect input");
                 } while (user_cave != "Y" && user_cave != "N");
             }
-
-
 
             //shop
             if (player.Current_Location.ID == 8)
@@ -692,7 +661,6 @@ class Program
                 }
             }
 
-
             // aragog 
             if (player.Current_Location.ID == 11)
             {
@@ -718,6 +686,8 @@ class Program
                     player.Current_Location = World.Locations[9];
                 }
             }
+
+            // end game
             if (player.Current_Location.ID == 1 && quest_aragog == true)
             {
                 Console.WriteLine("-------------------------------");

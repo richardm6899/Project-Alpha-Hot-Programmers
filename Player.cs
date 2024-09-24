@@ -403,14 +403,18 @@ public class Player
                                 Console.WriteLine($"Consumable name: ({count}){consumable.Name}");
                                 Console.WriteLine("--------------------------------------");
                             }
-                        int ConsumableID = Convert.ToInt32(Console.ReadLine()) - 1;
+                        string id = Console.ReadLine();
 
-                        Consumable consumableToUse = PlayerInventory.ConsumableInventory[ConsumableID];
-                        if (consumableToUse != null)
+                        if(int.TryParse(id, out int ConsumableID))
                         {
-                            consumableToUse.Consuming(this);
-                            PlayerInventory.ConsumableInventory.Remove(consumableToUse);
-                            Console.WriteLine($"You used {consumableToUse.Name}.");
+                            ConsumableID = ConsumableID - 1;
+                            Consumable consumableToUse = PlayerInventory.ConsumableInventory[ConsumableID];
+                            if (consumableToUse != null)
+                            {
+                                consumableToUse.Consuming(this);
+                                PlayerInventory.ConsumableInventory.Remove(consumableToUse);
+                                Console.WriteLine($"You used {consumableToUse.Name}.");
+                            }
                         }
                     }
                     else

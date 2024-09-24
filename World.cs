@@ -198,7 +198,6 @@ public static class World
         alchemistTower.QuestAvailableHere = QuestByID(QUEST_ID_ALCHEMISTS_ITEMS);
 
         Location cave = new Location(LOCATION_ID_CAVE, "Cave", "It's cold and moist in here.", null, null);
-        cave.MonsterLivingHere = MonsterByID(MONSTER_ID_LOOT_GOBLIN);
 
         Location blacksmithYard = new Location(LOCATION_ID_BLACKSMITH_YARD, "Blacksmith's yard", "It doesn't look so nice.", null, null);
         blacksmithYard.MonsterLivingHere = MonsterByID(MONSTER_ID_COCKROACH);

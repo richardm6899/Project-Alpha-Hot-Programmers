@@ -357,80 +357,81 @@ public class Player
 
     // }
 
-
     public void Fighting2(Monster monster)
     {
-        if (monster.CurrentHitPoints > 0)
+        Console.WriteLine($"You fight the {monster.Name}");
+        while (this.Current_Health > 0 && monster.CurrentHitPoints > 0)
         {
-            Console.WriteLine("-------------------------------");
-            Console.WriteLine($"You see the {monster.Name}");
-            Console.WriteLine("Do you try to kill them? (Y/N)?");
-            Console.WriteLine("-------------------------------");
-            string user_answer = Console.ReadLine().ToLower();
-            if (user_answer == "y")
+            Console.WriteLine("What do you want to do? (A)ttack, use a (C)onsumable or (R)un?");
+            bool run = false;
+            string answer = Console.ReadLine();
+            switch (answer.ToUpper())
             {
-                while (this.Current_Health > 0 && monster.CurrentHitPoints > 0)
-                {
-                    Console.WriteLine("What do you want to do? (A)ttack or (R)un?");
-                    bool run = false;
-                    string answer = Console.ReadLine();
-                    switch (answer.ToUpper())
-                    {
-                        case "A":
-                            AttackMonster(monster);
-                            if (monster.CurrentHitPoints > 0)
-                            {
-                                monster.AttackPlayer(this);
-                            }
-                            if (monster.CurrentHitPoints <= 0)
-                            {
-                                Console.WriteLine($"The {monster.Name} is dead!");
-                                break;
-                            }
-                            break;
-                        case "R":
-                            Console.WriteLine("");
-                            int treshhold = 12;
-                            if (RollDice(treshhold))
-                            {
+                case "A":
+                    AttackMonster(monster);
+                    if (monster.CurrentHitPoints > 0)
+                        monster.AttackPlayer(this);
+                    break;
 
-                                // The player flees,the quest is cancelled
-                                Console.WriteLine("You successfully fled from the combat!");
-                                run = true;
-                                monster.CurrentHitPoints = monster.MaximumHitPoints;
-                                //player.Current_Location = World.Locations[0];
-                            }
-                            else
-                            {
-                                Console.WriteLine("You failed to flee. The monster attacks you!");
-                                monster.AttackPlayer(this);
-                            }
-                            break;
-                        default:
-                            Console.WriteLine("Invalid input. Please try again.");
-                            break;
-                    }
-                    if (run == true)
+                case "R":
+                    Console.WriteLine("");
+                    int treshhold = 12;
+                    if (RollDice(treshhold))
                     {
-                        this.Current_Location = World.Locations[0];
-                        break;
 
+                        // The player flees,the quest is cancelled
+                        Console.WriteLine("You successfully fled from the combat!");
+                        run = true;
+                        //player.Current_Location = World.Locations[0];
                     }
-                }
-                if (this.Current_Health <= 0)
-                {
-                    Console.WriteLine("You died. GAME OVER");
-                }
+                    else
+                    {
+                        // The player suffers consequences, the quest fails to cancel
+                        Console.WriteLine("You failed to flee. The monster attacks you!");
+                        monster.AttackPlayer(this);
+                    }
+                    break;
+
+                case "C":
+                    if(this.PlayerInventory.ConsumableInventory.Count != 0)
+                    {
+                        foreach (var consumable in PlayerInventory.ConsumableInventory)
+                            {
+                                int count = 1;
+                                Console.WriteLine("Pick a Consumable:");
+                                Console.WriteLine($"Consumable name: ({count}){consumable.Name}");
+                                Console.WriteLine("--------------------------------------");
+                            }
+                        int ConsumableID = Convert.ToInt32(Console.ReadLine()) - 1;
+
+                        Consumable consumableToUse = PlayerInventory.ConsumableInventory[ConsumableID];
+                        if (consumableToUse != null)
+                        {
+                            consumableToUse.Consuming(this);
+                            PlayerInventory.ConsumableInventory.Remove(consumableToUse);
+                            Console.WriteLine($"You used {consumableToUse.Name}.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("You don't have any consumables.");
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Invalid input. Please try again.");
+                    break;
+
             }
-            else
+            if (run == true)
             {
-                Console.WriteLine($"the {monster.Name} is dead!");
+                this.Current_Location = World.Locations[0];
+                break;
+
             }
         }
-      
         if (this.Current_Health <= 0)
         {
-                Console.WriteLine("...");  
+            Console.WriteLine("You died. GAME OVER");
         }
         else
         {
@@ -438,8 +439,8 @@ public class Player
             this.Strength = 0;
             this.Defense = 0;
         }
-
     }
+
 
     public bool MoveTo(Location newlocation)
     {

@@ -383,6 +383,7 @@ public class Player
                         Console.WriteLine("You successfully fled from the combat!");
                         run = true;
                         //player.Current_Location = World.Locations[0];
+                        monster.CurrentHitPoints = monster.MaximumHitPoints;
                     }
                     else
                     {

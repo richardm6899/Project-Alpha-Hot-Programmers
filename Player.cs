@@ -11,7 +11,9 @@ public class Player
     public Inventory PlayerInventory = new Inventory();
     public int Coins;
     public string Name;
-    bool dead = false;
+    public int Strength = 0;
+    public int Defense = 0;
+  
     //Player Info
     public Player(string name, Location current_location)
     {
@@ -304,6 +306,18 @@ public class Player
                 Console.WriteLine($"the {monster.Name} is dead!");
             }
         }
+      
+        if (this.Current_Health <= 0)
+        {
+                Console.WriteLine("...");  
+        }
+        else
+        {
+            Console.WriteLine($"You killed the {monster.Name}!");
+            this.Strength = 0;
+            this.Defense = 0;
+        }
+
     }
 
     public bool MoveTo(Location newlocation)
@@ -419,6 +433,12 @@ public class Player
             Console.WriteLine("You missed and the monster attacks again!");
             monster.AttackPlayer(this);
             damage = 0;
+        }
+
+
+        if (this.Strength > 0)
+        {
+            damage = Convert.ToInt32(damage * 1.5);
         }
 
         return damage;

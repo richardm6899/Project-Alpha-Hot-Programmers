@@ -19,6 +19,8 @@ public static class World
     public const int CONSUMABLE_ID_HEALTH_POTION = 2;
     public const int CONSUMABLE_ID_STRENGTH = 3;
     public const int CONSUMABLE_ID_POTATO = 4;
+    public const int CONSUMABLE_ID_DEFENSE_POTION = 5;
+    public const int CONSUMABLE_ID_GREATER_DEFENSE_POTION = 6;
 
     // weapon ids
     public const int WEAPON_ID_RUSTY_SWORD = 1;
@@ -84,6 +86,10 @@ public static class World
         Consumables.Add(new Consumable(CONSUMABLE_ID_HEALTH_POTION, "Health Potion", 10, "h", 3));
         Consumables.Add(new Consumable(CONSUMABLE_ID_STRENGTH, "Strength Potion", 1, "p", 5));
         Consumables.Add(new Consumable(CONSUMABLE_ID_POTATO, "Potato", 5, "h", 2));
+        Consumables.Add(new Consumable(CONSUMABLE_ID_DEFENSE_POTION, "Defense Potion", 1, "d", 20));
+        Consumables.Add(new Consumable(CONSUMABLE_ID_GREATER_DEFENSE_POTION, "Greater Defense Potion", 2, "d", 50));
+
+
     }
     //  add weapons to the weapons list 
     public static void PopulateWeapons()

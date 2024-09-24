@@ -1,4 +1,3 @@
-using System.Formats.Asn1;
 
 public class Player
 {
@@ -11,7 +10,10 @@ public class Player
     public Inventory PlayerInventory = new Inventory();
     public int Coins;
     public string Name;
+
     public int Questlog_count;
+    public bool Strength = false;
+
     //Player Info
     public Player(string name, Location current_location)
     {
@@ -380,6 +382,32 @@ public class Player
                         monster.AttackPlayer(this);
                     }
                     break;
+
+                case "C":
+                    if(this.PlayerInventory.ConsumableInventory.Count != 0)
+                    {
+                        foreach (var consumable in PlayerInventory.ConsumableInventory)
+                            {
+                                int count = 1;
+                                Console.WriteLine("Pick a Consumable:");
+                                Console.WriteLine($"Consumable name: ({count}){consumable.Name}");
+                                Console.WriteLine("--------------------------------------");
+                            }
+                        int ConsumableID = Convert.ToInt32(Console.ReadLine()) - 1;
+
+                        Consumable consumableToUse = PlayerInventory.ConsumableInventory[ConsumableID];
+                        if (consumableToUse != null)
+                        {
+                            consumableToUse.Consuming(this);
+                            PlayerInventory.ConsumableInventory.Remove(consumableToUse);
+                            Console.WriteLine($"You used {consumableToUse.Name}.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("You don't have any consumables.");
+                    }
+                    break;
                 default:
                     Console.WriteLine("Invalid input. Please try again.");
                     break;
@@ -399,8 +427,10 @@ public class Player
         else
         {
             Console.WriteLine($"You killed the {monster.Name}!");
+            this.Strength = false;
         }
     }
+
 
     public bool MoveTo(Location newlocation)
     {
@@ -511,6 +541,10 @@ public class Player
             damage = 0;
         }
 
+        if (this.Strength == true)
+        {
+            damage = Convert.ToInt32(damage * 1.5);
+        }
         return damage;
     }
 

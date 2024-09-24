@@ -1,8 +1,9 @@
-﻿using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 
 class Program
 {
@@ -37,6 +38,7 @@ class Program
         bool reward_blacksmith = false; // you get better sword and can go to alchemist
         bool reward_alchemist = false; // you get health potion you can go to shop, when u return items
         bool reward_shopkeeper = false; // you can shop in the shop
+
 
         // cave things
         bool item = true;
@@ -94,6 +96,7 @@ class Program
             System.Console.WriteLine("Where to go? N/E/S/W");
             System.Console.WriteLine("Map info: M");
             System.Console.WriteLine("Inventory: I:");
+            System.Console.WriteLine("Quest Log: L");
             System.Console.WriteLine("Quit game: Q");
             string direction = Console.ReadLine().ToUpper();
             // System.Console.Clear();
@@ -103,10 +106,12 @@ class Program
             if (direction == "M") Location.Map();
 
             // quest log (what you have to do now/what you are doing)
-            // if (direction == "L") quest log
+            if (direction == "L") player.Quest_log();
+
 
             // show player inventory
             if (direction == "I") player.DisplayInventory();
+            // if (direction == "L") player.QuestLog();
 
             // quit game
             if (direction == "Q")
@@ -160,6 +165,12 @@ class Program
                             // "Kill cockroaches in the blacksmith's garden. "
                             blacksmith_yard = true;
                             reward_mayor = true;
+
+                            // quest log naar 2
+                            if (player.Questlog_count == 1)
+                            {
+                                player.Questlog_count = 2;
+                            }
                         }
                         else if (user_save_town == "N")
                         {
@@ -197,7 +208,12 @@ class Program
                     {
                         // fight roaches
                         // if win blacksmith = true and quest_blacksmith_garden = true
-                        Quest.StartQuest(1, 1, 3, player);
+                        //questlog_count naar 3
+                        if (player.Questlog_count == 2)
+                        {
+                            player.Questlog_count = 3;
+                        }
+
                         blacksmith = true;
                         quest_blacksmith_garden = true;
                         //  else stay false and die or respawn.
@@ -238,10 +254,16 @@ class Program
                 if (quest_blacksmith_items == false)
                 {
                     Console.WriteLine("-------------------------------");
-                    System.Console.WriteLine("The blacksmith thanks you for killing the monsters in hig garden.");
+                    System.Console.WriteLine("The blacksmith thanks you for killing the monsters in his garden.");
                     System.Console.WriteLine("He asks you to find his tools in his basement.");
                     System.Console.WriteLine("He says he'll give you a better sword if you do.");
                     Console.WriteLine("-------------------------------");
+                    //questlog naar 4
+                    if (player.Questlog_count == 3)
+                    {
+                        player.Questlog_count = 4;
+                    }
+
                     blacksmith_basement = true;
 
                 }
@@ -258,6 +280,12 @@ class Program
                     System.Console.WriteLine("He tells you about an alchemist that lives near that could give you potions for battle.");
                     Console.WriteLine("-------------------------------");
                     alchemist_tower = true;
+
+                    // questlog_count naar 6
+                    if (player.Questlog_count == 5)
+                    {
+                        player.Questlog_count = 6;
+                    }
                 }
                 // you gave the items and he gave sword
                 else if (reward_blacksmith)
@@ -274,9 +302,14 @@ class Program
             {
                 // "mini game" look for items in boxes. you find weird shit and in one of the boxes you find 
                 // maybe switch statements
-                Quest.StartQuest(2, 1, 4, player);
+
                 // when correct box found
                 quest_blacksmith_items = true;
+                //player questlog to 5
+                if (player.Questlog_count == 4)
+                {
+                    player.Questlog_count = 5;
+                }
             }
 
             // alchemists tower
@@ -301,6 +334,12 @@ class Program
                     System.Console.WriteLine("You hope this will make him want to talk to you.");
                     Console.WriteLine("-------------------------------");
                     cave = true;
+                    // questlog count naar 7 
+                    if (player.Questlog_count == 6)
+                    {
+                        player.Questlog_count = 7;
+                    }
+
                 }
                 // you defeated the loot goblin and you're returning their items
                 else if (quest_alchemists_items && reward_alchemist == false)
@@ -315,6 +354,11 @@ class Program
                     // you get potions
                     reward_alchemist = true;
                     shop = true;
+                    //player count naar 9
+                    if (player.Questlog_count == 8)
+                    {
+                        player.Questlog_count = 9;
+                    }
                 }
                 // you've given the items to the alchemist
                 else if (reward_alchemist)
@@ -325,6 +369,8 @@ class Program
                     player.Current_Location = World.Locations[0];
                 }
             }
+
+
 
             // cave
             if (player.Current_Location.ID == 7)
@@ -432,6 +478,11 @@ class Program
                                                 // fight the goblin 
                                                 // add goblin fight here!!
                                                 quest_alchemists_items = true;
+                                                if (player.Questlog_count == 7)
+                                                {
+                                                    player.Questlog_count = 8;
+                                                }
+
                                                 System.Console.WriteLine("Do you wish to leave the cave right away? Y/N");
                                                 string player_leave = Console.ReadLine().ToUpper();
                                                 if (player_leave == "Y")
@@ -508,6 +559,7 @@ class Program
                 } while (user_cave != "Y" && user_cave != "N");
             }
 
+
             //shop
             if (player.Current_Location.ID == 8)
             {
@@ -530,36 +582,22 @@ class Program
                     System.Console.WriteLine("You decide to go look down there.\nThe creature looks at you but doesn't say anything.");
                     Console.WriteLine("-------------------------------");
                     shop_basement = true;
-
+                    // count naar 10
+                    if (player.Questlog_count == 9)
+                    {
+                        player.Questlog_count = 10;
+                    }
                 }
                 else if (reward_shopkeeper)
                 {
-                    Console.WriteLine("-------------------------------");
-                    System.Console.WriteLine("The shop keeper still looks embarrassed");
-                    System.Console.WriteLine("He asks you, \"Would you like to buy anything?\"\nY/N");
-                    Console.WriteLine("-------------------------------");
-                    string user_shopping = Console.ReadLine().ToUpper();
-                    bool player_shopping = true;
-                    if (user_shopping == "Y")
+                    TradeShop.running_shop = true;
+                    TradeShop.TradeShopOG(player);
+                    // player count naar 12
+                    if (player.Questlog_count == 11)
                     {
-                        do
-                        {
-                            System.Console.WriteLine("Choose\nE: Exit shop");
-                            string user_shop = System.Console.ReadLine().ToUpper();
-                            if (user_shop == "E")
-                            {
-                                player_shopping = false;
-                            }
-                        } while (player_shopping);
+                        player.Questlog_count = 12;
+                    }
 
-                        // go shopping
-                    }
-                    else if (user_shopping == "N")
-                    {
-                        System.Console.WriteLine("Please leave...");
-                        player.Current_Location = World.Locations[1];
-                    }
-                    campfire = true;
                 }
             }
             // shop basement 
@@ -574,14 +612,21 @@ class Program
                     Console.WriteLine("You try to open the cages however, there's a special lock holding them in the cell.");
                     Console.WriteLine("Complete the puzzle to save the halflings.....");
                     Console.WriteLine("-------------------------------");
-                    Quest.StartQuest(4, 0, 9, player);
+
                     reward_shopkeeper = true;
                     // if quest completed then shop basement false Y om door te gaan
                     string test_doorgang = Console.ReadLine();
                     if (test_doorgang == "Y")
                     {
                         reward_shopkeeper = true;
+
                     }
+                    // questlog naar 11
+                    if (player.Questlog_count == 10)
+                    {
+                        player.Questlog_count = 11;
+                    }
+
 
                 }
 
@@ -648,7 +693,7 @@ class Program
                 string user_aragog = System.Console.ReadLine().ToUpper();
                 if (user_aragog == "Y")
                 {
-                    Quest.StartQuest(5, 3, 11, player);
+
                     bool beaten_aragog = true;
                     Console.WriteLine("-------------------------------");
                     System.Console.WriteLine("You defeated the monster, you can return home to rest.");

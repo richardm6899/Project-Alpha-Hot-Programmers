@@ -79,11 +79,11 @@ public static class World
 
     public static void PopulateConsumables()
     {
+
         Consumables.Add(new Consumable(CONSUMABLE_ID_APPLE, "Apple", 1, "h", 1));
         Consumables.Add(new Consumable(CONSUMABLE_ID_HEALTH_POTION, "Health Potion", 10, "h", 3));
         Consumables.Add(new Consumable(CONSUMABLE_ID_STRENGTH, "Strength Potion", 1, "p", 5));
         Consumables.Add(new Consumable(CONSUMABLE_ID_POTATO, "Potato", 5, "h", 2));
-
     }
     //  add weapons to the weapons list 
     public static void PopulateWeapons()

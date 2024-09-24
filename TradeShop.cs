@@ -16,8 +16,8 @@ static class TradeShop //oli
 
         Console.Clear();
         Console.WriteLine("-------------------------------");
-        Console.WriteLine("Hello and welcome to Sir Hubert Albert the third's trade shop.");
-        Console.WriteLine("We sell and buy,Consumables and weapons to help you on your quest.");
+        Console.WriteLine("The shop keeper still looks embarrassed");
+        Console.WriteLine("He sells and buys ,Consumables and weapons to help you on your quest.");
 
         while (running_shop)
         {

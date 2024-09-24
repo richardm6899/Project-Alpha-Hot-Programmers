@@ -176,16 +176,12 @@ static class TradeShop //oli
                     }
                     else
                     {
-                        Console.WriteLine("You dont have this weapon."); //when invalid input is entered get redirectd back to TradeshopOG
-                        Console.WriteLine("--------------------------------------");
-                        Console.WriteLine("[Enter]");
-                        Console.ReadLine();
-                        Console.Clear();
-                        Selling = false;
-                        return player;
+                        Console.WriteLine("yadayda."); //when invalid input is entered get redirectd back to TradeshopOG
+                        
                     }
 
                 }
+                
 
             }
             else
@@ -283,13 +279,8 @@ static class TradeShop //oli
                     }
                     else
                     {
-                        Console.WriteLine("You dont have this consumable.");
-                        Console.WriteLine("--------------------------------------");
-                        Console.WriteLine("[Enter]");
-                        Console.ReadLine();
-                        Console.Clear();
-                        Selling = false;
-                        return player;
+                        Console.WriteLine("Yadayada.");
+                       
                     }
 
                 }

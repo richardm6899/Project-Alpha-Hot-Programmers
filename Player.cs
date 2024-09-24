@@ -402,7 +402,9 @@ public class Player
                                 Console.WriteLine("Pick a Consumable:");
                                 Console.WriteLine($"Consumable name: ({count}){consumable.Name}");
                                 Console.WriteLine("--------------------------------------");
+                                count++;
                             }
+
                         string id = Console.ReadLine();
 
                         if(int.TryParse(id, out int ConsumableID))

@@ -81,9 +81,9 @@ public static class World
 
     public static void PopulateConsumables()
     {
-        Consumables.Add(new Consumable(CONSUMABLE_ID_APPLE, "Apple", 1, "heal",1));
-        Consumables.Add(new Consumable(CONSUMABLE_ID_HEALTH_POTION, "Health Potion", 10, "heal",3));
-        Consumables.Add(new Consumable(CONSUMABLE_ID_STRENGTH, "Strength Potion", 1, "power",5));
+        Consumables.Add(new Consumable(CONSUMABLE_ID_APPLE, "Apple", 1, "heal", 1));
+        Consumables.Add(new Consumable(CONSUMABLE_ID_HEALTH_POTION, "Health Potion", 10, "heal", 3));
+        Consumables.Add(new Consumable(CONSUMABLE_ID_STRENGTH, "Strength Potion", 1, "power", 5));
     }
     //  add weapons to the weapons list
     public static void PopulateWeapons()
@@ -92,13 +92,13 @@ public static class World
         // name
         // max damage
 
-        Weapons.Add(new Weapon(Weapon_ID_FIST, "Fist", 1,0));
-        Weapons.Add(new Weapon(WEAPON_ID_RUSTY_SWORD, "Rusty sword", 10,5));
-        Weapons.Add(new Weapon(WEAPON_ID_CLUB, "Sword", 15,7));
-        Weapons.Add(new Weapon(WEAPON_ID_CLOWN_HAMMER, "Clown Hammer", 3,3));
-        Weapons.Add(new Weapon(WEAPON_ID_LONG_SWORD, "Long sword", 20,8));
-        Weapons.Add(new Weapon(WEAPON_ID_EXCALIBUR, "Excalibur", 10000,1000000000));
-        Weapons.Add(new Weapon(WEAPONS_ID_BOW, "Bow", 25,15));
+        Weapons.Add(new Weapon(Weapon_ID_FIST, "Fist", 1, 0));
+        Weapons.Add(new Weapon(WEAPON_ID_RUSTY_SWORD, "Rusty sword", 10, 5));
+        Weapons.Add(new Weapon(WEAPON_ID_CLUB, "Sword", 15, 7));
+        Weapons.Add(new Weapon(WEAPON_ID_CLOWN_HAMMER, "Clown Hammer", 3, 3));
+        Weapons.Add(new Weapon(WEAPON_ID_LONG_SWORD, "Long sword", 20, 8));
+        Weapons.Add(new Weapon(WEAPON_ID_EXCALIBUR, "Excalibur", 10000, 1000000000));
+        Weapons.Add(new Weapon(WEAPONS_ID_BOW, "Bow", 25, 15));
 
     }
 
@@ -332,7 +332,7 @@ public static class World
 
     public static Consumable ConsumableByID(int id)
     {
-       foreach (Consumable consumable in Consumables;
+        foreach (var consumable in Consumables)
         {
             if (consumable.ID == id)
             {

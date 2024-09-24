@@ -11,6 +11,7 @@ public class Player
     public Inventory PlayerInventory = new Inventory();
     public int Coins;
     public string Name;
+    public int Questlog_count;
     //Player Info
     public Player(string name, Location current_location)
     {
@@ -22,6 +23,7 @@ public class Player
         this.Current_Weapon = World.Weapons[0];
         this.Current_Location = World.Locations[0];
         this.Coins = 10;
+        Questlog_count = 1;
 
     }
 
@@ -32,6 +34,131 @@ public class Player
     // how to: AddItemsToInventory(ConsumableByID(...),WeaponByID(...))
 
     // oli/Thomas
+    public void Quest_log()
+    {
+        if (Questlog_count == 1)
+        {
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("|+ Reach the the townhall...                |");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("[Enter]");
+            Console.ReadLine();
+            Console.Clear();
+        }
+        else if (Questlog_count == 2)
+        {
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("|+ Reach the Blacksmith's Yard.           |");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("[Enter]");
+            Console.ReadLine();
+            Console.Clear();
+        }
+        else if (Questlog_count == 3)
+        {
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("|+ The Blacksmith wants to thank you for    |");
+            Console.WriteLine("|+ you work. Head to the Blacksmith.         |");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("[Enter]");
+            Console.ReadLine();
+            Console.Clear();
+        }
+        else if (Questlog_count == 4)
+        {
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("|+ Reach the Blacksmith's basemant to       |");
+            Console.WriteLine("|+ continue the quest.                      |");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("[Enter]");
+            Console.ReadLine();
+            Console.Clear();
+        }
+        else if (Questlog_count == 5)
+        {
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("|+ Talk to the blacksmith to recieve        |");
+            Console.WriteLine("|+ your reward.                             |");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("[Enter]");
+            Console.ReadLine();
+            Console.Clear();
+        }
+        else if (Questlog_count == 6)
+        {
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("|+ Head to the Alchemist.                   |");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("[Enter]");
+            Console.ReadLine();
+            Console.Clear();
+        }
+        else if (Questlog_count == 7)
+        {
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("|+ Check out the cave to retrieve the loot  |");
+            Console.WriteLine("|+ from the goblins                         |");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("[Enter]");
+            Console.ReadLine();
+            Console.Clear();
+        }
+        else if (Questlog_count == 8)
+        {
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("|+ Return to the alchemist                  |");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("[Enter]");
+            Console.ReadLine();
+            Console.Clear();
+        }
+        else if (Questlog_count == 9)
+        {
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("|+ Head to the shop.                        |");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("[Enter]");
+            Console.ReadLine();
+            Console.Clear();
+        }
+        else if (Questlog_count == 10)
+        {
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("|+ Check out the strange noises in the      |");
+            Console.WriteLine("|+ basement.                                |");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("[Enter]");
+            Console.ReadLine();
+            Console.Clear();
+        }
+        else if (Questlog_count == 11)
+        {
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("|+ Get better weapons and potions at        |");
+            Console.WriteLine("|+ the shop.                                |");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("[Enter]");
+            Console.ReadLine();
+            Console.Clear();
+        }
+        else if (Questlog_count == 12)
+        {
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("|+ You are now ready to defeat the          |");
+            Console.WriteLine("|+ monster in the woods.                    |");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("[Enter]");
+            Console.ReadLine();
+            Console.Clear();
+        }
+        
+
+        
+
+
+
+
+    }
     public void AddItemToInventory(Consumable consumable, Weapon weapon)
     {
         if (consumable == null && weapon == null)
@@ -280,10 +407,21 @@ public class Player
         if (newlocation != null)
         {
             Current_Location = newlocation;
-            return true;
+            if (Current_Location.QuestAvailableHere != null)
+            {
+                if (Quest.quest_log.Contains(Current_Location.QuestAvailableHere) == false)
+                {
+                    Quest.StartQuest(Current_Location.QuestAvailableHere, Current_Location, Current_Location.MonsterLivingHere, this);
+                }
+            }
+            if (Current_Location.MonsterLivingHere != null)
+            {
+                Fighting2(Current_Location.MonsterLivingHere);
+            }
         }
-        return false;
+        return true;
     }
+
 
     public void Heal(int health)
     {

@@ -161,7 +161,7 @@ class Program
                     {
                         // mayor tells u about quest to get to the blacksmith
                         System.Console.WriteLine("The mayor tells you about a scary monster in the forest.");
-                        System.Console.WriteLine("He asks if you could try to save the town.\nY/N");
+                        System.Console.WriteLine("He asks if you could try to save the town.\nY/N.");
                         Console.WriteLine("-------------------------------");
 
                         user_save_town = System.Console.ReadLine().ToUpper();
@@ -211,17 +211,14 @@ class Program
                 // you go to the blacksmith garden, you have seen the mayor, and haven't finished the cockroach fight
                 if (blacksmith_yard && quest_blacksmith_garden == false)
                 {
-                    Console.WriteLine("-------------------------------");
-                    System.Console.WriteLine("You see huge cockroaches in the garden.");
-                    System.Console.WriteLine("Do you try to kill them? (Y/N) ");
-                    Console.WriteLine("-------------------------------");
-                    string user_answer = Console.ReadLine().ToLower();
+                    // System.Console.WriteLine("You see huge cockroaches in the garden.");
+                    // System.Console.WriteLine("Do you try to kill them? (Y/N) ");
+                    // string user_answer = Console.ReadLine().ToLower();
                     // you choose to fight the roaches
-                    if (user_answer == "y")
+                    if (player.Current_Location.MonsterLivingHere.CurrentHitPoints <= 0)
                     {
                         // fight roaches
                         // if win blacksmith = true and quest_blacksmith_garden = true
-                        Quest.StartQuest(1, 1, 3, player);
                         blacksmith = true;
                         quest_blacksmith_garden = true;
                         //  else stay false and die or respawn.
@@ -300,7 +297,6 @@ class Program
             {
                 // "mini game" look for items in boxes. you find weird shit and in one of the boxes you find 
                 // maybe switch statements
-                Quest.StartQuest(2, 1, 4, player);
                 // when correct box found
                 quest_blacksmith_items = true;
             }
@@ -468,6 +464,11 @@ class Program
                                                 // fight the goblin 
                                                 // add goblin fight here!!
                                                 quest_alchemists_items = true;
+                                                if (player.Questlog_count == 7)
+                                                {
+                                                    player.Questlog_count = 8;
+                                                }
+
                                                 System.Console.WriteLine("Do you wish to leave the cave right away? Y/N");
                                                 string player_leave = Console.ReadLine().ToUpper();
                                                 if (player_leave == "Y")
@@ -546,174 +547,171 @@ class Program
                 } while (user_cave != "Y" && user_cave != "N");
             }
 
-            //shop
-            if (player.Current_Location.ID == 8)
+        }
+
+        //shop
+        if (player.Current_Location.ID == 8)
+        {
+            // alchemists quest has net been done
+            if (shop == false)
             {
-                // alchemists quest has net been done
-                if (shop == false)
+                Console.WriteLine("-------------------------------");
+                System.Console.WriteLine("There is a sign on the door.\nIt reads");
+                Art.ShopSign();
+                System.Console.WriteLine("You return to the town hall.");
+                Console.WriteLine("-------------------------------");
+                player.Current_Location = World.Locations[1];
+            }
+            else if (shop && reward_shopkeeper == false)
+            {
+                Console.WriteLine("-------------------------------");
+                System.Console.WriteLine("You enter the shop.\nYou see a weird looking thing behind the counter.");
+                System.Console.WriteLine("The thing starts talking \"Welcome to my sh-\"");
+                System.Console.WriteLine("While he's talking you hear strange sounds coming from his basement.\nHe kind of looks embarrassed.");
+                System.Console.WriteLine("You decide to go look down there.\nThe creature looks at you but doesn't say anything.");
+                Console.WriteLine("-------------------------------");
+                shop_basement = true;
+
+            }
+            else if (reward_shopkeeper)
+            {
+                Console.WriteLine("-------------------------------");
+                System.Console.WriteLine("The shop keeper still looks embarrassed");
+                System.Console.WriteLine("He asks you, \"Would you like to buy anything?\"\nY/N");
+                Console.WriteLine("-------------------------------");
+                string user_shopping = Console.ReadLine().ToUpper();
+                bool player_shopping = true;
+                if (user_shopping == "Y")
                 {
-                    Console.WriteLine("-------------------------------");
-                    System.Console.WriteLine("There is a sign on the door.\nIt reads");
-                    Art.ShopSign();
-                    System.Console.WriteLine("You return to the town hall.");
-                    Console.WriteLine("-------------------------------");
+                    do
+                    {
+                        System.Console.WriteLine("Choose\nE: Exit shop");
+                        string user_shop = System.Console.ReadLine().ToUpper();
+                        if (user_shop == "E")
+                        {
+                            player_shopping = false;
+                        }
+                    } while (player_shopping);
+
+                    // go shopping
+                }
+                else if (user_shopping == "N")
+                {
+                    System.Console.WriteLine("Please leave...");
                     player.Current_Location = World.Locations[1];
                 }
-                else if (shop && reward_shopkeeper == false)
-                {
-                    Console.WriteLine("-------------------------------");
-                    System.Console.WriteLine("You enter the shop.\nYou see a weird looking thing behind the counter.");
-                    System.Console.WriteLine("The thing starts talking \"Welcome to my sh-\"");
-                    System.Console.WriteLine("While he's talking you hear strange sounds coming from his basement.\nHe kind of looks embarrassed.");
-                    System.Console.WriteLine("You decide to go look down there.\nThe creature looks at you but doesn't say anything.");
-                    Console.WriteLine("-------------------------------");
-                    shop_basement = true;
-
-                }
-                else if (reward_shopkeeper)
-                {
-                    Console.WriteLine("-------------------------------");
-                    System.Console.WriteLine("The shop keeper still looks embarrassed");
-                    System.Console.WriteLine("He asks you, \"Would you like to buy anything?\"\nY/N");
-                    Console.WriteLine("-------------------------------");
-                    string user_shopping = Console.ReadLine().ToUpper();
-                    bool player_shopping = true;
-                    if (user_shopping == "Y")
-                    {
-                        do
-                        {
-                            System.Console.WriteLine("Choose\nE: Exit shop");
-                            string user_shop = System.Console.ReadLine().ToUpper();
-                            if (user_shop == "E")
-                            {
-                                player_shopping = false;
-                            }
-                        } while (player_shopping);
-
-                        // go shopping
-                    }
-                    else if (user_shopping == "N")
-                    {
-                        System.Console.WriteLine("Please leave...");
-                        player.Current_Location = World.Locations[1];
-                    }
-                    campfire = true;
-                }
-            }
-
-            // shop basement 
-            if (player.Current_Location.ID == 9)
-            {
-
-                if (shop_basement)
-                {
-                    // puzzle/quest om slot te openen en de halflings te bevrijden
-                    Console.WriteLine("-------------------------------");
-                    Console.WriteLine("You go down stairs and see halflings in cages..\nYou sigh and look at the shop keeper");
-                    Console.WriteLine("You try to open the cages however, there's a special lock holding them in the cell.");
-                    Console.WriteLine("Complete the puzzle to save the halflings.....");
-                    Console.WriteLine("-------------------------------");
-                    Quest.StartQuest(4, 0, 9, player);
-                    reward_shopkeeper = true;
-                    // if quest completed then shop basement false Y om door te gaan
-                    string test_doorgang = Console.ReadLine();
-                    if (test_doorgang == "Y")
-                    {
-                        reward_shopkeeper = true;
-                    }
-
-                }
-
-            }
-
-            // campfire
-            if (player.Current_Location.ID == 10)
-            {
-                if (campfire)
-                {
-                    Console.WriteLine("-------------------------------");
-                    Console.WriteLine("In the clearing of the forest you spot a faint light with several shadows around it.");
-                    Console.WriteLine("You approach the campfire.\nYou spot fellow villagers taking a break from the chaos all around.");
-                    Console.WriteLine("This is a safe haven. The campfire has healing properties.\nHolding your hands near the fire will heal you up for battle;");
-                    Console.WriteLine("-------------------------------");
-
-                    bool campfire_heal = true;
-                    while (campfire_heal)
-                    {
-                        Console.WriteLine("Would you like to heal up? (Y/N)");
-                        Console.WriteLine("-------------------------------");
-                        string campfire_choice = Console.ReadLine().ToUpper();
-                        Console.Clear();
-                        if (campfire_choice == "Y")
-                        {
-                            // heal player
-                            Console.WriteLine("-------------------------------");
-                            Console.WriteLine("player healed");
-                            Console.WriteLine("-------------------------------");
-                            campfire_heal = false;
-                        }
-                        else if (campfire_choice == "N")
-                        {
-                            Console.WriteLine("-------------------------------");
-                            Console.WriteLine("healing rejected");
-                            Console.WriteLine("-------------------------------");
-                            campfire_heal = false;
-
-                        }
-                        else
-                        {
-                            Console.WriteLine("invalid input (Y/N)");
-                        }
-                    }
-                }
-                else if (campfire == false)
-                {
-                    Console.WriteLine("-------------------------------");
-                    System.Console.WriteLine("You see a campfire in the distance");
-                    System.Console.WriteLine("It looks scary\nYou turn back for now.");
-                    System.Console.WriteLine("Returning home..");
-                    Console.WriteLine("-------------------------------");
-                    player.Current_Location = World.Locations[0];
-                }
-            }
-
-            // aragog 
-            if (player.Current_Location.ID == 11)
-
-            {
-                quest_aragog = true;
-                Console.WriteLine("-------------------------------");
-                Console.WriteLine("Aragog lives here\nDo you fight him?\nY/N");
-                Console.WriteLine("-------------------------------");
-                string user_aragog = System.Console.ReadLine().ToUpper();
-                if (user_aragog == "Y")
-                {
-                    Quest.StartQuest(5, 3, 11, player);
-                    bool beaten_aragog = true;
-                    Console.WriteLine("-------------------------------");
-                    System.Console.WriteLine("You defeated the monster, you can return home to rest.");
-                    Console.WriteLine("-------------------------------");
-                }
-                else if (user_aragog == "N")
-                {
-                    Console.WriteLine("-------------------------------");
-                    System.Console.WriteLine("You don't dare to fight Aragog yet.");
-                    System.Console.WriteLine("You return to the campfire...");
-                    Console.WriteLine("-------------------------------");
-                    player.Current_Location = World.Locations[9];
-                }
-            }
-
-            // end game
-            if (player.Current_Location.ID == 1 && quest_aragog == true)
-            {
-                Console.WriteLine("-------------------------------");
-                System.Console.WriteLine("You did it!!!\nYou defeated the monster in the forest and helped the village people.");
-                System.Console.WriteLine("You are a hero.");
-                Console.WriteLine("-------------------------------");
-                running = false;
+                campfire = true;
             }
 
         }
+ 
+        // shop basement 
+        if (player.Current_Location.ID == 9)
+        {
+
+            if (shop_basement)
+            {
+                // puzzle/quest om slot te openen en de halflings te bevrijden
+                Console.WriteLine("-------------------------------");
+                Console.WriteLine("You go down stairs and see halflings in cages..\nYou sigh and look at the shop keeper");
+                Console.WriteLine("You try to open the cages however, there's a special lock holding them in the cell.");
+                Console.WriteLine("Complete the puzzle to save the halflings.....");
+                // if quest completed then shop basement false Y om door te gaan
+                string test_doorgang = Console.ReadLine();
+                if (test_doorgang == "Y")
+                {
+                    reward_shopkeeper = true;
+                }
+
+            }
+
+
+        }
+        // campfire
+        if (player.Current_Location.ID == 10)
+        {
+            if (campfire)
+            {
+                Console.WriteLine("-------------------------------");
+                Console.WriteLine("In the clearing of the forest you spot a faint light with several shadows around it.");
+                Console.WriteLine("You approach the campfire.\nYou spot fellow villagers taking a break from the chaos all around.");
+                Console.WriteLine("This is a safe haven. The campfire has healing properties.\nHolding your hands near the fire will heal you up for battle;");
+                Console.WriteLine("-------------------------------");
+
+                bool campfire_heal = true;
+                while (campfire_heal)
+                {
+                    Console.WriteLine("Would you like to heal up? (Y/N)");
+                    Console.WriteLine("-------------------------------");
+                    string campfire_choice = Console.ReadLine().ToUpper();
+                    Console.Clear();
+                    if (campfire_choice == "Y")
+                    {
+                        // heal player
+                        Console.WriteLine("-------------------------------");
+                        Console.WriteLine("player healed");
+                        Console.WriteLine("-------------------------------");
+                        campfire_heal = false;
+                    }
+                    else if (campfire_choice == "N")
+                    {
+                        Console.WriteLine("-------------------------------");
+                        Console.WriteLine("healing rejected");
+                        Console.WriteLine("-------------------------------");
+                        campfire_heal = false;
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("invalid input (Y/N)");
+                    }
+                }
+            }
+            else if (campfire == false)
+            {
+                Console.WriteLine("-------------------------------");
+                System.Console.WriteLine("You see a campfire in the distance");
+                System.Console.WriteLine("It looks scary\nYou turn back for now.");
+                System.Console.WriteLine("Returning home..");
+                Console.WriteLine("-------------------------------");
+                player.Current_Location = World.Locations[0];
+            }
+        }
+
+
+        // aragog 
+        if (player.Current_Location.ID == 11)
+        {
+            quest_aragog = true;
+            Console.WriteLine("-------------------------------");
+            Console.WriteLine("Aragog lives here\nDo you fight him?\nY/N");
+            Console.WriteLine("-------------------------------");
+            string user_aragog = System.Console.ReadLine().ToUpper();
+            if (user_aragog == "Y")
+            {
+                bool beaten_aragog = true;
+                Console.WriteLine("-------------------------------");
+                System.Console.WriteLine("You defeated the monster, you can return home to rest.");
+                Console.WriteLine("-------------------------------");
+            }
+  
+            else if (user_aragog == "N")
+            {
+                Console.WriteLine("-------------------------------");
+                System.Console.WriteLine("You don't dare to fight Aragog yet.");
+                System.Console.WriteLine("You return to the campfire...");
+                Console.WriteLine("-------------------------------");
+                player.Current_Location = World.Locations[9];
+            }
+        }
+        if (player.Current_Location.ID == 1 && quest_aragog == true)
+        {
+            Console.WriteLine("-------------------------------");
+            System.Console.WriteLine("You did it!!!\nYou defeated the monster in the forest and helped the village people.");
+            System.Console.WriteLine("You are a hero.");
+            Console.WriteLine("-------------------------------");
+            running = false;
+        }
     }
+}
 }

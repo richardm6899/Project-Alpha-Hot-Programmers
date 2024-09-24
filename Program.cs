@@ -1,4 +1,4 @@
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.ConstrainedExecution;
@@ -144,7 +144,7 @@ class Program
                     {
                         // mayor tells u about quest to get to the blacksmith
                         System.Console.WriteLine("The mayor tells you about a scary monster in the forest.");
-                        System.Console.WriteLine("He asks if you could try to save the town.\nY/N");
+                        System.Console.WriteLine("He asks if you could try to save the town.\nY/N.");
                         Console.WriteLine("-------------------------------");
 
                         user_save_town = System.Console.ReadLine().ToUpper();

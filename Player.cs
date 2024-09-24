@@ -12,6 +12,8 @@ public class Player
     public int Coins;
     public string Name;
     public int Strength = 0;
+    public static int Questlog_count = 1;
+
     public int Defense = 0;
   
     //Player Info
@@ -25,6 +27,7 @@ public class Player
         this.Current_Weapon = World.Weapons[0];
         this.Current_Location = World.Locations[0];
         this.Coins = 10;
+
 
     }
 

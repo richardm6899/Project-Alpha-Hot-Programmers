@@ -125,7 +125,7 @@ class Program
             if (direction == "M") Location.Map();
 
             // quest log (what you have to do now/what you are doing)
-            // if (direction == "L") quest log
+            if (direction == "L") player.Quest_log();
 
             // show player inventory
             if (direction == "I") player.DisplayInventory();
@@ -184,6 +184,11 @@ class Program
                             // "Kill cockroaches in the blacksmith's garden. "
                             blacksmith_yard = true;
                             reward_mayor = true;
+                            // quest log naar 2
+                            if (Player.Questlog_count == 1)
+                            {
+                                Player.Questlog_count = 2;
+                            }
                         }
                         else if (user_save_town == "N")
                         {
@@ -215,6 +220,11 @@ class Program
                     // System.Console.WriteLine("Do you try to kill them? (Y/N) ");
                     // string user_answer = Console.ReadLine().ToLower();
                     // you choose to fight the roaches
+                    //questlog_count naar 3
+                    if (Player.Questlog_count == 2)
+                    {
+                        Player.Questlog_count = 3;
+                    }
                     if (player.Current_Location.MonsterLivingHere.CurrentHitPoints <= 0)
                     {
                         // fight roaches
@@ -265,6 +275,11 @@ class Program
                     System.Console.WriteLine("He says he'll give you a better sword if you do.");
                     Console.WriteLine("-------------------------------");
                     blacksmith_basement = true;
+                    //questlog naar 4
+                    if (Player.Questlog_count == 3)
+                    {
+                        Player.Questlog_count = 4;
+                    }
 
                 }
                 // you give the items to the blacksmith and he gives a better sword
@@ -280,6 +295,11 @@ class Program
                     System.Console.WriteLine("He tells you about an alchemist that lives near that could give you potions for battle.");
                     Console.WriteLine("-------------------------------");
                     alchemist_tower = true;
+                    // questlog_count naar 6
+                    if (Player.Questlog_count == 5)
+                    {
+                        Player.Questlog_count = 6;
+                    }
                 }
                 // you gave the items and he gave sword
                 else if (reward_blacksmith)
@@ -299,254 +319,270 @@ class Program
                 // maybe switch statements
                 // when correct box found
                 quest_blacksmith_items = true;
-            }
-
-            // alchemists tower
-            if (player.Current_Location.ID == 6)
-            {
-                // you haven't given the items to the blacksmith yet
-                if (alchemist_tower == false)
+                if (Player.Questlog_count == 4)
                 {
-                    Console.WriteLine("-------------------------------");
-                    System.Console.WriteLine("You knock on the door. Someone yells at you.");
-                    System.Console.WriteLine("You decide to go back home");
-                    Console.WriteLine("-------------------------------");
-                    player.Current_Location = World.Locations[0];
-                }
-                // you've given the items to the blacksmith but you don't have the alchemists items yet
-                else if (quest_alchemists_items == false)
-                {
-                    Console.WriteLine("-------------------------------");
-                    System.Console.WriteLine("You hear the alchemist inside.\nHe sounds upset.");
-                    System.Console.WriteLine("You hear him say something about a goblin and his stuff.");
-                    System.Console.WriteLine("His muttering about a nearby cave gives you the idea to go there and try to get his stuff back.");
-                    System.Console.WriteLine("You hope this will make him want to talk to you.");
-                    Console.WriteLine("-------------------------------");
-                    cave = true;
-                }
-                // you defeated the loot goblin and you're returning their items
-                else if (quest_alchemists_items && reward_alchemist == false)
-                {
-                    // you get the alchemists items from the cave
-                    Console.WriteLine("-------------------------------");
-                    System.Console.WriteLine("You knock on the door.\nA small peep hole opens.");
-                    System.Console.WriteLine("The alchemist starts yelling at you.\nYou show the bag you took from the loot goblin.");
-                    System.Console.WriteLine("They stop yelling.\nThe door slightly opens.\nYou hear the alchemist say \"I'll give you some potions for the bag\"");
-                    System.Console.WriteLine("You agree.\nThey say \"Don't come back here, if you want more stuff go to the shop.\"");
-                    Console.WriteLine("-------------------------------");
-                    // you get potions
-                    reward_alchemist = true;
-                    shop = true;
-                }
-                // you've given the items to the alchemist
-                else if (reward_alchemist)
-                {
-                    Console.WriteLine("-------------------------------");
-                    System.Console.WriteLine("You knock on the door.\nYou hear humming.\nThe door doesn't open");
-                    Console.WriteLine("-------------------------------");
-                    player.Current_Location = World.Locations[0];
+                    Player.Questlog_count = 5;
                 }
             }
+        }
 
-            // cave
-            if (player.Current_Location.ID == 7)
+        // alchemists tower
+        if (player.Current_Location.ID == 6)
+        {
+            // you haven't given the items to the blacksmith yet
+            if (alchemist_tower == false)
             {
                 Console.WriteLine("-------------------------------");
-                System.Console.WriteLine("You walk to the cave behind the tower.");
-                System.Console.WriteLine("You see a board next to the entrance.");
-                Art.CaveMap();
-                System.Console.WriteLine("Do you enter? Y/N");
+                System.Console.WriteLine("You knock on the door. Someone yells at you.");
+                System.Console.WriteLine("You decide to go back home");
                 Console.WriteLine("-------------------------------");
-                string user_cave = "";
-                do
+                player.Current_Location = World.Locations[0];
+            }
+            // you've given the items to the blacksmith but you don't have the alchemists items yet
+            else if (quest_alchemists_items == false)
+            {
+                Console.WriteLine("-------------------------------");
+                System.Console.WriteLine("You hear the alchemist inside.\nHe sounds upset.");
+                System.Console.WriteLine("You hear him say something about a goblin and his stuff.");
+                System.Console.WriteLine("His muttering about a nearby cave gives you the idea to go there and try to get his stuff back.");
+                System.Console.WriteLine("You hope this will make him want to talk to you.");
+                Console.WriteLine("-------------------------------");
+                cave = true;
+                // questlog count naar 7 
+                if (Player.Questlog_count == 6)
                 {
-                    user_cave = Console.ReadLine().ToUpper();
-                    if (user_cave == "Y")
+                    Player.Questlog_count = 7;
+                }
+            }
+            // you defeated the loot goblin and you're returning their items
+            else if (quest_alchemists_items && reward_alchemist == false)
+            {
+                // you get the alchemists items from the cave
+                Console.WriteLine("-------------------------------");
+                System.Console.WriteLine("You knock on the door.\nA small peep hole opens.");
+                System.Console.WriteLine("The alchemist starts yelling at you.\nYou show the bag you took from the loot goblin.");
+                System.Console.WriteLine("They stop yelling.\nThe door slightly opens.\nYou hear the alchemist say \"I'll give you some potions for the bag\"");
+                System.Console.WriteLine("You agree.\nThey say \"Don't come back here, if you want more stuff go to the shop.\"");
+                Console.WriteLine("-------------------------------");
+                // you get potions
+                reward_alchemist = true;
+                shop = true;
+                //player count naar 9
+                if (Player.Questlog_count == 8)
+                {
+                    Player.Questlog_count = 9;
+                }
+            }
+            // you've given the items to the alchemist
+            else if (reward_alchemist)
+            {
+                Console.WriteLine("-------------------------------");
+                System.Console.WriteLine("You knock on the door.\nYou hear humming.\nThe door doesn't open");
+                Console.WriteLine("-------------------------------");
+                player.Current_Location = World.Locations[0];
+            }
+        }
+
+        // cave
+        if (player.Current_Location.ID == 7)
+        {
+            Console.WriteLine("-------------------------------");
+            System.Console.WriteLine("You walk to the cave behind the tower.");
+            System.Console.WriteLine("You see a board next to the entrance.");
+            Art.CaveMap();
+            System.Console.WriteLine("Do you enter? Y/N");
+            Console.WriteLine("-------------------------------");
+            string user_cave = "";
+            do
+            {
+                user_cave = Console.ReadLine().ToUpper();
+                if (user_cave == "Y")
+                {
+                    bool in_cave = true;
+                    // you enter the cave
+                    player.Current_Location = World.Locations[11];
+                    do
                     {
-                        bool in_cave = true;
-                        // you enter the cave
-                        player.Current_Location = World.Locations[11];
-                        do
+                        // player dies
+                        if (player.Current_Health <= 0)
                         {
-                            // player dies
-                            if (player.Current_Health <= 0)
-                            {
-                                break;
-                            }
-                            System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nCoins: {player.Coins}\nLocation: {player.Current_Location.Name}");
-                            System.Console.WriteLine("[enter]");
-                            Console.ReadLine();
-                            System.Console.WriteLine("Current location: " + player.Current_Location.Name);
-                            System.Console.WriteLine(player.Current_Location.Compass());
-                            System.Console.WriteLine("Where to go? N/E/S/W");
-                            System.Console.WriteLine("Inventory: I:");
-                            // System.Console.WriteLine("Quest Log: L");
-                            System.Console.WriteLine("Cave map: C");
-                            System.Console.WriteLine("Exit cave: EC");
-                            System.Console.WriteLine("Quit game: Q");
-                            string cave_direction = Console.ReadLine().ToUpper();
-                            // System.Console.Clear();
+                            break;
+                        }
+                        System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nCoins: {player.Coins}\nLocation: {player.Current_Location.Name}");
+                        System.Console.WriteLine("[enter]");
+                        Console.ReadLine();
+                        System.Console.WriteLine("Current location: " + player.Current_Location.Name);
+                        System.Console.WriteLine(player.Current_Location.Compass());
+                        System.Console.WriteLine("Where to go? N/E/S/W");
+                        System.Console.WriteLine("Inventory: I:");
+                        // System.Console.WriteLine("Quest Log: L");
+                        System.Console.WriteLine("Cave map: C");
+                        System.Console.WriteLine("Exit cave: EC");
+                        System.Console.WriteLine("Quit game: Q");
+                        string cave_direction = Console.ReadLine().ToUpper();
+                        // System.Console.Clear();
 
-                            // player choice
+                        // player choice
 
-                            // quest log (what you have to do now/what you are doing)
-                            // if (direction == "L") quest log
+                        // quest log (what you have to do now/what you are doing)
+                        // if (direction == "L") quest log
 
-                            // show player inventory
-                            if (cave_direction == "I") player.DisplayInventory();
+                        // show player inventory
+                        if (cave_direction == "I") player.DisplayInventory();
 
-                            // show cave map
-                            if (cave_direction == "C") Art.InsideCaveMap();
+                        // show cave map
+                        if (cave_direction == "C") Art.InsideCaveMap();
 
-                            if (cave_direction == "EC")
-                            {
-                                in_cave = false;
-                                player.Current_Location = World.Locations[3];
-                            }
+                        if (cave_direction == "EC")
+                        {
+                            in_cave = false;
+                            player.Current_Location = World.Locations[3];
+                        }
 
-                            // quit game
-                            if (cave_direction == "Q")
-                            {
-                                System.Console.WriteLine("Quitting game........");
-                                System.Console.ReadKey();
-                                break;
-                            }
-                            // game play
-                            else player.MoveTo(player.Current_Location.GetLocationAt(cave_direction));
+                        // quit game
+                        if (cave_direction == "Q")
+                        {
+                            System.Console.WriteLine("Quitting game........");
+                            System.Console.ReadKey();
+                            break;
+                        }
+                        // game play
+                        else player.MoveTo(player.Current_Location.GetLocationAt(cave_direction));
 
-                            switch (player.Current_Location.ID)
-                            {
-                                // cave room 1
-                                case 12:
+                        switch (player.Current_Location.ID)
+                        {
+                            // cave room 1
+                            case 12:
+                                {
+                                    System.Console.WriteLine("You're at the cave entrance. It's cold, the walls are moist. ieuw.\nYou hear sounds all around you. \nWhich way do you go?");
+                                    break;
+                                }
+
+                            // cave room 2
+                            case 13:
+                                {
+                                    System.Console.WriteLine("You hear hissing sounds to your right.\nIt might not be smart to go that way.");
+                                    break;
+                                }
+
+                            // cave room 3
+                            case 14:
+                                {
+                                    System.Console.WriteLine("You see a few gold coins.\nYou hear whispering.");
+                                    break;
+                                }
+
+                            // cave room 4
+                            case 15:
+                                {
+                                    System.Console.WriteLine("There are coins leading west.\nThere are also food scraps laying around.");
+                                    break;
+                                }
+
+                            // cave room 5
+                            case 16:
+                                {
+                                    System.Console.WriteLine("It's a dead end.\nYou sit down for a bit.");
+                                    break;
+                                }
+
+                            // cave room goblin
+                            case 17:
+                                {
+                                    if (goblin_in_room)
                                     {
-                                        System.Console.WriteLine("You're at the cave entrance. It's cold, the walls are moist. ieuw.\nYou hear sounds all around you. \nWhich way do you go?");
-                                        break;
-                                    }
-
-                                // cave room 2
-                                case 13:
-                                    {
-                                        System.Console.WriteLine("You hear hissing sounds to your right.\nIt might not be smart to go that way.");
-                                        break;
-                                    }
-
-                                // cave room 3
-                                case 14:
-                                    {
-                                        System.Console.WriteLine("You see a few gold coins.\nYou hear whispering.");
-                                        break;
-                                    }
-
-                                // cave room 4
-                                case 15:
-                                    {
-                                        System.Console.WriteLine("There are coins leading west.\nThere are also food scraps laying around.");
-                                        break;
-                                    }
-
-                                // cave room 5
-                                case 16:
-                                    {
-                                        System.Console.WriteLine("It's a dead end.\nYou sit down for a bit.");
-                                        break;
-                                    }
-
-                                // cave room goblin
-                                case 17:
-                                    {
-                                        if (goblin_in_room)
+                                        System.Console.WriteLine("You see the Goblin.\nDo you fight it? Y/N");
+                                        string player_fight = Console.ReadLine().ToUpper();
+                                        if (player_fight == "Y")
                                         {
-                                            System.Console.WriteLine("You see the Goblin.\nDo you fight it? Y/N");
-                                            string player_fight = Console.ReadLine().ToUpper();
-                                            if (player_fight == "Y")
+                                            // fight the goblin 
+                                            // add goblin fight here!!\
+                                            //player count naar 8
+                                            quest_alchemists_items = true;
+                                            if (Player.Questlog_count == 7)
                                             {
-                                                // fight the goblin 
-                                                // add goblin fight here!!
-                                                quest_alchemists_items = true;
-                                                if (player.Questlog_count == 7)
-                                                {
-                                                    player.Questlog_count = 8;
-                                                }
+                                                Player.Questlog_count = 8;
+                                            }
 
-                                                System.Console.WriteLine("Do you wish to leave the cave right away? Y/N");
-                                                string player_leave = Console.ReadLine().ToUpper();
-                                                if (player_leave == "Y")
-                                                {
-                                                    player.Current_Location.ID = 7;
-                                                    in_cave = false;
-                                                }
-                                            }
-                                            else if (player_fight == "N")
+                                            System.Console.WriteLine("Do you wish to leave the cave right away? Y/N");
+                                            string player_leave = Console.ReadLine().ToUpper();
+                                            if (player_leave == "Y")
                                             {
-                                                System.Console.WriteLine("You decide to not yet fight the goblin.");
-                                                player.Current_Location = World.Locations[14];
+                                                player.Current_Location.ID = 7;
+                                                in_cave = false;
                                             }
+                                        }
+                                        else if (player_fight == "N")
+                                        {
+                                            System.Console.WriteLine("You decide to not yet fight the goblin.");
+                                            player.Current_Location = World.Locations[14];
+                                        }
+                                    }
+                                    else
+                                    {
+                                        System.Console.WriteLine("The goblin lays still in the room.\nHe's dead.");
+                                    }
+                                    // if monster dead quest_alchemist is true, get asked if you want to leave cave. if yes go to cave = id 7
+
+                                    break;
+                                }
+                            // cave room item
+
+                            case 18:
+                                {
+                                    if (item)
+                                    {
+                                        System.Console.WriteLine("You see an item on the ground.\nPick it up? Y/N");
+                                        string player_pick_up = Console.ReadLine().ToUpper();
+                                        if (player_pick_up == "Y")
+                                        {
+                                            player.AddItemToInventory(World.Consumables[3], null);
+                                            System.Console.WriteLine("You pick up a potato.\nMaybe it would be better heated up.");
+                                            item = false;
                                         }
                                         else
                                         {
-                                            System.Console.WriteLine("The goblin lays still in the room.\nHe's dead.");
+                                            System.Console.WriteLine("You've already picked up the item here.");
                                         }
-                                        // if monster dead quest_alchemist is true, get asked if you want to leave cave. if yes go to cave = id 7
-
-                                        break;
                                     }
-                                // cave room item
+                                    break;
+                                }
 
-                                case 18:
-                                    {
-                                        if (item)
-                                        {
-                                            System.Console.WriteLine("You see an item on the ground.\nPick it up? Y/N");
-                                            string player_pick_up = Console.ReadLine().ToUpper();
-                                            if (player_pick_up == "Y")
-                                            {
-                                                player.AddItemToInventory(World.Consumables[3], null);
-                                                System.Console.WriteLine("You pick up a potato.\nMaybe it would be better heated up.");
-                                                item = false;
-                                            }
-                                            else
-                                            {
-                                                System.Console.WriteLine("You've already picked up the item here.");
-                                            }
-                                        }
-                                        break;
-                                    }
+                            // cave room snake
+                            case 19:
+                                {
+                                    System.Console.WriteLine("You see a whole lotta snakes in the room.");
+                                    System.Console.WriteLine("You try to run away but one bites you in the leg.\nYou lose 5 health.");
+                                    player.Current_Health -= 5;
+                                    player.Current_Location = World.Locations[12];
+                                    break;
+                                }
 
-                                // cave room snake
-                                case 19:
-                                    {
-                                        System.Console.WriteLine("You see a whole lotta snakes in the room.");
-                                        System.Console.WriteLine("You try to run away but one bites you in the leg.\nYou lose 5 health.");
-                                        player.Current_Health -= 5;
-                                        player.Current_Location = World.Locations[12];
-                                        break;
-                                    }
+                            default:
+                                {
+                                    System.Console.WriteLine("Error");
+                                    break;
+                                }
 
-                                default:
-                                    {
-                                        System.Console.WriteLine("Error");
-                                        break;
-                                    }
+                        }
 
-                            }
+                        user_cave = "N";
 
-                            user_cave = "N";
-
-                        } while (in_cave == true);
-                    }
-                    else if (user_cave == "N")
-                    {
-                        Console.WriteLine("-------------------------------");
-                        System.Console.WriteLine("You don't enter the cave just yet.");
-                        System.Console.WriteLine("You return to the alchemists tower.");
-                        Console.WriteLine("-------------------------------");
-                        player.Current_Location = World.Locations[2];
-                    }
-                    else System.Console.WriteLine("Incorrect input");
-                } while (user_cave != "Y" && user_cave != "N");
-            }
-
+                    } while (in_cave == true);
+                }
+                else if (user_cave == "N")
+                {
+                    Console.WriteLine("-------------------------------");
+                    System.Console.WriteLine("You don't enter the cave just yet.");
+                    System.Console.WriteLine("You return to the alchemists tower.");
+                    Console.WriteLine("-------------------------------");
+                    player.Current_Location = World.Locations[2];
+                }
+                else System.Console.WriteLine("Incorrect input");
+            } while (user_cave != "Y" && user_cave != "N");
         }
+
+
 
         //shop
         if (player.Current_Location.ID == 8)
@@ -570,35 +606,23 @@ class Program
                 System.Console.WriteLine("You decide to go look down there.\nThe creature looks at you but doesn't say anything.");
                 Console.WriteLine("-------------------------------");
                 shop_basement = true;
+                // count naar 10
+                if (Player.Questlog_count == 9)
+                {
+                    Player.Questlog_count = 10;
+                }
 
             }
             else if (reward_shopkeeper)
             {
-                Console.WriteLine("-------------------------------");
-                System.Console.WriteLine("The shop keeper still looks embarrassed");
-                System.Console.WriteLine("He asks you, \"Would you like to buy anything?\"\nY/N");
-                Console.WriteLine("-------------------------------");
-                string user_shopping = Console.ReadLine().ToUpper();
-                bool player_shopping = true;
-                if (user_shopping == "Y")
+                TradeShop.running_shop = true;
+                TradeShop.TradeShopOG(player);
+                // player count naar 12
+                if (Player.Questlog_count == 11)
                 {
-                    do
-                    {
-                        System.Console.WriteLine("Choose\nE: Exit shop");
-                        string user_shop = System.Console.ReadLine().ToUpper();
-                        if (user_shop == "E")
-                        {
-                            player_shopping = false;
-                        }
-                    } while (player_shopping);
-
-                    // go shopping
+                    Player.Questlog_count = 12;
                 }
-                else if (user_shopping == "N")
-                {
-                    System.Console.WriteLine("Please leave...");
-                    player.Current_Location = World.Locations[1];
-                }
+                player.Current_Location = World.Locations[1];
                 campfire = true;
             }
 
@@ -607,21 +631,17 @@ class Program
         // shop basement 
         if (player.Current_Location.ID == 9)
         {
-
+            //after youve done the quest you get new quest log
+            Console.WriteLine("-------------------------------");
+            Console.WriteLine("[Enter]");
+            Console.ReadLine();
             if (shop_basement)
             {
-                // puzzle/quest om slot te openen en de halflings te bevrijden
-                Console.WriteLine("-------------------------------");
-                Console.WriteLine("You go down stairs and see halflings in cages..\nYou sigh and look at the shop keeper");
-                Console.WriteLine("You try to open the cages however, there's a special lock holding them in the cell.");
-                Console.WriteLine("Complete the puzzle to save the halflings.....");
-                // if quest completed then shop basement false Y om door te gaan
-                string test_doorgang = Console.ReadLine();
-                if (test_doorgang == "Y")
+                if (Player.Questlog_count == 10)
                 {
-                    reward_shopkeeper = true;
+                    Player.Questlog_count = 11;
                 }
-
+                reward_shopkeeper = true;
             }
 
 

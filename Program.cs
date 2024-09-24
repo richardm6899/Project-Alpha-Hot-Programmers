@@ -463,10 +463,10 @@ class Program
                                                 // fight the goblin 
                                                 // add goblin fight here!!
                                                 quest_alchemists_items = true;
-                                                // if (player.Questlog_count == 7)
-                                                // {
-                                                //     player.Questlog_count = 8;
-                                                // }
+                                                if (player.Questlog_count == 7)
+                                                {
+                                                    player.Questlog_count = 8;
+                                                }
 
                                                 System.Console.WriteLine("Do you wish to leave the cave right away? Y/N");
                                                 string player_leave = Console.ReadLine().ToUpper();

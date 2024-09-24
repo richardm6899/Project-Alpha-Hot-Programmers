@@ -359,11 +359,11 @@ public class Player
 
     public void Fighting2(Monster monster)
     {
+        bool run = false;
         Console.WriteLine($"You fight the {monster.Name}");
         while (this.Current_Health > 0 && monster.CurrentHitPoints > 0)
         {
             Console.WriteLine("What do you want to do? (A)ttack, use a (C)onsumable or (R)un?");
-            bool run = false;
             string answer = Console.ReadLine();
             switch (answer.ToUpper())
             {
@@ -430,15 +430,18 @@ public class Player
 
             }
         }
-        if (this.Current_Health <= 0)
-        {
-            Console.WriteLine("You died. GAME OVER");
-        }
-        else
-        {
-            Console.WriteLine($"You killed the {monster.Name}!");
-            this.Strength = 0;
-            this.Defense = 0;
+        if (run == false)
+        {  
+            if (this.Current_Health <= 0)
+            {
+                Console.WriteLine("You died. GAME OVER");
+            }
+            else
+            {
+                Console.WriteLine($"You killed the {monster.Name}!");
+                this.Strength = 0;
+                this.Defense = 0;
+            }
         }
     }
 

@@ -227,16 +227,6 @@ public class Player
 
     // }
 
-    public void Fighting(Monster monster)
-    {
-        Console.WriteLine($"You fight the {monster}");
-        string answer1 = Console.ReadLine();
-        do
-        {
-            AttackMonster(monster);
-            monster.AttackPlayer(this);
-        } while (World.Monsters != null || this.Current_Health != 0);
-    }
 
     public void Fighting2(Monster monster)
     {
@@ -277,6 +267,7 @@ public class Player
                                 // The player flees,the quest is cancelled
                                 Console.WriteLine("You successfully fled from the combat!");
                                 run = true;
+                                monster.CurrentHitPoints = monster.MaximumHitPoints;
                                 //player.Current_Location = World.Locations[0];
                             }
                             else

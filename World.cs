@@ -81,12 +81,14 @@ public static class World
 
     public static void PopulateConsumables()
     {
+
         Consumables.Add(new Consumable(CONSUMABLE_ID_APPLE, "Apple", 1, "h", 1));
         Consumables.Add(new Consumable(CONSUMABLE_ID_HEALTH_POTION, "Health Potion", 10, "h", 3));
         Consumables.Add(new Consumable(CONSUMABLE_ID_STRENGTH, "Strength Potion", 1, "p", 5));
         Consumables.Add(new Consumable(CONSUMABLE_ID_POTATO, "Potato", 5, "h", 2));
         Consumables.Add(new Consumable(CONSUMABLE_ID_DEFENSE_POTION, "Defense Potion", 1, "d", 20));
         Consumables.Add(new Consumable(CONSUMABLE_ID_GREATER_DEFENSE_POTION, "Greater Defense Potion", 2, "d", 50));
+
 
     }
     //  add weapons to the weapons list 
@@ -190,6 +192,7 @@ public static class World
         Location home = new Location(LOCATION_ID_HOME, "Home", "You really need to clean up the place.", null, null);
 
         Location townHall = new Location(LOCATION_ID_TOWN_HAll, "Town square", "You see a scared Mayor.", null, null);
+        townHall.QuestAvailableHere = QuestByID(QUEST_ID_CLEAR_BLACKSMITH_GARDEN);
 
         Location alchemistTower = new Location(LOCATION_ID_ALCHEMIST_TOWER, "Alchemist's tower", "The alchemist really doesn't want you here.", null, null);
         alchemistTower.QuestAvailableHere = QuestByID(QUEST_ID_ALCHEMISTS_ITEMS);
@@ -213,6 +216,7 @@ public static class World
         Location campFire = new Location(LOCATION_ID_CAMPFIRE, "Campfire", "You find a campfire, you rest", null, null);
 
         Location forest = new Location(LOCATION_ID_FOREST, "Forest", "A monster!", null, null);
+        forest.QuestAvailableHere = QuestByID(QUEST_ID_ARAGOG);
         forest.MonsterLivingHere = MonsterByID(MONSTER_ID_ARAGOG);
 
         // cave locations

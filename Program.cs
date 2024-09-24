@@ -26,7 +26,7 @@ class Program
         bool blacksmith_yard = false;
         bool blacksmith = false;
         bool blacksmith_basement = false;
-        bool alchemist_tower = true;
+        bool alchemist_tower = false;
         bool cave = false;
         bool campfire = false;
         bool forest = false;
@@ -52,44 +52,59 @@ class Program
             System.Console.ReadLine();
             home_screen = false;
         }
-        // ask player for name and show player beginning stats
+
+
+        // player name
         System.Console.WriteLine("What is your characters name? ");
-        string player_name = Console.ReadLine();
+        string? player_name = Console.ReadLine();
+        while (player_name == null || player_name == "")
+        {
+            System.Console.WriteLine("Incorrect Input\nPlayer name:");
+            player_name = Console.ReadLine();
+        }
+        player_name = char.ToUpper(player_name[0]) + player_name.Substring(1); // capitalize first letter
+
+        // create player
         Player player = new Player(player_name, World.Locations[0]);
-        // Quest Objects 
-        Quest quest1 = World.QuestByID(1);
-        Quest quest2 = World.QuestByID(2);
-        Quest quest3 = World.QuestByID(3);
-        Quest quest4 = World.QuestByID(4);
-        Quest quest5 = World.QuestByID(5);
+
         Console.WriteLine("-------------------------------");
-        // System.Console.Clear();
+        System.Console.Clear();
         System.Console.WriteLine("Player starting stats:");
 
-        System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nLocation: {player.Current_Location.Name}");
+        // player starting stats
+        System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nCoins: {player.Coins}\nLocation: {player.Current_Location.Name}");
         Console.WriteLine("-------------------------------");
         System.Console.WriteLine("[enter]");
         System.Console.ReadLine();
         // System.Console.Clear();
         while (running)
         {
+            // if player dies
+            if (player.Current_Health <= 0)
+            {
+                System.Console.WriteLine("You died :()");
+                break;
+            }
             while (home) // first time coming home without ever moving /game intro
             {
 
                 Console.WriteLine("-------------------------------");
                 Console.WriteLine("Trrriiiing Triiiing.\nIts 9 AM. Time to start the day.\nAs you walk down your cat George greets you.");
-                Console.WriteLine("Lovely morning isn't it. As you take your first look outside you see chaos and mayhem everywhere.");
+                Console.WriteLine("Lovely morning isn't it. You sit down grab an apple.");
+                player.AddItemToInventory(World.Consumables[0], null);
+                Console.WriteLine("As you take your first look outside you see chaos and mayhem everywhere.");
                 Console.WriteLine("Time to start and adventure.");
                 Console.WriteLine("-------------------------------");
                 Console.WriteLine("You need to reach the town hall(T) to meet the mayor, he might know what to do.");
                 Console.WriteLine("-------------------------------");
+
                 System.Console.WriteLine("[enter]");
                 System.Console.ReadLine();
-                // System.Console.Clear();
+                System.Console.Clear();
                 home = false;
             }
 
-            System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nLocation: {player.Current_Location.Name}");
+            System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nCoins: {player.Coins}\nLocation: {player.Current_Location.Name}");
             Console.WriteLine("-------------------------------");
             Console.WriteLine("        SB\n         |\n         S\n         |\n         T\n         |\n    F-CF-H-Y-B-BB\n         |\n         A\n         |\n         C");
             Console.WriteLine("-------------------------------");
@@ -100,6 +115,7 @@ class Program
             System.Console.WriteLine("Where to go? N/E/S/W");
             System.Console.WriteLine("Map info: M");
             System.Console.WriteLine("Inventory: I:");
+            System.Console.WriteLine("Quest Log: L");
             System.Console.WriteLine("Quit game: Q");
             string direction = Console.ReadLine().ToUpper();
             // System.Console.Clear();
@@ -124,8 +140,7 @@ class Program
             // game play
             else player.MoveTo(player.Current_Location.GetLocationAt(direction));
 
-            // return home
-            // can add new functionality to home if need be (inventory or crafting lol)
+            // home
             if (player.Current_Location.ID == 1)
             {
                 System.Console.WriteLine("You enter you home.");
@@ -137,8 +152,9 @@ class Program
             {
                 Console.WriteLine("-------------------------------");
                 System.Console.WriteLine("You see the mayor.\nYou go up to him.");
-                // no weapon
-                if (quest_blacksmith_garden == false)
+
+                // no weapon you have done nothing yet.
+                if (quest_blacksmith_garden == false && reward_mayor == false)
                 {
                     string user_save_town = "";
                     do
@@ -155,7 +171,9 @@ class Program
                             System.Console.Clear();
                             Console.WriteLine("-------------------------------");
                             System.Console.WriteLine("The mayor thanks you, but sees you don't have a weapon.");
-                            System.Console.WriteLine("He gives you a rusty looking sword.\nHe apologizes for not having anything better for you");
+                            System.Console.WriteLine("He gives you a rusty looking sword.");
+                            System.Console.WriteLine("He apologizes for not having anything better for you");
+
                             // recieve weapon
                             player.AddItemToInventory(null, World.Weapons[1]);
                             System.Console.WriteLine("He says the blacksmith might be able to improve your sword,\nbut his garden is overrun by cockroaches.");
@@ -178,7 +196,7 @@ class Program
                         else System.Console.WriteLine("Incorrect input");
                     } while (user_save_town != "Y" && user_save_town != "N");
                 }
-                //  yes weapon
+                //  themayor has given you a weapon and you return to him
                 else if (reward_mayor)
                 {
                     Console.WriteLine("-------------------------------");
@@ -237,6 +255,7 @@ class Program
 
             // blacksmith
             if (player.Current_Location.ID == 4)
+            {
                 // you killed the cockroaches but don't have the blacksmiths items yet
                 if (quest_blacksmith_items == false)
                 {
@@ -255,7 +274,7 @@ class Program
                     System.Console.WriteLine("You give the tools, the blacksmith smiles.");
                     // you get better weapon
                     System.Console.WriteLine("The blacksmith gives you a better sword.");
-                    player.AddItemToInventory(null, World.Weapons[1]);
+                    player.AddItemToInventory(null, World.Weapons[2]);
                     reward_blacksmith = true;
 
                     System.Console.WriteLine("He tells you about an alchemist that lives near that could give you potions for battle.");
@@ -271,6 +290,7 @@ class Program
                     System.Console.WriteLine("You think about leaving.");
                     Console.WriteLine("-------------------------------");
                 }
+            }
 
             // blacksmith basement
             if (player.Current_Location.ID == 5)
@@ -348,7 +368,12 @@ class Program
                         player.Current_Location = World.Locations[11];
                         do
                         {
-                            System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nLocation: {player.Current_Location.Name}");
+                            // player dies
+                            if (player.Current_Health <= 0)
+                            {
+                                break;
+                            }
+                            System.Console.WriteLine($"Name:{player.Name}\nHealth: {player.Current_Health}\nCoins: {player.Coins}\nLocation: {player.Current_Location.Name}");
                             System.Console.WriteLine("[enter]");
                             Console.ReadLine();
                             System.Console.WriteLine("Current location: " + player.Current_Location.Name);
@@ -397,6 +422,7 @@ class Program
                                         System.Console.WriteLine("You're at the cave entrance. It's cold, the walls are moist. ieuw.\nYou hear sounds all around you. \nWhich way do you go?");
                                         break;
                                     }
+
                                 // cave room 2
                                 case 13:
                                     {
@@ -410,18 +436,21 @@ class Program
                                         System.Console.WriteLine("You see a few gold coins.\nYou hear whispering.");
                                         break;
                                     }
+
                                 // cave room 4
                                 case 15:
                                     {
                                         System.Console.WriteLine("There are coins leading west.\nThere are also food scraps laying around.");
                                         break;
                                     }
+
                                 // cave room 5
                                 case 16:
                                     {
                                         System.Console.WriteLine("It's a dead end.\nYou sit down for a bit.");
                                         break;
                                     }
+
                                 // cave room goblin
                                 case 17:
                                     {
@@ -462,6 +491,7 @@ class Program
                                         break;
                                     }
                                 // cave room item
+
                                 case 18:
                                     {
                                         if (item)
@@ -481,6 +511,7 @@ class Program
                                         }
                                         break;
                                     }
+
                                 // cave room snake
                                 case 19:
                                     {
@@ -570,7 +601,9 @@ class Program
                 }
                 campfire = true;
             }
+
         }
+
         // shop basement 
         if (player.Current_Location.ID == 9)
         {
@@ -590,6 +623,7 @@ class Program
                 }
 
             }
+
 
         }
         // campfire
@@ -659,6 +693,7 @@ class Program
                 System.Console.WriteLine("You defeated the monster, you can return home to rest.");
                 Console.WriteLine("-------------------------------");
             }
+
             else if (user_aragog == "N")
             {
                 Console.WriteLine("-------------------------------");
@@ -677,5 +712,4 @@ class Program
             running = false;
         }
     }
-}
 }

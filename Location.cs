@@ -49,7 +49,7 @@ public class Location
             s += "    |\n    S\n";
         }
         return s;
-    }
+        }
 
     public Location GetLocationAt(string location)
     {

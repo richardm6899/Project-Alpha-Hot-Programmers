@@ -19,7 +19,12 @@ public class Monster
     public void AttackPlayer(Player player)
     {
         Console.WriteLine($"{Name} attacks {player.Name}!");
-        player.TakeDamage(this.Damage);
+        int damage = this.Damage;
+        if(player.Defense > 0)
+        {
+            damage = Convert.ToInt32(damage - (damage * (player.Defense * 0.25)));
+        }
+        player.TakeDamage(damage);
     }
 
     public void TakeDamage(int damage)

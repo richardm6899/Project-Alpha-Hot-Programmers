@@ -135,13 +135,24 @@ public class Quest
 
             // }
             PickUpQuest(quest, player);
+
             // Keep running program after player leaves location world.Location[1]
         }
-        if (player.Current_Location == World.Locations[4]) // Blacksmith yard, cockroach
+        if (player.Current_Location == World.Locations[4] && location1 == true) // Blacksmith yard, cockroach
         {
+            player.Fighting2(monster);
             if (monster.CurrentHitPoints <= 0)
             {
+                player.AddMoney(10);
+                Console.WriteLine("--------------------------------------");
+                Console.WriteLine($"10 coins have been added to your inventory.");
+                Console.WriteLine($"Your total wallet is now {player.Coins} coins.");
+                Console.WriteLine("--------------------------------------");
                 victory1 = true;
+            }
+            else if (victory3 == true)
+            {
+                Console.WriteLine("You have done this quest already.");
             }
         }
         if (player.Current_Location == World.Locations[5] && location1 == true) //Blackmisth, location 5, picks up quest
@@ -158,6 +169,11 @@ public class Quest
                 if (monster.CurrentHitPoints <= 0)
                 {
                     Console.WriteLine($"Return to the Alchemist for your reward and your next quest awaits in the shop basement.");
+                    player.AddMoney(15);
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine($"15 coins have been added to your inventory.");
+                    Console.WriteLine($"Your total wallet is now {player.Coins} coins.");
+                    Console.WriteLine("--------------------------------------");
                     victory3 = true;
                 }
                 else if (victory3 == true)
@@ -186,7 +202,13 @@ public class Quest
                 player.Fighting2(monster);
                 if (monster.CurrentHitPoints <= 0)
                 {
+
                     Console.WriteLine($"The villagers now live in piece and harmony, maybe its time to go back to bed.");
+                    player.AddMoney(69696969);
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine($"69696969 coins have been added to your inventory.");
+                    Console.WriteLine($"Your total wallet is now {player.Coins} coins.");
+                    Console.WriteLine("--------------------------------------");
                     victory5 = true;
                 }
                 else if (victory5 == true)
@@ -200,7 +222,7 @@ public class Quest
             }
             else
             {
-                Console.WriteLine("Incorrect monster for this zone");
+                Console.WriteLine("Boolean is false");
             }
         }
     }
@@ -248,6 +270,11 @@ public class Quest
                 if (answer == "c")
                 {
                     Console.WriteLine("Correct! You've collected the tools. You received a reward that will aid you in the alchemist, where your next quest awaits.");
+                    player.AddMoney(12);
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine($"12 coins have been added to your inventory.");
+                    Console.WriteLine($"Your total wallet is now {player.Coins} coins.");
+                    Console.WriteLine("--------------------------------------");
                     menu2 = false;
                     victory2 = true;
                 }
@@ -272,6 +299,11 @@ public class Quest
                 if (answer == "gift")
                 {
                     Console.WriteLine("Correct! The cages are now unlocked and the halflings are free. You received a reward that will help you in the forest, where your next quest awaits.");
+                    player.AddMoney(18);
+                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine($"18 coins have been added to your inventory.");
+                    Console.WriteLine($"Your total wallet is now {player.Coins} coins.");
+                    Console.WriteLine("--------------------------------------");
                     menu1 = false;
                     victory4 = true;
                 }

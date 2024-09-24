@@ -41,7 +41,7 @@ public class Player
         if (Questlog_count == 1)
         {
             Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("|+ Reach the the townhall...                |");
+            Console.WriteLine("|+ Reach the the townhall....               |");
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("[Enter]");
             Console.ReadLine();
@@ -50,7 +50,7 @@ public class Player
         else if (Questlog_count == 2)
         {
             Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("|+ Reach the Blacksmith's Yard.           |");
+            Console.WriteLine("|+ Reach the Blacksmith's Yard......           |");
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("[Enter]");
             Console.ReadLine();
@@ -99,7 +99,7 @@ public class Player
         {
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("|+ Check out the cave to retrieve the loot  |");
-            Console.WriteLine("|+ from the goblins                         |");
+            Console.WriteLine("|+ from the goblins..                         |");
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("[Enter]");
             Console.ReadLine();
@@ -108,7 +108,7 @@ public class Player
         else if (Questlog_count == 8)
         {
             Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("|+ Return to the alchemist                  |");
+            Console.WriteLine("|+ Return to the alchemist..                  |");
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("[Enter]");
             Console.ReadLine();
@@ -117,7 +117,7 @@ public class Player
         else if (Questlog_count == 9)
         {
             Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("|+ Head to the shop.                        |");
+            Console.WriteLine("|+ Head to the shop....                        |");
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("[Enter]");
             Console.ReadLine();
@@ -127,7 +127,7 @@ public class Player
         {
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("|+ Check out the strange noises in the      |");
-            Console.WriteLine("|+ basement.                                |");
+            Console.WriteLine("|+ basement....                                |");
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("[Enter]");
             Console.ReadLine();
@@ -137,7 +137,7 @@ public class Player
         {
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("|+ Get better weapons and potions at        |");
-            Console.WriteLine("|+ the shop.                                |");
+            Console.WriteLine("|+ the shop....                                |");
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("[Enter]");
             Console.ReadLine();
@@ -147,20 +147,20 @@ public class Player
         {
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("|+ You are now ready to defeat the          |");
-            Console.WriteLine("|+ monster in the woods.                    |");
+            Console.WriteLine("|+ monster in the woods.....                    |");
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("[Enter]");
             Console.ReadLine();
             Console.Clear();
         }
-        
-
-        
-
-
 
 
     }
+      // Inventory ----------------------------------------------------
+    // add item in player inventory
+    // how to: AddItemsToInventory(ConsumableByID(...),WeaponByID(...))
+
+    // oli/Thomas
     public void AddItemToInventory(Consumable consumable, Weapon weapon)
     {
         if (consumable == null && weapon == null)

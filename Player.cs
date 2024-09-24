@@ -53,7 +53,8 @@ public class Player
         else if (Questlog_count == 2)
         {
             Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("|+ Reach the Blacksmith's Yard......           |");
+            Console.WriteLine("|+ Reach the Blacksmith's Yard....          |");
+            Console.WriteLine("|+ advice: switch your current weapon       |");
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("[Enter]");
             Console.ReadLine();
@@ -63,7 +64,7 @@ public class Player
         {
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("|+ The Blacksmith wants to thank you for    |");
-            Console.WriteLine("|+ you work. Head to the Blacksmith.         |");
+            Console.WriteLine("|+ you work. Head to the Blacksmith.        |");
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("[Enter]");
             Console.ReadLine();
@@ -174,13 +175,13 @@ public class Player
         else if (consumable == null)
         {
             PlayerInventory.WeaponInventory.Add(weapon);
-            Console.WriteLine("you got a weapon");
+          
 
         }
         else if (weapon == null)
         {
             PlayerInventory.ConsumableInventory.Add(consumable);
-            Console.WriteLine("you got a Consumable");
+            
         }
     }
 
@@ -371,9 +372,11 @@ public class Player
             {
                 while (this.Current_Health > 0 && monster.CurrentHitPoints > 0)
                 {
+                    
                     Console.WriteLine("What do you want to do? (A)ttack or (R)un?");
                     bool run = false;
                     string answer = Console.ReadLine();
+                    
                     switch (answer.ToUpper())
                     {
                         case "A":
@@ -438,6 +441,7 @@ public class Player
             this.Strength = 0;
             this.Defense = 0;
         }
+        
 
     }
 

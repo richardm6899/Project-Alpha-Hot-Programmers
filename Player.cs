@@ -10,7 +10,8 @@ public class Player
     public Inventory PlayerInventory = new Inventory();
     public int Coins;
     public string Name;
-    public bool Strength = false;
+    public int Strength = 0;
+    public int Defense = 0;
     //Player Info
     public Player(string name, Location current_location)
     {
@@ -293,12 +294,13 @@ public class Player
         }
         if (this.Current_Health <= 0)
         {
-            Console.WriteLine("You died. GAME OVER");
+                Console.WriteLine("...");  
         }
         else
         {
             Console.WriteLine($"You killed the {monster.Name}!");
-            this.Strength = false;
+            this.Strength = 0;
+            this.Defense = 0;
         }
     }
 
@@ -401,7 +403,7 @@ public class Player
             damage = 0;
         }
 
-        if (this.Strength == true)
+        if (this.Strength > 0)
         {
             damage = Convert.ToInt32(damage * 1.5);
         }

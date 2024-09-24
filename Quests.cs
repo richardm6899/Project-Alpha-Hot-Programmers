@@ -128,7 +128,7 @@ public class Quest
         // Quest quest = World.QuestByID(questID); //Making object
         // Location location = World.LocationByID(LocationID);
         // Monster monster = World.MonsterByID(monsterID);
-        if (player.Current_Location == World.Locations[1]) // its done at Blackmisth garden, location 3
+        if (player.Current_Location == World.Locations[1]) //Town hall, its done at Blackmisth garden, location 3
         {
             // for (int i = 0; i < 11; i++){
             //     Console.WriteLine(World.Locations[i].Name);
@@ -139,89 +139,41 @@ public class Quest
         }
         if (player.Current_Location == World.Locations[4]) // Blacksmith yard, cockroach
         {
-
+            if (monster.CurrentHitPoints <= 0)
+            {
+                victory1 = true;
+            }
         }
         if (player.Current_Location == World.Locations[5] && location1 == true) //Blackmisth, location 5, picks up quest
         {
             PickUpQuest(quest, player);
-            bool menu2 = true;
-            {
-        if (player.Current_Location == World.Locations[6]) // Blacksmith Basement
+        }
+        if (player.Current_Location == World.Locations[2] && location2 == true) // Quest in Alchemist, objective in cave, location 7, picks up quest
         {
-            while (menu2 == true)
+            PickUpQuest(quest, player);
+            if (player.Current_Location == World.Locations[3])
             {
                 //Introduce quest method logic
-                Console.WriteLine("In order to collect the tools out you must answer the following riddle correctly");
-                Console.WriteLine("Which letter of the alphabet has the most water? (Type in the letter)");
-                string answer = Console.ReadLine().ToLower();
-                if (answer == "c")
+                player.Fighting2(monster);
+                if (monster.CurrentHitPoints <= 0)
                 {
-                    Console.WriteLine("Correct! You've collected the tools. You received a reward that will aid you in the alchemist, where your next quest awaits.");
-                    menu2 = false;
-                    victory2 = true;
+                    Console.WriteLine($"Return to the Alchemist for your reward and your next quest awaits in the shop basement.");
+                    victory3 = true;
                 }
-                else if (victory2 == true)
+                else if (victory3 == true)
                 {
                     Console.WriteLine("You have done this quest already.");
                 }
                 else
                 {
-                    Console.WriteLine("Incorrect. Try again.");
+                    Console.WriteLine("Don't give up!");
                 }
             }
-        }
-            }
-        }
-        if (player.Current_Location == World.Locations[2] && location2 == true) // Quest in Alchemist, objective in cave, location 7, picks up quest
-        {
-            PickUpQuest(quest, player);
-        if (player.Current_Location == World.Locations[3])
-        {
-            //Introduce quest method logic
-            player.Fighting2(monster);
-            if (monster.CurrentHitPoints <= 0)
-            {
-                Console.WriteLine($"Return to the Alchemist for your reward and your next quest awaits in the shop basement.");
-                victory3 = true;
-            }
-            else if (victory3 == true)
-            {
-                Console.WriteLine("You have done this quest already.");
-            }
-            else
-            {
-                Console.WriteLine("Don't give up!");
-            }
-        }
         }
         if (player.Current_Location == World.Locations[7] && location3 == true) // Shop basement, location 9
         {
             PickUpQuest(quest, player);
             //Introduce quest method logic
-        }
-        if (player.Current_Location == World.Locations[8] && location3 == true)
-        {
-            bool menu1 = true;
-            Console.WriteLine("In order to save the halflings out you must answer the following riddle correctly");
-            while (menu1 == true)
-            {
-                Console.WriteLine("If the past is history, the future is mistery, today is a ...? That's why its called the present");
-                string answer = Console.ReadLine().ToLower();
-                if (answer == "gift")
-                {
-                    Console.WriteLine("Correct! The cages are now unlocked and the halflings are free. You received a reward that will help you in the forest, where your next quest awaits.");
-                    menu1 = false;
-                    victory4 = true;
-                }
-                else if (victory4 == true)
-                {
-                    Console.WriteLine("You have done this quest already.");
-                }
-                else
-                {
-                    Console.WriteLine("Try again!");
-                }
-            }
         }
         if (player.Current_Location == World.Locations[10] && location4 == true) // Forest, location 11
         {
@@ -250,10 +202,6 @@ public class Quest
             {
                 Console.WriteLine("Incorrect monster for this zone");
             }
-        }
-        else
-        {
-            Console.WriteLine("You must complete another quest to start this quest");
         }
     }
 
@@ -286,7 +234,58 @@ public class Quest
         }
     }
 
-    // 
+    public static void Riddles(Player player)
+    {
+        bool menu2 = true;
+        if (player.Current_Location == World.Locations[6]) // Blacksmith Basement
+        {
+            while (menu2 == true)
+            {
+                //Introduce quest method logic
+                Console.WriteLine("In order to collect the tools out you must answer the following riddle correctly");
+                Console.WriteLine("Which letter of the alphabet has the most water? (Type in the letter)");
+                string answer = Console.ReadLine().ToLower();
+                if (answer == "c")
+                {
+                    Console.WriteLine("Correct! You've collected the tools. You received a reward that will aid you in the alchemist, where your next quest awaits.");
+                    menu2 = false;
+                    victory2 = true;
+                }
+                else if (victory2 == true)
+                {
+                    Console.WriteLine("You have done this quest already.");
+                }
+                else
+                {
+                    Console.WriteLine("Incorrect. Try again.");
+                }
+            }
+        }
+        if (player.Current_Location == World.Locations[8] && location3 == true)
+        {
+            bool menu1 = true;
+            Console.WriteLine("In order to save the halflings out you must answer the following riddle correctly");
+            while (menu1 == true)
+            {
+                Console.WriteLine("If the past is history, the future is mistery, today is a ...? That's why its called the present");
+                string answer = Console.ReadLine().ToLower();
+                if (answer == "gift")
+                {
+                    Console.WriteLine("Correct! The cages are now unlocked and the halflings are free. You received a reward that will help you in the forest, where your next quest awaits.");
+                    menu1 = false;
+                    victory4 = true;
+                }
+                else if (victory4 == true)
+                {
+                    Console.WriteLine("You have done this quest already.");
+                }
+                else
+                {
+                    Console.WriteLine("Try again!");
+                }
+            }
+        }
+    }
     public static void PickUpQuest(Quest quest, Player player)
     {
         if (player.Current_Location.ID == 2)

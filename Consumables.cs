@@ -24,7 +24,7 @@ public class Consumable
         switch(this.Usage.ToUpper())
         {
             case "P":
-                player.Strength = true;
+                player.Strength = 1;
                 Console.WriteLine("You feel a surge of energy!");
 
                 break;
@@ -36,6 +36,11 @@ public class Consumable
                     player.Current_Health = player.Max_Health;
                 }
                 Console.WriteLine(player.DisplayHealth());
+                break;
+            
+            case "D":
+                player.Defense = this.Strength;
+                Console.WriteLine("You feel a layer of protective air around your body");                
                 break;
             
             default:
